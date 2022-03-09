@@ -18,13 +18,25 @@ import org.springframework.web.bind.annotation.*;
 public class BlogController {
 
     /**
+     * 博客浏览量增加
+     *
+     * @param blogId 博客id
+     * @return 是否成功
+     */
+    @PostMapping("/changeView")
+    @ApiOperation("浏览量增加")
+    public JsonResult viewBlog(Long blogId){
+        return null;
+    }
+
+    /**
      * 获得随机博客列表
      *
      * @return 随机博客列表
      */
     @GetMapping("/random")
     @ApiOperation("获得随机博客列表")
-    public JsonResult blogRandomList(){
+    public JsonResult blogRandomList(@RequestParam(value="pageNo",defaultValue="1")int pageNo, @RequestParam(value="pageSize",defaultValue="10")int pageSize){
         return null;
     }
 
@@ -60,7 +72,7 @@ public class BlogController {
      */
     @GetMapping("/search")
     @ApiOperation("搜索博客/标签")
-    public JsonResult searchBlog(String key) {
+    public JsonResult searchBlog(String key, @RequestParam(value = "pageNo", defaultValue = "1") int pageNo, @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
         return null;
     }
 

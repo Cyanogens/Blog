@@ -25,7 +25,7 @@ public class CommentController {
      */
     @GetMapping("/get/{blogId}")
     @ApiOperation("查询某博客的所有评论")
-    public JsonResult getAllComment(@PathVariable Long blogId) {
+    public JsonResult getAllComment(@PathVariable Long blogId, @RequestParam(value="pageNo",defaultValue="1")int pageNo, @RequestParam(value="pageSize",defaultValue="10")int pageSize) {
         return null;
     }
 

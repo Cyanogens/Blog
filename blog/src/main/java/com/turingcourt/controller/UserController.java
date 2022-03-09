@@ -50,7 +50,7 @@ public class UserController {
      */
     @GetMapping("/userBlogs/{userId}")
     @ApiOperation("查询用户发布的所有博客")
-    public JsonResult userBlogs(@PathVariable Integer userId) {
+    public JsonResult userBlogs(@PathVariable Integer userId, @RequestParam(value="pageNo",defaultValue="1")int pageNo, @RequestParam(value="pageSize",defaultValue="10")int pageSize) {
         return null;
     }
 

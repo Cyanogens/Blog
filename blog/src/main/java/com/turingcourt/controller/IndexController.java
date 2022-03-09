@@ -8,10 +8,7 @@ import com.turingcourt.service.UserLoginService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.FileCopyUtils;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -130,15 +127,4 @@ public class IndexController {
         return null;
     }
 
-    /**
-     * 博客浏览量增加
-     *
-     * @param blogId 博客id
-     * @return 是否成功
-     */
-    @PostMapping("/changeView")
-    @ApiOperation("浏览量增加")
-    public JsonResult viewBlog(Long blogId){
-        return null;
-    }
 }

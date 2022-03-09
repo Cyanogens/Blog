@@ -15,3 +15,8 @@ mybatis:
   configuration.map-underscore-to-camel-case: true
   configuration:
     log-impl: org.apache.ibatis.logging.log4j2.Log4j2Impl
+#分页pageHelper
+pagehelper:
+  helper-dialect: mysql
+  reasonable: true
+  support-methods-arguments: true
