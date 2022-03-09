@@ -7,9 +7,8 @@ create table blog
     htmlcontent varchar(255) not null comment 'html格式的内容',
     summary     varchar(255) not null comment '内容',
     cid         bigint       not null comment '标签id',
-    uid         int          not null comment '用户id
-',
-    publishdata datetime     not null comment '发布数据',
+    uid         int          not null comment '用户id',
+    publishdata datetime     not null comment '发布时间',
     state       tinyint(1)   not null comment '状态',
     pageview    bigint       not null comment '浏览量',
     likecount   bigint       not null comment '点赞数'
@@ -45,7 +44,7 @@ create table comment
         primary key,
     pid        bigint default -1 not null comment '所评论的id',
     bid        bigint            not null comment '博客id',
-    uid        int               not null comment '用户id',
+    uid        int               not null comment '评论者id',
     content    varchar(255)      not null comment '评论内容',
     createdate datetime          not null comment '发布时间',
     likecount  bigint            not null comment '点赞数'
@@ -67,6 +66,8 @@ create table user
     username varchar(255) not null comment '用户名',
     password varchar(255) not null comment '密码',
     isenable tinyint(1)   not null comment '用户是否可用',
-    sex      varchar(10)  not null comment '性别'
+    sex      varchar(10)  not null comment '性别',
+    problem  varchar(255) not null comment '密保问题',
+    ans      varchar(255) not null comment '密保答案'
 );
 
