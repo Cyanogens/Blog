@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author Cyanogen
@@ -32,9 +33,9 @@ public class BlogVO {
      */
     private String summary;
     /**
-     * 标签名
+     * 标签名集合
      */
-    private String categoryName;
+    private List<String> categoryNames;
     /**
      * 用户名
      */
