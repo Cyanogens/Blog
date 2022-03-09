@@ -1,0 +1,27 @@
+package com.turingcourt.vo;
+
+import java.util.Date;
+
+/**
+ * @author Cyanogen
+ * @description Comment类视图层
+ * @date 2022/3/8 20:41
+ */
+public class CommentVO {
+    /**
+     * 用户名
+     */
+    private String username;
+    /**
+     * 评论内容
+     */
+    private String content;
+    /**
+     * 发布时间
+     */
+    private Date createDate;
+    /**
+     * 点赞数
+     */
+    private Long likeCount;
+}
