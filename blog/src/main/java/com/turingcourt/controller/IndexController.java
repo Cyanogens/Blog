@@ -129,4 +129,16 @@ public class IndexController {
     public JsonResult changePassword(String password) {
         return null;
     }
+
+    /**
+     * 博客浏览量增加
+     *
+     * @param blogId 博客id
+     * @return 是否成功
+     */
+    @PostMapping("/changeView")
+    @ApiOperation("浏览量增加")
+    public JsonResult viewBlog(Long blogId){
+        return null;
+    }
 }

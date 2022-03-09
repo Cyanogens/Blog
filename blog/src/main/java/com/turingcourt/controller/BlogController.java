@@ -18,6 +18,17 @@ import org.springframework.web.bind.annotation.*;
 public class BlogController {
 
     /**
+     * 获得随机博客列表
+     *
+     * @return 随机博客列表
+     */
+    @GetMapping("/random")
+    @ApiOperation("获得随机博客列表")
+    public JsonResult blogRandomList(){
+        return null;
+    }
+
+    /**
      * 查看博客详情
      *
      * @param blogId 博客id
