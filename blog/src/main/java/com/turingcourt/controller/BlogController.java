@@ -32,6 +32,8 @@ public class BlogController {
     /**
      * 获得随机博客列表
      *
+     * @param pageNo 要显示第几页内容
+     * @param pageSize 一页显示多少条
      * @return 随机博客列表
      */
     @GetMapping("/random")
@@ -68,6 +70,8 @@ public class BlogController {
      * 搜索博客/标签
      *
      * @param key 搜索关键字
+     * @param pageNo 要显示第几页内容
+     * @param pageSize 一页显示多少条
      * @return 博客集合
      */
     @GetMapping("/search")

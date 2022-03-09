@@ -46,6 +46,8 @@ public class UserController {
      * 通过用户id查找博客
      *
      * @param userId 用户id
+     * @param pageNo 要显示第几页内容
+     * @param pageSize 一页显示多少条
      * @return 博客列表
      */
     @GetMapping("/userBlogs/{userId}")

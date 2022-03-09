@@ -21,6 +21,8 @@ public class CommentController {
      * 查询某博客的所有评论
      *
      * @param blogId 博客id
+     * @param pageNo 要显示第几页内容
+     * @param pageSize 一页显示多少条
      * @return 所有评论
      */
     @GetMapping("/get/{blogId}")
