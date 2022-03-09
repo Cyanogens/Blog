@@ -25,7 +25,7 @@ public class UserController {
      */
     @GetMapping("/{userId}")
     @ApiOperation("查询用户信息")
-    public JsonResult myself(@PathVariable Integer userId) {
+    public JsonResult getUser(@PathVariable Integer userId) {
         return null;
     }
 
@@ -37,7 +37,7 @@ public class UserController {
      */
     @PostMapping("/change")
     @ApiOperation("更改用户信息")
-    public JsonResult changeMyself(@RequestBody User user) {
+    public JsonResult changeUser(@RequestBody User user) {
         return null;
     }
 
@@ -50,7 +50,7 @@ public class UserController {
      */
     @GetMapping("/userBlogs/{userId}")
     @ApiOperation("查询用户发布的所有博客")
-    public JsonResult myGoods(@PathVariable Integer userId) {
+    public JsonResult userBlogs(@PathVariable Integer userId) {
         return null;
     }
 
@@ -63,7 +63,7 @@ public class UserController {
      */
     @PostMapping("/changeBlogs/{userId}")
     @ApiOperation("更改用户发布的博客")
-    public JsonResult changeMyselfGoods(@RequestBody BlogVO blogVO, @PathVariable Integer userId) {
+    public JsonResult changeUserBlog(@RequestBody BlogVO blogVO, @PathVariable Integer userId) {
         return null;
     }
 
