@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.turingcourt.dao.CommentDao">
+
+    <resultMap id="BaseResultMap" type="com.turingcourt.entity.Comment">
+        <!--@Table comment-->
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="pid" column="pid" jdbcType="INTEGER"/>
+        <result property="bid" column="bid" jdbcType="INTEGER"/>
+        <result property="uid" column="uid" jdbcType="INTEGER"/>
+        <result property="content" column="content" jdbcType="VARCHAR"/>
+        <result property="createdate" column="createdate" jdbcType="TIMESTAMP"/>
+        <result property="likecount" column="likecount" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="BaseResultMap">
+        select
+          id, pid, bid, uid, content, createdate, likecount
+        from turingblog.comment
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="BaseResultMap">
+        select
+          id, pid, bid, uid, content, createdate, likecount
+        from turingblog.comment
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="BaseResultMap">
+        select
+          id, pid, bid, uid, content, createdate, likecount
+        from turingblog.comment
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="pid != null">
+                and pid = #{pid}
+            </if>
+            <if test="bid != null">
+                and bid = #{bid}
+            </if>
+            <if test="uid != null">
+                and uid = #{uid}
+            </if>
+            <if test="content != null and content != ''">
+                and content = #{content}
+            </if>
+            <if test="createdate != null">
+                and createdate = #{createdate}
+            </if>
+            <if test="likecount != null">
+                and likecount = #{likecount}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into turingblog.comment(pid, bid, uid, content, createdate, likecount)
+        values (#{pid}, #{bid}, #{uid}, #{content}, #{createdate}, #{likecount})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update turingblog.comment
+        <set>
+            <if test="pid != null">
+                pid = #{pid},
+            </if>
+            <if test="bid != null">
+                bid = #{bid},
+            </if>
+            <if test="uid != null">
+                uid = #{uid},
+            </if>
+            <if test="content != null and content != ''">
+                content = #{content},
+            </if>
+            <if test="createdate != null">
+                createdate = #{createdate},
+            </if>
+            <if test="likecount != null">
+                likecount = #{likecount},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from turingblog.comment where id = #{id}
+    </delete>
+
+</mapper>
