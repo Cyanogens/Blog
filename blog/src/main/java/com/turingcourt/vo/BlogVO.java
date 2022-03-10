@@ -44,5 +44,9 @@ public class BlogVO {
      * 发布时间
      */
     private Date publishData;
+    /**
+     * 点赞数
+     */
+    private Long likeCount;
 
 }
