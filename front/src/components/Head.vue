@@ -20,8 +20,12 @@
     <div class="menu">
       <ul>
         <li class="user"><img src="@/assets/images/user.jpg" alt="" /></li>
-        <li>个人中心</li>
-        <li>登录</li>
+        <li>
+          <router-link to="/person">个人中心</router-link>
+        </li>
+        <li>
+          <router-link to="/login">登录</router-link>
+        </li>
       </ul>
     </div>
     <!-- 发布博客 -->
@@ -46,9 +50,12 @@ export default {
 /* 头部整体区域 */
 .head {
   position: relative;
+  position: fixed;
+  top: 0;
+  left: 170px;
   width: 1042px;
   height: 51px;
-  margin: 0 auto;
+  margin-bottom: 10px;
   box-shadow: 0px 0px 1px;
   background-color: #fff;
   z-index: 99;
@@ -82,7 +89,6 @@ export default {
 
 .search .search-ipt >>> .el-input__inner {
   padding: 0 8px;
-  height: 32px;
   height: 100%;
   outline: #ccc;
   border-top-right-radius: 0;
@@ -134,10 +140,6 @@ export default {
   height: 100%;
 }
 
-.menu .user {
-  width: 100%;
-  height: 100%;
-}
 .user img {
   width: 100%;
   height: 100%;
@@ -146,26 +148,33 @@ export default {
 
 /* 头像部分下弹菜单 */
 .menu {
-  overflow: hidden;
+  /* overflow: hidden; */
   right: 178px;
-}
-.menu:hover {
-  overflow: visible;
+  /* transition: all 1s; */
 }
 
 .menu ul {
   list-style: none;
   width: 80px;
+  height: 51px;
+  overflow: hidden;
+  transition: height 0.5s;
+}
+
+.menu ul:hover {
+  height: 150px;
 }
 
 .menu ul li {
-  padding: 10px 10px;
+  height: 35px;
+  line-height: 35px;
   text-align: center;
 }
 
 .menu ul li:not(:first-child) {
   background-color: #fff;
 }
+
 
 .menu .user {
   padding: 0;
@@ -175,6 +184,13 @@ export default {
 
 .menu ul li:hover {
   background-color: #cccccc;
+}
+
+.menu ul li a {
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+  color: #343434;
 }
 
 /* 发布博客 */
