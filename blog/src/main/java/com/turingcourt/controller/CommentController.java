@@ -36,11 +36,12 @@ public class CommentController {
      * 评论完要重新把该博客的所有评论查一遍
      *
      * @param commentVO 评论内容
+     * @param blogId 回复的博客id
      * @return 评论是否发布成功
      */
     @PostMapping("/insert")
     @ApiOperation("发布评论")
-    public JsonResult insertComment(CommentVO commentVO) {
+    public JsonResult insertComment(CommentVO commentVO, Long blogId) {
         return null;
     }
 

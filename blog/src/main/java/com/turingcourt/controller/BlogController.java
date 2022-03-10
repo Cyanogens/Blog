@@ -21,7 +21,7 @@ public class BlogController {
      * 博客浏览量增加
      *
      * @param blogId 博客id
-     * @return 是否成功
+     * @return 浏览量
      */
     @PostMapping("/changeView")
     @ApiOperation("浏览量增加")

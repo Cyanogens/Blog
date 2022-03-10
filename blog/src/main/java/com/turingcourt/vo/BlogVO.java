@@ -16,6 +16,11 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class BlogVO {
+
+    /**
+     * 博客id
+     */
+    private Long id;
     /**
      * 标题
      */
@@ -48,5 +53,10 @@ public class BlogVO {
      * 点赞数
      */
     private Long likeCount;
+
+    /**
+     * 浏览量
+     */
+    private Long pageView;
 
 }

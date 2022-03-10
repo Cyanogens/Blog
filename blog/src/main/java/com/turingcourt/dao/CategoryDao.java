@@ -20,7 +20,7 @@ public interface CategoryDao {
      * @param id 标签id
      * @return 标签类
      */
-    Category queryById(Integer id);
+    Category queryCategoryById(Integer id);
 
     /**
      * 获得所有标签

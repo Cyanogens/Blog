@@ -2,6 +2,7 @@ package com.turingcourt.dao;
 
 import com.turingcourt.entity.User;
 import org.apache.ibatis.annotations.Mapper;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.List;
 
@@ -23,12 +24,21 @@ public interface UserDao {
     User getUser(Integer id);
 
     /**
-     * 通过实体作为筛选条件查询
+     * 查询用户信息
      *
-     * @param user 实例对象
-     * @return 对象列表
+     * @param username 用户名
+     * @return 用户信息
      */
-    List<User> queryAll(User user);
+    User getUserByName(String username);
+
+    /**
+     * 验证密保答案
+     *
+     * @param answer 密保答案
+     * @param username 用户名
+     * @return 符合条件的用户
+     */
+    User verifyAnswer(String username, String answer);
 
     /**
      * 用户注册
