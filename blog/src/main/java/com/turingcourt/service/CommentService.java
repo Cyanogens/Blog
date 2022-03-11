@@ -1,7 +1,6 @@
 package com.turingcourt.service;
 
 import com.github.pagehelper.PageInfo;
-import com.turingcourt.entity.Comment;
 import com.turingcourt.vo.CommentVO;
 
 /**

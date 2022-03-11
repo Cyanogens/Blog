@@ -2,9 +2,6 @@ package com.turingcourt.dao;
 
 import com.turingcourt.entity.User;
 import org.apache.ibatis.annotations.Mapper;
-import org.springframework.security.core.userdetails.UserDetails;
-
-import java.util.List;
 
 /**
  * (User)表数据库访问层
@@ -34,7 +31,7 @@ public interface UserDao {
     /**
      * 验证密保答案
      *
-     * @param answer 密保答案
+     * @param answer   密保答案
      * @param username 用户名
      * @return 符合条件的用户
      */

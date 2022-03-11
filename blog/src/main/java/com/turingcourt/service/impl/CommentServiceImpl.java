@@ -2,7 +2,6 @@ package com.turingcourt.service.impl;
 
 import com.github.pagehelper.PageInfo;
 import com.turingcourt.dao.CommentDao;
-import com.turingcourt.entity.Comment;
 import com.turingcourt.service.CommentService;
 import com.turingcourt.vo.CommentVO;
 import org.springframework.stereotype.Service;

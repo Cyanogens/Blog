@@ -2,7 +2,6 @@ package com.turingcourt.service.impl;
 
 import com.github.pagehelper.PageInfo;
 import com.turingcourt.dao.UserDao;
-import com.turingcourt.entity.Blog;
 import com.turingcourt.entity.User;
 import com.turingcourt.service.UserService;
 import com.turingcourt.vo.BlogVO;
