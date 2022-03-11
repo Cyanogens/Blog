@@ -6,6 +6,7 @@
 #### 后端
 - Spring Boot
 - Spring Security
+- MySQL
 - Mybatis
 - PageHelper
 - Swagger
