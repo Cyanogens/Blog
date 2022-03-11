@@ -38,7 +38,7 @@ public interface UserService {
      * @param pageSize 一页显示多少条
      * @return 博客列表
      */
-    PageInfo<Blog> userBlogs(Integer userId, int pageNo, int pageSize);
+    PageInfo<BlogVO> userBlogs(Integer userId, int pageNo, int pageSize);
 
 
     /**

@@ -27,7 +27,7 @@ public interface BlogService {
      * @param pageSize 一页显示多少条
      * @return 随机博客列表
      */
-    PageInfo<Blog> blogRandomList(int pageNo, int pageSize);
+    PageInfo<BlogVO> blogRandomList(int pageNo, int pageSize);
 
     /**
      * 查看博客详情
@@ -53,6 +53,6 @@ public interface BlogService {
      * @param pageSize 一页显示多少条
      * @return 博客集合
      */
-    PageInfo<Blog> searchBlog(String key, int pageNo, int pageSize);
+    PageInfo<BlogVO> searchBlog(String key, int pageNo, int pageSize);
 
 }

@@ -32,7 +32,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public PageInfo<Blog> userBlogs(Integer userId, int pageNo, int pageSize) {
+    public PageInfo<BlogVO> userBlogs(Integer userId, int pageNo, int pageSize) {
         return null;
     }
 

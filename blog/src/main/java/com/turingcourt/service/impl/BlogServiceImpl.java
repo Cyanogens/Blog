@@ -27,7 +27,7 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
-    public PageInfo<Blog> blogRandomList(int pageNo, int pageSize) {
+    public PageInfo<BlogVO> blogRandomList(int pageNo, int pageSize) {
         return null;
     }
 
@@ -42,7 +42,7 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
-    public PageInfo<Blog> searchBlog(String key, int pageNo, int pageSize) {
+    public PageInfo<BlogVO> searchBlog(String key, int pageNo, int pageSize) {
         return null;
     }
 }

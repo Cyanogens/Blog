@@ -20,7 +20,7 @@ public interface CommentService {
      * @param pageSize 一页显示多少条
      * @return 所有评论
      */
-    PageInfo<Comment> getAllComment(Long blogId, int pageNo, int pageSize);
+    PageInfo<CommentVO> getAllComment(Long blogId, int pageNo, int pageSize);
 
     /**
      * 发布评论

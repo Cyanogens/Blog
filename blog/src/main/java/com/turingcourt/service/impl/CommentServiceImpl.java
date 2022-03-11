@@ -21,7 +21,7 @@ public class CommentServiceImpl implements CommentService {
     private CommentDao commentDao;
 
     @Override
-    public PageInfo<Comment> getAllComment(Long blogId, int pageNo, int pageSize) {
+    public PageInfo<CommentVO> getAllComment(Long blogId, int pageNo, int pageSize) {
         return null;
     }
 
