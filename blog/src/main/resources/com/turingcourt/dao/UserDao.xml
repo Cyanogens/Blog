@@ -5,10 +5,10 @@
     <resultMap id="BaseResultMap" type="com.turingcourt.entity.User">
         <!--@Table user-->
         <result property="id" column="id" jdbcType="INTEGER"/>
-        <result property="nickname" column="nickname" jdbcType="VARCHAR"/>
+        <result property="nickName" column="nickname" jdbcType="VARCHAR"/>
         <result property="username" column="username" jdbcType="VARCHAR"/>
         <result property="password" column="password" jdbcType="VARCHAR"/>
-        <result property="isenable" column="isenable" jdbcType="OTHER"/>
+        <result property="isEnable" column="isenable" jdbcType="OTHER"/>
         <result property="sex" column="sex" jdbcType="VARCHAR"/>
         <result property="problem" column="problem" jdbcType="VARCHAR"/>
         <result property="ans" column="ans" jdbcType="VARCHAR"/>
