@@ -44,5 +44,9 @@ public class Comment implements Serializable {
     * 点赞数
     */
     private Long likeCount;
+    /**
+     * 评论树型
+     */
+    private String treePath;
 
 }

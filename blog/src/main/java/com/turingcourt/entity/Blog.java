@@ -51,7 +51,7 @@ public class Blog implements Serializable {
     /**
     * 状态
     */
-    private Object state;
+    private Boolean state;
     /**
     * 浏览量
     */
