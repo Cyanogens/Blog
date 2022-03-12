@@ -33,11 +33,18 @@ public interface CommentDao {
 
     /**
      * 删除评论
-     * 也要删除该评论下的回复
      *
      * @param id 评论id
      * @return 影响行数
      */
     int deleteComment(Long id);
+
+    /**
+     * 删除评论的子评论
+     *
+     * @param tree 树型
+     * @return 影响行数
+     */
+    int deleteChlidComment(String tree);
 
 }
