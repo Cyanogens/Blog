@@ -45,6 +45,6 @@ public interface CommentDao {
      * @param tree 树型
      * @return 影响行数
      */
-    int deleteChlidComment(String tree);
+    int deleteChildComment(String tree);
 
 }
