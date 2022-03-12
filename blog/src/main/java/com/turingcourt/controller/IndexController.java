@@ -34,6 +34,7 @@ public class IndexController {
      * 用户注册
      *
      * @param user 用户信息
+     * @return 是否注册成功
      */
     @PostMapping("/register")
     @ApiOperation("用户注册")
@@ -107,11 +108,12 @@ public class IndexController {
      * 验证密保答案
      *
      * @param answer 密保答案
+     * @param username 用户名
      * @return 答案是否正确
      */
     @GetMapping("/verifyAnswer")
     @ApiOperation("验证密保答案")
-    public JsonResult verifyAnswer(String answer) {
+    public JsonResult verifyAnswer(String username, String answer) {
         return null;
     }
 
@@ -119,11 +121,12 @@ public class IndexController {
      * 更改密码
      *
      * @param password 新密码
+     * @param username 用户名
      * @return 是否更改成功
      */
     @PostMapping("/changePassword")
     @ApiOperation("更改密码")
-    public JsonResult changePassword(String password) {
+    public JsonResult changePassword(String username, String password) {
         return null;
     }
 

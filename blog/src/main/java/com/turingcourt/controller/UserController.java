@@ -1,5 +1,6 @@
 package com.turingcourt.controller;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.turingcourt.config.json.JsonResult;
 import com.turingcourt.entity.User;
 import com.turingcourt.vo.BlogVO;
@@ -46,6 +47,8 @@ public class UserController {
      * 通过用户id查找博客
      *
      * @param userId 用户id
+     * @param pageNo 要显示第几页内容
+     * @param pageSize 一页显示多少条
      * @return 博客列表
      */
     @GetMapping("/userBlogs/{userId}")
@@ -58,12 +61,25 @@ public class UserController {
     /**
      * 更改用户发布的博客
      *
-     * @param userId 用户id
+     * @param blogId 博客id
      * @param blogVO 更新后的博客
+     * @return 是否更新成功
      */
-    @PostMapping("/changeBlogs/{userId}")
+    @PostMapping("/changeBlog/{blogId}")
     @ApiOperation("更改用户发布的博客")
-    public JsonResult changeUserBlog(@RequestBody BlogVO blogVO, @PathVariable Integer userId) {
+    public JsonResult changeUserBlog(@RequestBody BlogVO blogVO, @PathVariable Long blogId) {
+        return null;
+    }
+
+    /**
+     * 删除用户发布的博客
+     *
+     * @param blogId 用户id
+     * @return 是否删除成功
+     */
+    @PostMapping("/deleteBlog/{blogId}")
+    @ApiOperation("删除用户发布的博客")
+    public JsonResult deleteUserBlog(Long blogId) {
         return null;
     }
 

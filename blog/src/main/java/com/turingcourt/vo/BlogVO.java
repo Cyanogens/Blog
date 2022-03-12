@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author Cyanogen
@@ -15,6 +16,11 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class BlogVO {
+
+    /**
+     * 博客id
+     */
+    private Long id;
     /**
      * 标题
      */
@@ -32,9 +38,9 @@ public class BlogVO {
      */
     private String summary;
     /**
-     * 标签名
+     * 标签名集合
      */
-    private String categoryName;
+    private List<String> categoryNames;
     /**
      * 用户名
      */
@@ -43,5 +49,14 @@ public class BlogVO {
      * 发布时间
      */
     private Date publishData;
+    /**
+     * 点赞数
+     */
+    private Long likeCount;
+
+    /**
+     * 浏览量
+     */
+    private Long pageView;
 
 }

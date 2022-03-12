@@ -1,5 +1,9 @@
 package com.turingcourt.vo;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.util.Date;
 
 /**
@@ -7,6 +11,9 @@ import java.util.Date;
  * @description Comment类视图层
  * @date 2022/3/8 20:41
  */
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class CommentVO {
     /**
      * 用户名

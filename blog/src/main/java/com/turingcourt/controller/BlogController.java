@@ -21,22 +21,24 @@ public class BlogController {
      * 博客浏览量增加
      *
      * @param blogId 博客id
-     * @return 是否成功
+     * @return 浏览量
      */
     @PostMapping("/changeView")
     @ApiOperation("浏览量增加")
-    public JsonResult viewBlog(Long blogId){
+    public JsonResult viewBlog(Long blogId) {
         return null;
     }
 
     /**
      * 获得随机博客列表
      *
+     * @param pageNo   要显示第几页内容
+     * @param pageSize 一页显示多少条
      * @return 随机博客列表
      */
     @GetMapping("/random")
     @ApiOperation("获得随机博客列表")
-    public JsonResult blogRandomList(@RequestParam(value="pageNo",defaultValue="1")int pageNo, @RequestParam(value="pageSize",defaultValue="10")int pageSize){
+    public JsonResult blogRandomList(@RequestParam(value = "pageNo", defaultValue = "1") int pageNo, @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
         return null;
     }
 
@@ -67,7 +69,9 @@ public class BlogController {
     /**
      * 搜索博客/标签
      *
-     * @param key 搜索关键字
+     * @param key      搜索关键字
+     * @param pageNo   要显示第几页内容
+     * @param pageSize 一页显示多少条
      * @return 博客集合
      */
     @GetMapping("/search")
