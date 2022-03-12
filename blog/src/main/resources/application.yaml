@@ -11,7 +11,7 @@ spring:
 
 #原来在MybatisConfig配置的设置在导入依赖后,可以直接在properties或yaml配置
 mybatis:
-  type-aliases-package: com.turingcoourt
+  type-aliases-package: com.turingcourt
   configuration.map-underscore-to-camel-case: true
   configuration:
     log-impl: org.apache.ibatis.logging.log4j2.Log4j2Impl
