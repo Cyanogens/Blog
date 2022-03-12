@@ -2,7 +2,9 @@
   <div class="head">
     <!-- logo -->
     <div class="logo">
-      <img src="@/assets/images/logo.png" alt="" />
+      <router-link to="/">
+        <img src="@/assets/images/logo.png" title="山本仙人酋" />
+      </router-link>
     </div>
     <!-- 搜索框 -->
     <div class="search">
