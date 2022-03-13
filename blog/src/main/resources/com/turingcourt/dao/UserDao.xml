@@ -4,108 +4,53 @@
 
     <resultMap id="BaseResultMap" type="com.turingcourt.entity.User">
         <!--@Table user-->
-        <result property="id" column="id" jdbcType="INTEGER"/>
-        <result property="nickName" column="nickname" jdbcType="VARCHAR"/>
-        <result property="username" column="username" jdbcType="VARCHAR"/>
-        <result property="password" column="password" jdbcType="VARCHAR"/>
-        <result property="isEnable" column="isenable" jdbcType="OTHER"/>
-        <result property="sex" column="sex" jdbcType="VARCHAR"/>
-        <result property="problem" column="problem" jdbcType="VARCHAR"/>
-        <result property="ans" column="ans" jdbcType="VARCHAR"/>
+        <result property="id" column="id"/>
+        <result property="nickName" column="nickname"/>
+        <result property="username" column="username" />
+        <result property="password" column="password"/>
+        <result property="isEnable" column="isenable"/>
+        <result property="sex" column="sex"/>
+        <result property="problem" column="problem"/>
+        <result property="ans" column="ans"/>
     </resultMap>
 
-    <!--账号检查-->
-    <select id="checkAccount" resultType="java.lang.Boolean">
-        select exists(select 1 from turingblog.user where username = #{username})
-    </select>
-
-    <!--查询单个-->
+    <!--通过id查询用户信息-->
     <select id="getUser" resultMap="BaseResultMap">
         select
-          id, nickname, username, password, isenable, sex, problem, ans
-        from turingblog.user
+            id ,nickname, username, password, isenable, sex, problem, ans
+        from user
         where id = #{id}
     </select>
-
-    <!--查询指定行数据-->
-    <select id="queryAllByLimit" resultMap="BaseResultMap">
+    <!--通过用户名查询用户信息-->
+    <select id="getUserByName" resultMap="BaseResultMap">
         select
-          id, nickname, username, password, isenable, sex, problem, ans
-        from turingblog.user
-        limit #{offset}, #{limit}
+            id, nickname, username, password, isenable, sex, problem, ans
+        from user
+        where username = #{username}
     </select>
-
-    <!--通过实体作为筛选条件查询-->
-    <select id="queryAll" resultMap="BaseResultMap">
+    <!--验证密保答案,查询出符合条件的用户-->
+    <select id="verifyAnswer" resultMap="BaseResultMap">
         select
-          id, nickname, username, password, isenable, sex, problem, ans
+            nickname, username, sex
         from turingblog.user
-        <where>
-            <if test="id != null">
-                and id = #{id}
-            </if>
-            <if test="nickname != null and nickname != ''">
-                and nickname = #{nickname}
-            </if>
-            <if test="username != null and username != ''">
-                and username = #{username}
-            </if>
-            <if test="password != null and password != ''">
-                and password = #{password}
-            </if>
-            <if test="isenable != null">
-                and isenable = #{isenable}
-            </if>
-            <if test="sex != null and sex != ''">
-                and sex = #{sex}
-            </if>
-            <if test="problem != null and problem != ''">
-                and problem = #{problem}
-            </if>
-            <if test="ans != null and ans != ''">
-                and ans = #{ans}
-            </if>
-        </where>
+        where username = #{username} and ans = #{ans}
     </select>
-
-    <!--新增所有列-->
-    <insert id="register" keyProperty="id" useGeneratedKeys="true">
-        insert into turingblog.user(nickname, username, password, isenable, sex, problem, ans)
-        values (#{nickname}, #{username}, #{password}, #{isenable}, #{sex}, #{problem}, #{ans})
+    <!-- 用户注册-->
+    <insert id="register" parameterType="User">
+        insert into turingblog.user (nickname, username, password, isenable,sex, problem, ans)
+        values (#{nickName},#{username},#{password},#{isEnable},#{sex},#{problem},#{ans})
     </insert>
-
-    <!--通过主键修改数据-->
-    <update id="update">
-        update turingblog.user
-        <set>
-            <if test="nickname != null and nickname != ''">
-                nickname = #{nickname},
-            </if>
-            <if test="username != null and username != ''">
-                username = #{username},
-            </if>
-            <if test="password != null and password != ''">
-                password = #{password},
-            </if>
-            <if test="isenable != null">
-                isenable = #{isenable},
-            </if>
-            <if test="sex != null and sex != ''">
-                sex = #{sex},
-            </if>
-            <if test="problem != null and problem != ''">
-                problem = #{problem},
-            </if>
-            <if test="ans != null and ans != ''">
-                ans = #{ans},
-            </if>
-        </set>
-        where id = #{id}
+    <!--更改用户信息-->
+    <update id="update" parameterType="User">
+        update turingblog.user set nickname = #{nickName} , username = #{username} , password = #{password} ,
+                                   sex = #{sex} , isenable = #{isEnable},problem = #{problem} , ans = #{ans} where id = #{id}
     </update>
 
-    <!--通过主键删除-->
-    <delete id="deleteById">
-        delete from turingblog.user where id = #{id}
-    </delete>
+
+    <!--通过用户名查询是否存在用户-->
+    <select id="checkAccount" resultType="java.lang.Boolean">
+        select exists(select 1 from user where username = #{username})
+    </select>
+
 
 </mapper>

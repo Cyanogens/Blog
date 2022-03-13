@@ -9,63 +9,20 @@
         <result property="uid" column="uid" jdbcType="INTEGER"/>
     </resultMap>
 
-    <!--查询单个-->
-    <select id="queryById" resultMap="BaseResultMap">
-        select
-          id, bid, uid
-        from turingblog.blog-likes
-        where id = #{id}
+    <!--查询博客是否点赞-->
+    <select id="queryLike" resultType="java.lang.Boolean">
+        select exists (select 1 from turingblog.bloglikes where bid = #{bid} and uid = #{uid})
     </select>
 
-    <!--查询指定行数据-->
-    <select id="queryAllByLimit" resultMap="BaseResultMap">
-        select
-          id, bid, uid
-        from turingblog.blog-likes
-        limit #{offset}, #{limit}
-    </select>
-
-    <!--通过实体作为筛选条件查询-->
-    <select id="queryAll" resultMap="BaseResultMap">
-        select
-          id, bid, uid
-        from turingblog.blog-likes
-        <where>
-            <if test="id != null">
-                and id = #{id}
-            </if>
-            <if test="bid != null">
-                and bid = #{bid}
-            </if>
-            <if test="uid != null">
-                and uid = #{uid}
-            </if>
-        </where>
-    </select>
-
-    <!--新增所有列-->
-    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
-        insert into turingblog.blog-likes(bid, uid)
-        values (#{bid}, #{uid})
+    <!--对博客点赞-->
+    <insert id="likeBlog" >
+        insert into turingblog.bloglikes (bid,uid) values (#{bid} , #{uid})
     </insert>
 
-    <!--通过主键修改数据-->
-    <update id="update">
-        update turingblog.blog-likes
-        <set>
-            <if test="bid != null">
-                bid = #{bid},
-            </if>
-            <if test="uid != null">
-                uid = #{uid},
-            </if>
-        </set>
-        where id = #{id}
-    </update>
-
-    <!--通过主键删除-->
-    <delete id="deleteById">
-        delete from turingblog.blog-likes where id = #{id}
+    <!--取消博客点赞-->
+    <delete id="unlikeBlog">
+        delete from turingblog.bloglikes where bid = (#{bid}) and uid = #{uid}
     </delete>
+
 
 </mapper>
