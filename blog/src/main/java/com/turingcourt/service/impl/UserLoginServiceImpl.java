@@ -24,11 +24,9 @@ public class UserLoginServiceImpl implements UserLoginService, UserDetailsServic
 
     @Override
     public Boolean register(User user) {
-        //密码加密
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         user.setIsEnable(true);
-        passwordEncoder.encode(user.getPassword());
-
+        //密码加密
+        user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
         int insert = userDao.register(user);
         return insert > 0;
     }
@@ -40,12 +38,16 @@ public class UserLoginServiceImpl implements UserLoginService, UserDetailsServic
 
     @Override
     public Boolean verifyAnswer(String username, String answer) {
-        return null;
+        User user = userDao.verifyAnswer(username, answer);
+        return user != null;
     }
 
     @Override
     public Boolean changePassword(String username, String password) {
-        return null;
+        User user = userDao.getUserByName(username);
+        user.setPassword(new BCryptPasswordEncoder().encode(password));
+        int update = userDao.update(user);
+        return update > 0;
     }
 
     @Override
