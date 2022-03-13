@@ -6,12 +6,10 @@
 
 <script>
 export default {
-  name: 'Forget'
+  name: 'Hot'
 }
 </script>
 
 <style>
-.el-empty {
-  margin-top: 175px;
-}
+
 </style>

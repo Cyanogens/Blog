@@ -4,7 +4,7 @@
 			<div class="register-logo">
 				<router-link to="/login">
 					<svg class="icon icon-guanbi" aria-hidden="true">
-						<use xlink:href="#icon-guanbi"></use>
+						<use xlink:href="#icon-fanhui"></use>
 					</svg>
 				</router-link>
 				<div class="logo">
@@ -142,7 +142,7 @@
 		top: 0;
 		height: 100%;
 		width: 100%;
-		background: url(@/assets/images/background-2.png) no-repeat;
+		background: url(@/assets/images/bg1.jpg) no-repeat;
 		background-size: 100% 100%;
 		background-attachment: fixed;
 		background-position: center top;
@@ -152,7 +152,7 @@
 		margin: 135px auto;
 		width: 423px;
 		height: 380px;
-		background-color: rgba(29, 30, 30);
+		background-color: rgba(29, 30, 30, 0.5);
 		// background-color: pink;
 		.register-logo {
 			position: relative;
@@ -166,9 +166,10 @@
 			}
 			.icon-guanbi {
 				position: absolute;
-				width: 18px;
-				height: 18px;
-				color: #515151;
+				width: 20px;
+				height: 20px;
+				// color: #515151;
+				color: #fff;
 				top: 10px;
 				right: 10px;
 			}

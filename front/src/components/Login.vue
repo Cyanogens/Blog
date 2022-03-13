@@ -1,46 +1,57 @@
 <template>
-	<div class="body">
-		<div class="login">
-			<div class="login-logo">
-				<router-link to="/">
-					<svg class="icon icon-guanbi" aria-hidden="true">
-						<use xlink:href="#icon-guanbi"></use>
-					</svg>
-				</router-link>
-				<span class="login-logo-txt">LOGIN IN</span>
+	<div class="login-body">
+		<div class="login-main">
+			<div class="bg">
+				<img src="@/assets/images/loginBg.png">
 			</div>
-			<el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
-				<el-form-item label="用户名" prop="name">
-					<svg class="icon icon-name" aria-hidden="true">
-						<use xlink:href="#icon-kuaidiyuan_o"></use>
-					</svg>
-					<el-input type="txt" v-model="ruleForm.name" autocomplete="off"></el-input>
-				</el-form-item>
-				<el-form-item label="密码" prop="pass">
-					<svg class="icon icon-mima" aria-hidden="true">
-						<use xlink:href="#icon-mima"></use>
-					</svg>
-					<el-input type="password" v-model="ruleForm.pass" autocomplete="off"></el-input>
-				</el-form-item>
-				<el-form-item>
-					<el-button type="primary" @click="submitForm('ruleForm')">登录</el-button>
-				</el-form-item>
-			</el-form>
-			<div class="other-enter">
-				<span class="forget-pass">
-					<router-link to="/forget">忘记密码</router-link>
-				</span>
-				<span class="to-register">
-					<router-link to="/register">注册</router-link>
-				</span>
+			<div class="login">
+				<div class="login-logo">
+					<router-link to="/">
+						<svg class="icon icon-guanbi" aria-hidden="true">
+							<use xlink:href="#icon-fanhui"></use>
+						</svg>
+					</router-link>
+					<span class="login-logo-txt">LOGIN IN</span>
+				</div>
+				<el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+					<el-form-item label="用户名" prop="name">
+						<svg class="icon icon-name" aria-hidden="true">
+							<use xlink:href="#icon-kuaidiyuan_o"></use>
+						</svg>
+						<el-input type="txt" v-model="ruleForm.name" autocomplete="off"></el-input>
+					</el-form-item>
+					<el-form-item label="密码" prop="pass">
+						<svg class="icon icon-mima" aria-hidden="true">
+							<use xlink:href="#icon-mima"></use>
+						</svg>
+						<el-input type="password" v-model="ruleForm.pass" autocomplete="off"></el-input>
+					</el-form-item>
+					<el-form-item>
+						<el-button type="primary" @click="submitForm('ruleForm')">登录</el-button>
+					</el-form-item>
+				</el-form>
+				<div class="other-enter">
+					<span class="forget-pass">
+						<router-link to="/forget">忘记密码</router-link>
+					</span>
+					<span class="to-register">
+						<router-link to="/register">注册</router-link>
+					</span>
+				</div>
 			</div>
 		</div>
+		<footer class="footer">
+			Copyright © 2022
+		</footer>
 	</div>
 </template>
 
 <script>
 	export default {
 		name: 'Login',
+		components: {
+
+		},
 		data () {
 			var validatePass = (rule, value, callback) => {
 				if (value === '') {
@@ -91,25 +102,40 @@
 </script>
 
 <style scoped lang="less">
-	.body {
+	.login-body {
 		position: absolute;
 		top: 0;
 		height: 100%;
 		width: 100%;
-		background: url(@/assets/images/background-login-register.png) no-repeat;
+		background: url(@/assets/images/login-bg2.png) center top no-repeat;
 		background-size: 100% 100%;
 		background-attachment: fixed;
 		background-position: center top;
 		overflow: auto;
 	}
 
+	.login-main {
+		margin: 0 auto;
+		width: 1000px;
+		height: 93%;
+		.bg {
+			top: 120px;
+		}
+		.bg img {
+			width: 560px;
+		}
+	}
+
 	.login {
 		position: absolute;
-		left: 500px;
-		top: 163px;
+		right: 220px;
+		top: 130px;
 		width: 370px;
-		height: 310px;
-		box-shadow: 0 0 10px #ccc;
+		height: 360px;
+		background-color: #fff;
+		// box-shadow: 0 0 10px #ccc;
+		border: 1px solid #e8e8e8 !important;
+		border-radius: 6px;
 		.login-logo {
 			text-align: center;
 			padding: 20px 0;
@@ -120,8 +146,8 @@
 			}
 			.icon-guanbi {
 				position: absolute;
-				width: 18px;
-				height: 18px;
+				width: 20px;
+				height: 20px;
 				color: #515151;
 				top: 10px;
 				right: 10px;
@@ -155,7 +181,7 @@
 		.el-form-item {
 			width: 63%;
 			margin-left: 30px;
-			margin-bottom: 10px;
+			margin-bottom: 20px;
 		}
 		.el-input {
 			width: 100%;
@@ -168,7 +194,7 @@
 		}
 		.other-enter {
 			height: 40px;
-			margin-top: 85px;
+			margin-top: 90px;
 			margin-left: 62px;
 			width: 237px;
 			span {
@@ -195,6 +221,15 @@
 				float: right;
 			}
 		}
+	}
+
+	// 底部
+	.footer {
+		margin: 0 auto;
+		text-align: center;
+		height: 20px;
+		line-height: 20px;
+		color: rgba(255, 255, 255, 0.6);
 	}
 </style>
 
