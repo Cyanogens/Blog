@@ -45,14 +45,14 @@
         values (#{categoryname})
     </insert>
 
-    <insert id="insertCategory">
-        insert into turingbolg.category(id, categoryname)
+    <insert id="insertCategory" keyProperty="id" useGeneratedKeys="true">
+        insert into turingblog.category(id, categoryname)
         select #{id}, #{categoryName}
-        from turingbolg.category
+        from turingblog.category
         where not exists(
             select id
-            from turingbolg.category
-            where id = #{id}
+            from turingblog.category
+            where categoryname = #{categoryName}
         )
     </insert>
 
