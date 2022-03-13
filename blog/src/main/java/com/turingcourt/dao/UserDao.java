@@ -31,11 +31,11 @@ public interface UserDao {
     /**
      * 验证密保答案
      *
-     * @param answer   密保答案
+     * @param ans   密保答案
      * @param username 用户名
      * @return 符合条件的用户
      */
-    User verifyAnswer(String username, String answer);
+    User verifyAnswer(String username, String ans);
 
     /**
      * 用户注册
