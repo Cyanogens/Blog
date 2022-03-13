@@ -85,6 +85,20 @@
         FROM turingblog.blog
         limit 10;
     </select>
+    <select id="queryByTitle" resultType="com.turingcourt.entity.Blog">
+        SELECT *
+        FROM truringblog.blog
+        WHERE title LIKE #{key};
+    </select>
+
+    <select id="queryByCategory" resultType="com.turingcourt.entity.Blog">
+        SELECT a.id, a.title, a.mdcontent, a.htmlcontent, a.summary, a.cid, a.uid,
+               a.publishdata, a.state,a.pageview, a.likecount
+        FROM turingblog.blog a
+        INNER JOIN turingblog.category b
+        ON a.cid = b.id
+        WHERE b.categoryname LIKE #{key}
+    </select>
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
@@ -168,6 +182,10 @@
             </if>
         </set>
         where id = #{id}
+    </update>
+    <update id="changeView">
+        UPDATE turingblog
+        SET pageview = pageview + 1;
     </update>
 
     <!--通过主键删除-->
