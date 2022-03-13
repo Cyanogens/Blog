@@ -5,7 +5,7 @@
     <resultMap id="BaseResultMap" type="com.turingcourt.entity.Category">
         <!--@Table category-->
         <result property="id" column="id" jdbcType="INTEGER"/>
-        <result property="categoryname" column="categoryname" jdbcType="VARCHAR"/>
+        <result property="categoryName" column="categoryname" jdbcType="VARCHAR"/>
     </resultMap>
 
     <!--查询单个-->
@@ -45,6 +45,17 @@
         values (#{categoryname})
     </insert>
 
+    <insert id="insertCategory" keyProperty="id" useGeneratedKeys="true">
+        insert into turingblog.category(id, categoryname)
+        select #{id}, #{categoryName}
+        from turingblog.category
+        where not exists(
+            select id
+            from turingblog.category
+            where categoryname = #{categoryName}
+        )
+    </insert>
+
     <!--通过主键修改数据-->
     <update id="update">
         update turingblog.category
@@ -56,8 +67,21 @@
         where id = #{id}
     </update>
 
+    <update id="updateCategory">
+        update turingblog.category
+        <set>
+            <if test="categoryname != null and categoryname != ''">
+                categoryname = #{categoryname},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
     <!--通过主键删除-->
     <delete id="deleteById">
+        delete from turingblog.category where id = #{id}
+    </delete>
+    <delete id="deleteCategory">
         delete from turingblog.category where id = #{id}
     </delete>
 

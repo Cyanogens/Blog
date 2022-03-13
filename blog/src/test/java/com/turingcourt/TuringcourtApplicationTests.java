@@ -6,12 +6,14 @@ import com.turingcourt.dao.UserDao;
 import com.turingcourt.entity.BlogLikes;
 import com.turingcourt.entity.CommentLikes;
 import com.turingcourt.entity.User;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
 class TuringcourtApplicationTests {
+
     @Autowired
     UserDao userDao;
     @Autowired
@@ -40,7 +42,10 @@ class TuringcourtApplicationTests {
         System.out.println(blogLikesDao.queryLike(new BlogLikes(null,22L,33)));
         System.out.println(blogLikesDao.likeBlog(new BlogLikes(null,22L,33)));
         System.out.println(blogLikesDao.unlikeBlog(new BlogLikes(null,22L,33)));*/
-
     }
 
 }
+
+
+
+

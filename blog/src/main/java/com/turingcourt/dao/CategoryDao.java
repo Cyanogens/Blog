@@ -1,7 +1,9 @@
 package com.turingcourt.dao;
 
 import com.turingcourt.entity.Category;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
@@ -20,6 +22,7 @@ public interface CategoryDao {
      * @param id 标签id
      * @return 标签类
      */
+    @Select("SELECT * FROM turingblog.category WHERE id = #{id}")
     Category queryCategoryById(Integer id);
 
     /**

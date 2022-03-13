@@ -9,8 +9,8 @@
         <result property="bid" column="bid" jdbcType="INTEGER"/>
         <result property="uid" column="uid" jdbcType="INTEGER"/>
         <result property="content" column="content" jdbcType="VARCHAR"/>
-        <result property="createdate" column="createdate" jdbcType="TIMESTAMP"/>
-        <result property="likecount" column="likecount" jdbcType="INTEGER"/>
+        <result property="createDate" column="createdate" jdbcType="TIMESTAMP"/>
+        <result property="likeCount" column="likecount" jdbcType="INTEGER"/>
     </resultMap>
 
     <!--查询单个-->
@@ -94,6 +94,16 @@
     <!--通过主键删除-->
     <delete id="deleteById">
         delete from turingblog.comment where id = #{id}
+    </delete>
+
+    <delete id="deleteComment">
+        delete from turingblog.comment where id = #{id}
+    </delete>
+
+    <delete id="deleteChildComment">
+        DELETE
+        FROM turingblog.comment
+        WHERE treePath LIKE #{tree};
     </delete>
 
 </mapper>
