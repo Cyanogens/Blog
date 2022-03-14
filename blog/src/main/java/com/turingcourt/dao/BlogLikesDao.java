@@ -36,4 +36,11 @@ public interface BlogLikesDao {
      */
     int unlikeBlog(BlogLikes blogLikes);
 
+    /**
+     * 通过博客id删除博客点赞
+     * @param bid
+     * @return
+     */
+    int deleteByBid( Long bid);
+
 }

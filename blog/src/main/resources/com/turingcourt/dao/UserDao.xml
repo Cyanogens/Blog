@@ -51,22 +51,22 @@
             <if test="nickName != null and nickName != ''">
                 nickname = #{nickName},
             </if>
-            <if test="nickName != null and nickName != ''">
+            <if test="username != null and username != ''">
                 username = #{username},
             </if>
-            <if test="nickName != null and nickName != ''">
+            <if test="password != null and password != ''">
                 password = #{password},
             </if>
-            <if test="nickName != null and nickName != ''">
+            <if test="sex != null and sex != ''">
                 sex = #{sex},
             </if>
-            <if test="nickName != null and nickName != ''">
+            <if test="isenable != null and isenable != ''">
                 isenable = #{isEnable},
             </if>
-            <if test="nickName != null and nickName != ''">
+            <if test="problem != null and problem != ''">
                 problem = #{problem},
             </if>
-            <if test="nickName != null and nickName != ''">
+            <if test="ans != null and ans != ''">
                 ans = #{ans},
             </if>
         </set>

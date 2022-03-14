@@ -47,7 +47,7 @@ public interface UserService {
      * @param blogVO 更新后的博客
      * @return 是否更新成功
      */
-    Boolean changeUserBlog(BlogVO blogVO, Long blogId);
+    Boolean changeUserBlog(BlogVO blogVO, Long blogId,Integer uid);
 
     /**
      * 删除用户发布的博客
@@ -55,7 +55,7 @@ public interface UserService {
      * 博客下所有标签关系也要删除
      * 博客下所有点赞关系也要删除
      *
-     * @param blogId 用户id
+     * @param blogId 博客id
      * @return 是否删除成功
      */
     Boolean deleteUserBlog(Long blogId);
