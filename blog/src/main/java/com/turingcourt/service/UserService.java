@@ -51,6 +51,9 @@ public interface UserService {
 
     /**
      * 删除用户发布的博客
+     * 博客下所有评论也要删除
+     * 博客下所有标签关系也要删除
+     * 博客下所有点赞关系也要删除
      *
      * @param blogId 用户id
      * @return 是否删除成功

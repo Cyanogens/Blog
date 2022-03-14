@@ -42,6 +42,8 @@ public interface CommentService {
 
     /**
      * 删除评论
+     * 也要删除其子评论
+     * 评论下所有点赞关系也要删除
      *
      * @param id 评论的id
      * @return 是否删除成功

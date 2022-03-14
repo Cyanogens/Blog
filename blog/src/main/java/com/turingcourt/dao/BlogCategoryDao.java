@@ -24,6 +24,14 @@ public interface BlogCategoryDao {
      * @param blogId 主键
      * @return 影响行数
      */
-    int deleteById(Long blogId);
+    int deleteByBlogId(Long blogId);
+
+    /**
+     * 通过标签id删除关系
+     *
+     * @param categoryId 主键
+     * @return 影响行数
+     */
+    int deleteByCategoryId(Long categoryId);
 
 }

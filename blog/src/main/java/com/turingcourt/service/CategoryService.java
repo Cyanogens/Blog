@@ -47,6 +47,7 @@ public interface CategoryService {
 
     /**
      * 删除标签内容
+     * 博客-标签表也要对应的删除
      *
      * @param id 主键
      * @return 是否删除成功

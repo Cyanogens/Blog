@@ -16,8 +16,13 @@
     </insert>
 
     <!--通过博客id删除关系-->
-    <delete id="deleteById">
-        delete from turingblog.blog-category where id = #{id}
+    <delete id="deleteByBlogId">
+        delete from turingblog.blog-category where bid = #{blogId}
+    </delete>
+
+    <!--通过标签id删除关系-->
+    <delete id="deleteByBlogId">
+        delete from turingblog.blog-category where cid = #{categoryId}
     </delete>
 
 </mapper>
