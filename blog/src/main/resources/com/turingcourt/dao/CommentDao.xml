@@ -32,7 +32,7 @@
     <!--发布评论/回复-->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
         insert into turingblog.comment(pid, bid, uid, content, createdate, likecount, treepath)
-        values (#{pid}, #{bid}, #{uid}, #{content}, #{createdate}, #{likecount}, #{treepath})
+        values (#{pid}, #{bid}, #{uid}, #{content}, #{createDate}, #{likeCount}, #{treePath})
     </insert>
 
     <!--删除评论-->

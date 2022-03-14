@@ -67,4 +67,12 @@ public interface CategoryDao {
     @Delete("delete from turingblog.category where id = #{id}")
     int deleteCategory(Integer id);
 
+    /**
+     * 通过博客id查找标签集合
+     *
+     * @param blogId 博客
+     * @return 标签集合
+     */
+    List<Category> queryByBlogId(Long blogId);
+
 }

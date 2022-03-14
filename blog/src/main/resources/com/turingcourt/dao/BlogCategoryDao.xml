@@ -21,7 +21,7 @@
     </delete>
 
     <!--通过标签id删除关系-->
-    <delete id="deleteByBlogId">
+    <delete id="deleteByCategoryId">
         delete from turingblog.blog-category where cid = #{categoryId}
     </delete>
 

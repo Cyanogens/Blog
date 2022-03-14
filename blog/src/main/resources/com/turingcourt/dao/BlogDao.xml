@@ -55,14 +55,14 @@
         from turingblog.blog a
         inner join turingblog.category cate
         inner join turingblog.blog-category bc
-        on a.id = ca.bid and bc.cid = cate.id
-        WHERE b.categoryname LIKE #{key}
+        on a.id = bc.bid and bc.cid = cate.id
+        where cate.categoryname like #{key}
     </select>
 
     <!--发布博客-->
-    <insert id="insertBlog">
+    <insert id="insertBlog" useGeneratedKeys="true" keyProperty="id"  keyColumn="id" >
         insert into turingblog.blog(title, mdcontent, htmlcontent, summary, uid, publishdata, state, pageview, likecount)
-        values (#{title}, #{mdcontent}, #{htmlcontent}, #{summary}, #{uid}, #{publishdata}, #{state}, #{pageview}, #{likecount})
+        values (#{title}, #{mdContent}, #{htmlContent}, #{summary}, #{uid}, #{publishData}, #{state}, #{pageView}, #{likeCount})
     </insert>
 
     <!--更改用户发布的博客-->
@@ -73,10 +73,10 @@
                 title = #{title},
             </if>
             <if test="mdcontent != null and mdcontent != ''">
-                mdcontent = #{mdcontent},
+                mdcontent = #{mdContent},
             </if>
             <if test="htmlcontent != null and htmlcontent != ''">
-                htmlcontent = #{htmlcontent},
+                htmlcontent = #{htmlContent},
             </if>
             <if test="summary != null and summary != ''">
                 summary = #{summary},
@@ -85,16 +85,16 @@
                 uid = #{uid},
             </if>
             <if test="publishdata != null">
-                publishdata = #{publishdata},
+                publishdata = #{publishData},
             </if>
             <if test="state != null">
                 state = #{state},
             </if>
             <if test="pageview != null">
-                pageview = #{pageview},
+                pageview = #{pageView},
             </if>
             <if test="likecount != null">
-                likecount = #{likecount},
+                likecount = #{likeCount},
             </if>
         </set>
         where id = #{userId}
