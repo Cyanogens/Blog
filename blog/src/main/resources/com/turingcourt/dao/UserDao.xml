@@ -21,6 +21,7 @@
         from user
         where id = #{id}
     </select>
+
     <!--通过用户名查询用户信息-->
     <select id="getUserByName" resultMap="BaseResultMap">
         select
@@ -28,6 +29,7 @@
         from user
         where username = #{username}
     </select>
+
     <!--验证密保答案,查询出符合条件的用户-->
     <select id="verifyAnswer" resultMap="BaseResultMap">
         select
@@ -35,17 +37,41 @@
         from turingblog.user
         where username = #{username} and ans = #{ans}
     </select>
+
     <!-- 用户注册-->
     <insert id="register" parameterType="User">
         insert into turingblog.user (nickname, username, password, isenable,sex, problem, ans)
         values (#{nickName},#{username},#{password},#{isEnable},#{sex},#{problem},#{ans})
     </insert>
+
     <!--更改用户信息-->
     <update id="update" parameterType="User">
-        update turingblog.user set nickname = #{nickName} , username = #{username} , password = #{password} ,
-                                   sex = #{sex} , isenable = #{isEnable},problem = #{problem} , ans = #{ans} where id = #{id}
+        update turingblog.user
+        <set>
+            <if test="nickName != null and nickName != ''">
+                nickname = #{nickName},
+            </if>
+            <if test="nickName != null and nickName != ''">
+                username = #{username},
+            </if>
+            <if test="nickName != null and nickName != ''">
+                password = #{password},
+            </if>
+            <if test="nickName != null and nickName != ''">
+                sex = #{sex},
+            </if>
+            <if test="nickName != null and nickName != ''">
+                isenable = #{isEnable},
+            </if>
+            <if test="nickName != null and nickName != ''">
+                problem = #{problem},
+            </if>
+            <if test="nickName != null and nickName != ''">
+                ans = #{ans},
+            </if>
+        </set>
+        where id = #{id}
     </update>
-
 
     <!--通过用户名查询是否存在用户-->
     <select id="checkAccount" resultType="java.lang.Boolean">

@@ -9,7 +9,6 @@
         <result property="mdContent" column="mdcontent" jdbcType="VARCHAR"/>
         <result property="htmlContent" column="htmlcontent" jdbcType="VARCHAR"/>
         <result property="summary" column="summary" jdbcType="VARCHAR"/>
-        <result property="cid" column="cid" jdbcType="INTEGER"/>
         <result property="uid" column="uid" jdbcType="INTEGER"/>
         <result property="publishData" column="publishdata" jdbcType="TIMESTAMP"/>
         <result property="state" column="state" jdbcType="OTHER"/>
@@ -17,136 +16,56 @@
         <result property="likeCount" column="likecount" jdbcType="INTEGER"/>
     </resultMap>
 
-    <!--查询单个-->
-    <select id="queryById" resultMap="BaseResultMap">
+    <!--查询博客详情-->
+    <select id="getBlog" resultType="blog">
         select
-          id, title, mdcontent, htmlcontent, summary, cid, uid, publishdata, state, pageview, likecount
+            id, title, mdcontent, htmlcontent, summary, uid, publishdata, state, pageview, likecount
         from turingblog.blog
         where id = #{id}
     </select>
 
-    <!--查询指定行数据-->
-    <select id="queryAllByLimit" resultMap="BaseResultMap">
+    <!--查询用户发布的博客列表-->
+    <select id="queryByUserId" resultType="blog">
         select
-          id, title, mdcontent, htmlcontent, summary, cid, uid, publishdata, state, pageview, likecount
+            id, title, mdcontent, htmlcontent, summary, publishdata, state, pageview, likecount
         from turingblog.blog
-        limit #{offset}, #{limit}
+        where uid = #{userId}
     </select>
 
-    <!--通过实体作为筛选条件查询-->
-    <select id="queryAll" resultMap="BaseResultMap">
+    <!--获取随机博客列表-->
+    <select id="queryRandomBlog" resultType="blog">
         select
-          id, title, mdcontent, htmlcontent, summary, cid, uid, publishdata, state, pageview, likecount
+            id, title, mdcontent, htmlcontent, summary, uid, publishdata, state, pageview, likecount
         from turingblog.blog
-        <where>
-            <if test="id != null">
-                and id = #{id}
-            </if>
-            <if test="title != null and title != ''">
-                and title = #{title}
-            </if>
-            <if test="mdcontent != null and mdcontent != ''">
-                and mdcontent = #{mdcontent}
-            </if>
-            <if test="htmlcontent != null and htmlcontent != ''">
-                and htmlcontent = #{htmlcontent}
-            </if>
-            <if test="summary != null and summary != ''">
-                and summary = #{summary}
-            </if>
-            <if test="cid != null">
-                and cid = #{cid}
-            </if>
-            <if test="uid != null">
-                and uid = #{uid}
-            </if>
-            <if test="publishdata != null">
-                and publishdata = #{publishdata}
-            </if>
-            <if test="state != null">
-                and state = #{state}
-            </if>
-            <if test="pageview != null">
-                and pageview = #{pageview}
-            </if>
-            <if test="likecount != null">
-                and likecount = #{likecount}
-            </if>
-        </where>
-    </select>
-    <select id="getBlog" resultType="com.turingcourt.entity.Blog">
-        select
-            id, title, mdcontent, htmlcontent, summary, cid, uid, publishdata, state, pageview, likecount
-        from turingblog.blog
-        where id = #{id}
-    </select>
-    <select id="queryRandomBlog" resultType="com.turingcourt.entity.Blog">
-        SELECT *
-        FROM turingblog.blog
-        limit 10;
-    </select>
-    <select id="queryByTitle" resultType="com.turingcourt.entity.Blog">
-        SELECT *
-        FROM truringblog.blog
-        WHERE title LIKE #{key};
+        by rand()
     </select>
 
-    <select id="queryByCategory" resultType="com.turingcourt.entity.Blog">
-        SELECT a.id, a.title, a.mdcontent, a.htmlcontent, a.summary, a.cid, a.uid,
-               a.publishdata, a.state,a.pageview, a.likecount
-        FROM turingblog.blog a
-        INNER JOIN turingblog.category b
-        ON a.cid = b.id
+    <!--根据标题搜索博客-->
+    <select id="queryByTitle" resultType="blog">
+        select
+            id, title, mdcontent, htmlcontent, summary, uid, publishdata, state, pageview, likecount
+        from truringblog.blog
+        where title like #{key};
+    </select>
+
+    <!--根据标签搜索博客-->
+    <select id="queryByCategory" resultType="blog">
+        select
+            a.id, a.title, a.mdcontent, a.htmlcontent, a.summary, a.uid, a.publishdata, a.state,a.pageview, a.likecount
+        from turingblog.blog a
+        inner join turingblog.category cate
+        inner join turingblog.blog-category bc
+        on a.id = ca.bid and bc.cid = cate.id
         WHERE b.categoryname LIKE #{key}
     </select>
 
-    <!--新增所有列-->
-    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
-        insert into turingblog.blog(title, mdcontent, htmlcontent, summary, cid, uid, publishdata, state, pageview, likecount)
-        values (#{title}, #{mdcontent}, #{htmlcontent}, #{summary}, #{cid}, #{uid}, #{publishdata}, #{state}, #{pageview}, #{likecount})
-    </insert>
+    <!--发布博客-->
     <insert id="insertBlog">
-        insert into turingblog.blog(title, mdcontent, htmlcontent, summary, cid, uid, publishdata, state, pageview, likecount)
-        values (#{title}, #{mdcontent}, #{htmlcontent}, #{summary}, #{cid}, #{uid}, #{publishdata}, #{state}, #{pageview}, #{likecount})
+        insert into turingblog.blog(title, mdcontent, htmlcontent, summary, uid, publishdata, state, pageview, likecount)
+        values (#{title}, #{mdcontent}, #{htmlcontent}, #{summary}, #{uid}, #{publishdata}, #{state}, #{pageview}, #{likecount})
     </insert>
 
-    <!--通过主键修改数据-->
-    <update id="update">
-        update turingblog.blog
-        <set>
-            <if test="title != null and title != ''">
-                title = #{title},
-            </if>
-            <if test="mdcontent != null and mdcontent != ''">
-                mdcontent = #{mdcontent},
-            </if>
-            <if test="htmlcontent != null and htmlcontent != ''">
-                htmlcontent = #{htmlcontent},
-            </if>
-            <if test="summary != null and summary != ''">
-                summary = #{summary},
-            </if>
-            <if test="cid != null">
-                cid = #{cid},
-            </if>
-            <if test="uid != null">
-                uid = #{uid},
-            </if>
-            <if test="publishdata != null">
-                publishdata = #{publishdata},
-            </if>
-            <if test="state != null">
-                state = #{state},
-            </if>
-            <if test="pageview != null">
-                pageview = #{pageview},
-            </if>
-            <if test="likecount != null">
-                likecount = #{likecount},
-            </if>
-        </set>
-        where id = #{id}
-    </update>
+    <!--更改用户发布的博客-->
     <update id="updateBlog">
         update turingblog.blog
         <set>
@@ -162,9 +81,6 @@
             <if test="summary != null and summary != ''">
                 summary = #{summary},
             </if>
-            <if test="cid != null">
-                cid = #{cid},
-            </if>
             <if test="uid != null">
                 uid = #{uid},
             </if>
@@ -181,19 +97,19 @@
                 likecount = #{likecount},
             </if>
         </set>
-        where id = #{id}
-    </update>
-    <update id="changeView">
-        UPDATE turingblog
-        SET pageview = pageview + 1;
+        where id = #{userId}
     </update>
 
-    <!--通过主键删除-->
-    <delete id="deleteById">
-        delete from turingblog.blog where id = #{id}
-    </delete>
+    <!--更改博客浏览量-->
+    <update id="changeView">
+        update turingblog
+        set pageview = pageview + 1
+        where id = #{blogId}
+    </update>
+
+    <!--删除博客-->
     <delete id="deleteBlog">
-        delete from turingblog.blog where id = #{id}
+        delete from turingblog.blog where id = #{blogId}
     </delete>
 
 </mapper>

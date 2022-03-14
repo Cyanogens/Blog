@@ -20,12 +20,12 @@ public class BlogLikes implements Serializable {
 
     private Long id;
     /**
-    * 博客id
-    */
+     * 博客id
+     */
     private Long bid;
     /**
-    * 用户id
-    */
+     * 用户id
+     */
     private Integer uid;
 
 }

@@ -15,7 +15,7 @@
     </select>
 
     <!--对博客点赞-->
-    <insert id="likeBlog" >
+    <insert id="likeBlog">
         insert into turingblog.bloglikes (bid,uid) values (#{bid} , #{uid})
     </insert>
 

@@ -20,9 +20,8 @@ public class Category implements Serializable {
 
     private Long id;
     /**
-    * 标签名
-    */
+     * 标签名
+     */
     private String categoryName;
-
 
 }

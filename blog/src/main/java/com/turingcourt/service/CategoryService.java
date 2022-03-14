@@ -1,7 +1,8 @@
 package com.turingcourt.service;
 
-import com.github.pagehelper.PageInfo;
 import com.turingcourt.entity.Category;
+
+import java.util.List;
 
 /**
  * (Category)表服务接口
@@ -20,14 +21,14 @@ public interface CategoryService {
     Category queryCategoryById(Integer id);
 
     /**
-     * 获得所有标签
+     * 获得所有标签内容
      *
      * @return 标签集合
      */
-    PageInfo<Category> queryAll();
+    List<Category> queryAll();
 
     /**
-     * 添加标签
+     * 添加标签内容
      * 要判断是否已经存在
      *
      * @param category 实例对象
@@ -36,7 +37,8 @@ public interface CategoryService {
     Boolean insertCategory(Category category);
 
     /**
-     * 修改标签
+     * 修改标签内容
+     * 要判断修改后的内容是否已经存在
      *
      * @param category 实例对象
      * @return 是否修改成功
@@ -44,7 +46,7 @@ public interface CategoryService {
     Boolean updateCategory(Category category);
 
     /**
-     * 删除标签
+     * 删除标签内容
      *
      * @param id 主键
      * @return 是否删除成功

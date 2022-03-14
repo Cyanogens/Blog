@@ -4,8 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * 博客内容表(Blog)实体类
@@ -21,44 +21,40 @@ public class Blog implements Serializable {
 
     private Long id;
     /**
-    * 标题
-    */
+     * 标题
+     */
     private String title;
     /**
-    * md格式的内容
-    */
+     * md格式的内容
+     */
     private String mdContent;
     /**
-    * html格式的内容
-    */
+     * html格式的内容
+     */
     private String htmlContent;
     /**
-    * 内容
-    */
+     * 内容
+     */
     private String summary;
     /**
-    * 标签id
-    */
-    private Long cid;
-    /**
-    * 用户id
-    */
+     * 用户id
+     */
     private Integer uid;
     /**
-    * 发布时间
-    */
+     * 发布时间
+     */
     private Date publishData;
     /**
-    * 状态
-    */
+     * 状态
+     */
     private Boolean state;
     /**
-    * 浏览量
-    */
+     * 浏览量
+     */
     private Long pageView;
     /**
-    * 点赞数
-    */
+     * 点赞数
+     */
     private Long likeCount;
 
 }

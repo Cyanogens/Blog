@@ -8,65 +8,12 @@
         <result property="categoryName" column="categoryname" jdbcType="VARCHAR"/>
     </resultMap>
 
-    <!--查询单个-->
-    <select id="queryById" resultMap="BaseResultMap">
-        select
-          id, categoryname
-        from turingblog.category
-        where id = #{id}
-    </select>
-
-    <!--查询指定行数据-->
-    <select id="queryAllByLimit" resultMap="BaseResultMap">
-        select
-          id, categoryname
-        from turingblog.category
-        limit #{offset}, #{limit}
-    </select>
-
-    <!--通过实体作为筛选条件查询-->
-    <select id="queryAll" resultMap="BaseResultMap">
-        select
-          id, categoryname
-        from turingblog.category
-        <where>
-            <if test="id != null">
-                and id = #{id}
-            </if>
-            <if test="categoryname != null and categoryname != ''">
-                and categoryname = #{categoryname}
-            </if>
-        </where>
-    </select>
-
-    <!--新增所有列-->
-    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
-        insert into turingblog.category(categoryname)
-        values (#{categoryname})
-    </insert>
-
+    <!--添加标签内容-->
     <insert id="insertCategory" keyProperty="id" useGeneratedKeys="true">
-        insert into turingblog.category(id, categoryname)
-        select #{id}, #{categoryName}
-        from turingblog.category
-        where not exists(
-            select id
-            from turingblog.category
-            where categoryname = #{categoryName}
-        )
+        insert into turingblog.category(categoryname) values (#{categoryName});
     </insert>
 
-    <!--通过主键修改数据-->
-    <update id="update">
-        update turingblog.category
-        <set>
-            <if test="categoryname != null and categoryname != ''">
-                categoryname = #{categoryname},
-            </if>
-        </set>
-        where id = #{id}
-    </update>
-
+    <!--修改标签内容-->
     <update id="updateCategory">
         update turingblog.category
         <set>
@@ -76,13 +23,5 @@
         </set>
         where id = #{id}
     </update>
-
-    <!--通过主键删除-->
-    <delete id="deleteById">
-        delete from turingblog.category where id = #{id}
-    </delete>
-    <delete id="deleteCategory">
-        delete from turingblog.category where id = #{id}
-    </delete>
 
 </mapper>

@@ -15,6 +15,11 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CommentVO {
+
+    /**
+     * 评论id
+     */
+    private Long id;
     /**
      * 用户名
      */

@@ -20,11 +20,11 @@ public class BlogCategory implements Serializable {
 
     private Long id;
     /**
-    * 博客id
-    */
+     * 博客id
+     */
     private Long bid;
     /**
-    * 标签id
-    */
+     * 标签id
+     */
     private Long cid;
 }

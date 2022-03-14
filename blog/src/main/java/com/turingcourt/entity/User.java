@@ -23,24 +23,24 @@ public class User implements Serializable, UserDetails {
 
     private Integer id;
     /**
-    * 昵称
-    */
+     * 昵称
+     */
     private String nickName;
     /**
-    * 用户名
-    */
+     * 用户名
+     */
     private String username;
     /**
-    * 密码
-    */
+     * 密码
+     */
     private String password;
     /**
-    * 用户是否可用
-    */
+     * 用户是否可用
+     */
     private Boolean isEnable = true;
     /**
-    * 性别
-    */
+     * 性别
+     */
     private String sex;
 
     /**

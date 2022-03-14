@@ -15,7 +15,7 @@
     </select>
 
     <!--对评论点赞-->
-    <insert id="likeComment" >
+    <insert id="likeComment">
         insert into turingblog.commentlikes (cid,uid) values (#{cid} , #{uid})
     </insert>
 

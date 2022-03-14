@@ -1,12 +1,12 @@
 package com.turingcourt.service.impl;
 
-import com.github.pagehelper.PageInfo;
 import com.turingcourt.dao.CategoryDao;
 import com.turingcourt.entity.Category;
 import com.turingcourt.service.CategoryService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * (Category)表服务实现类
@@ -25,7 +25,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public PageInfo<Category> queryAll() {
+    public List<Category> queryAll() {
         return null;
     }
 
