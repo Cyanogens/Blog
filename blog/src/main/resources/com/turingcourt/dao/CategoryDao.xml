@@ -24,7 +24,7 @@
         where id = #{id}
     </update>
 
-    <select id="queryByBlogId" resultType="com.turingcourt.entity.Category">
+    <select id="queryByBlogId" resultType="category">
         select
             cate.id, cate.categoryname
         from turingblog.blog a
