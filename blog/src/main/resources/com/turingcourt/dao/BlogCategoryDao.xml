@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.turingcourt.dao.BlogCategoryDao">
+
+    <resultMap id="BaseResultMap" type="com.turingcourt.entity.BlogCategory">
+        <!--@Table blog-category-->
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="bid" column="bid" jdbcType="INTEGER"/>
+        <result property="cid" column="cid" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--新增关系-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into turingblog.blog-category(bid, cid)
+        values (#{bid}, #{cid})
+    </insert>
+
+    <!--通过博客id删除关系-->
+    <delete id="deleteById">
+        delete from turingblog.blog-category where id = #{id}
+    </delete>
+
+</mapper>
