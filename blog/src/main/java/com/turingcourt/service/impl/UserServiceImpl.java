@@ -5,7 +5,6 @@ import com.turingcourt.dao.UserDao;
 import com.turingcourt.entity.User;
 import com.turingcourt.service.UserService;
 import com.turingcourt.vo.BlogVO;
-import io.swagger.models.auth.In;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -42,7 +41,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Boolean changeUserBlog(BlogVO blogVO, Integer userId) {
+    public Boolean changeUserBlog(BlogVO blogVO, Long blogId) {
         return null;
     }
 
