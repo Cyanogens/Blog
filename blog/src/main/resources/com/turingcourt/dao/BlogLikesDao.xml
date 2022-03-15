@@ -26,7 +26,7 @@
 
     <!--删除博客点赞-->
     <delete id="deleteByBid">
-        delete from turingblog.bloglikes where bid = (#{bid})
+        delete from turingblog.blog_likes where bid = (#{bid})
     </delete>
 
 

@@ -4,11 +4,12 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.turingcourt.dao.*;
 import com.turingcourt.entity.Blog;
+import com.turingcourt.entity.Category;
 import com.turingcourt.entity.User;
 import com.turingcourt.service.UserService;
 import com.turingcourt.vo.BlogVO;
 import org.springframework.stereotype.Service;
-
+import com.turingcourt.entity.Blog;
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.Date;
@@ -32,6 +33,8 @@ public class UserServiceImpl implements UserService {
     private BlogCategoryDao blogCategoryDao;
     @Resource
     private BlogLikesDao blogLikesDao;
+    @Resource
+    private CategoryDao categoryDao;
     @Override
     public User getUser(Integer userId) {
 
@@ -63,6 +66,7 @@ public class UserServiceImpl implements UserService {
         String username = user.getUsername();
         BlogVO blogVO = new BlogVO();
         List<BlogVO> blogVOS = new ArrayList<BlogVO>();
+
         for (Blog blog : blogs){
             Long id = blog.getId();
             blogVO.setId(id);
@@ -82,8 +86,9 @@ public class UserServiceImpl implements UserService {
             blogVO.setLikeCount(likeCount);
             Long pageView = blog.getPageView();
             blogVO.setPageView(pageView);
+            blogVOS.add(blogVO);
         }
-        blogVOS.add(blogVO);
+
         PageHelper.startPage(pageNo,pageSize);
         PageInfo pageInfo = new PageInfo<BlogVO>(blogVOS);
         return pageInfo;
@@ -96,10 +101,13 @@ public class UserServiceImpl implements UserService {
      * @return 是否更新成功
      */
     @Override
-    public Boolean changeUserBlog(BlogVO blogVO, Long blogId,Integer uid ) {
-        int i = blogDao.updateBlog(new Blog(blogId, blogVO.getTitle(), blogVO.getHtmlContent(),
+    public Boolean changeUserBlog(BlogVO blogVO, Long blogId ) {
+        Integer uid = blogDao.getBlog(blogId).getUid();
+        Blog blog = new Blog(blogId,blogVO.getTitle(),blogVO.getMdContent(),
                 blogVO.getHtmlContent(), blogVO.getSummary(), uid, blogVO.getPublishData(),
-                true, blogVO.getPageView(), blogVO.getLikeCount()));
+                true, blogVO.getPageView(), blogVO.getLikeCount());
+        int i = blogDao.updateBlog(blog);
+
         if (i>0){
             return true;
         }else {
@@ -126,7 +134,7 @@ public class UserServiceImpl implements UserService {
         int c = blogCategoryDao.deleteByBlogId(blogId);
         //根据博客id删除博客下的给博客的点赞
         int d = blogLikesDao.deleteByBid(blogId);
-        if (a>0 && b>0 && c>0 && d>0){
+        if (a>=0 && b>=0 && c>=0 && d>=0){
             return true;
         }else {
             return false;

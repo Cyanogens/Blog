@@ -57,12 +57,13 @@
             <if test="password != null and password != ''">
                 password = #{password},
             </if>
+            <if test="isEnable != null and isEnable != ''">
+                isEnable = #{isEnable},
+            </if>
             <if test="sex != null and sex != ''">
                 sex = #{sex},
             </if>
-            <if test="isenable != null and isenable != ''">
-                isenable = #{isEnable},
-            </if>
+
             <if test="problem != null and problem != ''">
                 problem = #{problem},
             </if>

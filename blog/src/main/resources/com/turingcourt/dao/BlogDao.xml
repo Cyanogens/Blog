@@ -25,7 +25,7 @@
     </select>
 
     <!--查询用户发布的博客列表-->
-    <select id="queryByUserId" resultType="BlogVO">
+    <select id="queryByUserId" resultType="Blog">
         select
             id, title, mdcontent, htmlcontent, summary, publishdata, state, pageview, likecount
         from turingblog.blog
@@ -69,47 +69,45 @@
     <update id="updateBlog">
         update turingblog.blog
         <set>
+
             <if test="title != null and title != ''">
                 title = #{title},
             </if>
-            <if test="mdcontent != null and mdcontent != ''">
+            <if test="mdContent != null and mdContent != ''">
                 mdcontent = #{mdContent},
             </if>
-            <if test="htmlcontent != null and htmlcontent != ''">
+            <if test="htmlContent != null and htmlContent != ''">
                 htmlcontent = #{htmlContent},
             </if>
             <if test="summary != null and summary != ''">
                 summary = #{summary},
             </if>
-            <if test="uid != null">
-                uid = #{uid},
-            </if>
-            <if test="publishdata != null">
+
+            <if test="publishData != null">
                 publishdata = #{publishData},
             </if>
             <if test="state != null">
                 state = #{state},
             </if>
-            <if test="pageview != null">
+            <if test="pageView != null">
                 pageview = #{pageView},
             </if>
-            <if test="likecount != null">
+            <if test="likeCount != null">
                 likecount = #{likeCount},
             </if>
         </set>
-        where id = #{userId}
+        where id = #{id}
     </update>
-
     <!--更改博客浏览量-->
     <update id="changeView">
         update turingblog
         set pageview = pageview + 1
-        where id = #{blogId}
+        where uid = #{blogId}
     </update>
 
     <!--删除博客-->
     <delete id="deleteBlog">
-        delete from turingblog.blog where id = #{blogId}
+        delete from turingblog.blog where id = #{id}
     </delete>
 
 </mapper>

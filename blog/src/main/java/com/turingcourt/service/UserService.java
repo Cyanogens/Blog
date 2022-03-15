@@ -47,7 +47,7 @@ public interface UserService {
      * @param blogVO 更新后的博客
      * @return 是否更新成功
      */
-    Boolean changeUserBlog(BlogVO blogVO, Long blogId,Integer uid);
+    Boolean changeUserBlog(BlogVO blogVO, Long blogId);
 
     /**
      * 删除用户发布的博客
