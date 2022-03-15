@@ -72,10 +72,10 @@
             <if test="title != null and title != ''">
                 title = #{title},
             </if>
-            <if test="mdcontent != null and mdcontent != ''">
+            <if test="mdContent != null and mdContent != ''">
                 mdcontent = #{mdContent},
             </if>
-            <if test="htmlcontent != null and htmlcontent != ''">
+            <if test="htmlContent != null and htmlContent != ''">
                 htmlcontent = #{htmlContent},
             </if>
             <if test="summary != null and summary != ''">
@@ -84,16 +84,16 @@
             <if test="uid != null">
                 uid = #{uid},
             </if>
-            <if test="publishdata != null">
+            <if test="publishData != null">
                 publishdata = #{publishData},
             </if>
             <if test="state != null">
                 state = #{state},
             </if>
-            <if test="pageview != null">
+            <if test="pageView != null">
                 pageview = #{pageView},
             </if>
-            <if test="likecount != null">
+            <if test="likeCount != null">
                 likecount = #{likeCount},
             </if>
         </set>
