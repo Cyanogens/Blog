@@ -15,7 +15,7 @@ create table blog
 )
     comment '博客内容表';
 
-create table `blog-category`
+create table blog_category
 (
     id  bigint auto_increment
         primary key,
@@ -23,7 +23,7 @@ create table `blog-category`
     cid bigint not null comment '标签id'
 );
 
-create table `blog-likes`
+create table blog_likes
 (
     id  bigint auto_increment
         primary key,
@@ -51,7 +51,7 @@ create table comment
     treepath   varchar(255)      not null comment '评论树型'
 );
 
-create table `comment-likes`
+create table comment_likes
 (
     id  bigint auto_increment
         primary key,

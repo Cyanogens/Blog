@@ -11,17 +11,17 @@
 
     <!--查询评论是否点赞-->
     <select id="queryLike" resultType="java.lang.Boolean">
-        select exists (select 1 from turingblog.commentlikes where cid = #{cid} and uid = #{uid})
+        select exists (select 1 from turingblog.comment_likes where cid = #{cid} and uid = #{uid})
     </select>
 
     <!--对评论点赞-->
     <insert id="likeComment">
-        insert into turingblog.commentlikes (cid,uid) values (#{cid} , #{uid})
+        insert into turingblog.comment_likes (cid,uid) values (#{cid} , #{uid})
     </insert>
 
     <!--取消点赞-->
     <delete id="unlikeComment">
-        delete from turingblog.commentlikes where cid = (#{cid}) and uid = #{uid}
+        delete from turingblog.comment_likes where cid = (#{cid}) and uid = #{uid}
     </delete>
 
 </mapper>
