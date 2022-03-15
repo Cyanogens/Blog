@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 博客内容表(Blog)表服务实现类
@@ -37,8 +38,9 @@ public class BlogServiceImpl implements BlogService {
 
     /**
      * 先访问之后加一，然后再得到实体类，进行查找
+     *
      * @param blogId 博客id
-     * @return
+     * @return 浏览量
      */
     @Override
     public Long viewBlog(Long blogId) {
@@ -51,34 +53,33 @@ public class BlogServiceImpl implements BlogService {
      * 得到随机排列的blog集合，并且分页展示，返回的实体类为BlogVO
      *
      * @param pageNo   要显示第几页内容
-     * @para pageSize 一页显示多少条
-     * @return
+     * @param pageSize 一页显示多少条
+     * @return 随机博客列表
      */
     @Override
     public PageInfo<BlogVO> blogRandomList(int pageNo, int pageSize) {
         PageHelper.startPage(pageNo, pageSize);
         List<Blog> blogs = blogDao.queryRandomBlog();
         List<BlogVO> blogVOS = new ArrayList<>();
-        for(Blog blog : blogs){
+        for (Blog blog : blogs) {
             List<Category> categories = categoryDao.queryByBlogId(blog.getId());
             List<String> categoryNames = new ArrayList<>();
             User user = userDao.getUser(blog.getUid());
-            for(Category category : categories){
+            for (Category category : categories) {
                 categoryNames.add(category.getCategoryName());
             }
             blogVOS.add(new BlogVO(blog.getId(), blog.getTitle(), blog.getMdContent(), blog.getHtmlContent(),
                     blog.getSummary(), categoryNames, user.getUsername(), blog.getPublishData(),
                     blog.getLikeCount(), blog.getPageView()));
         }
-        PageInfo<BlogVO> pageInfo = new PageInfo<>(blogVOS);
-        return pageInfo;
+        return new PageInfo<>(blogVOS);
     }
 
     /**
      * 展示blog
      *
      * @param blogId 博客id
-     * @return
+     * @return 博客内容
      */
     @Override
     public BlogVO blogDetail(Long blogId) {
@@ -86,7 +87,7 @@ public class BlogServiceImpl implements BlogService {
         List<Category> categories = categoryDao.queryByBlogId(blog.getId());
         List<String> categoryNames = new ArrayList<>();
         User user = userDao.getUser(blog.getUid());
-        for(Category category : categories){
+        for (Category category : categories) {
             categoryNames.add(category.getCategoryName());
         }
         return new BlogVO(blog.getId(), blog.getTitle(), blog.getMdContent(), blog.getHtmlContent(),
@@ -98,7 +99,7 @@ public class BlogServiceImpl implements BlogService {
      * 此处有过更改 long -> int
      *
      * @param blogVO 博客内容
-     * @return
+     * @return 博客id
      */
     @Override
     public Long insertBlog(BlogVO blogVO) {
@@ -119,22 +120,30 @@ public class BlogServiceImpl implements BlogService {
 
     @Override
     public PageInfo<BlogVO> searchBlog(String key, int pageNo, int pageSize) {
-        List<Blog> blogs = blogDao.queryByCategory(key);
         PageHelper.startPage(pageNo, pageSize);
+        key = "%" + key + "%";
+        List<Blog> blogs = new ArrayList<>();
+        List<Blog> blogs1 = blogDao.queryByCategory(key);
+        List<Blog> blogs2 = blogDao.queryByTitle(key);
+        blogs.addAll(blogs1);
+        blogs.addAll(blogs2);
+
+        //去重
+        blogs = blogs.stream().distinct().collect(Collectors.toList());
+
         List<BlogVO> blogVOS = new ArrayList<>();
-        for(Blog blog : blogs){
+        for (Blog blog : blogs) {
             List<Category> categories = categoryDao.queryByBlogId(blog.getId());
             List<String> categoryNames = new ArrayList<>();
             User user = userDao.getUser(blog.getUid());
-            for(Category category : categories){
+            for (Category category : categories) {
                 categoryNames.add(category.getCategoryName());
             }
             blogVOS.add(new BlogVO(blog.getId(), blog.getTitle(), blog.getMdContent(), blog.getHtmlContent(),
                     blog.getSummary(), categoryNames, user.getUsername(), blog.getPublishData(),
                     blog.getLikeCount(), blog.getPageView()));
         }
-        PageInfo<BlogVO> pageInfo = new PageInfo<>(blogVOS);
-        return pageInfo;
+        return new PageInfo<>(blogVOS);
     }
 }
 

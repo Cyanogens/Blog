@@ -41,6 +41,6 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public Boolean deleteCategory(Long id) {
-        return categoryDao.deleteCategory(Math.toIntExact(id)) > 0;
+        return categoryDao.deleteCategory(id) > 0;
     }
 }
