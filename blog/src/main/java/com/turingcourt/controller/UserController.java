@@ -1,10 +1,14 @@
 package com.turingcourt.controller;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.github.pagehelper.PageInfo;
 import com.turingcourt.config.json.JsonResult;
+import com.turingcourt.config.json.ResultTool;
 import com.turingcourt.entity.User;
+import com.turingcourt.service.UserService;
 import com.turingcourt.vo.BlogVO;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -19,6 +23,8 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/user")
 public class UserController {
 
+    @Autowired
+    private UserService userService;
     /**
      * 查询用户信息
      *
@@ -27,7 +33,12 @@ public class UserController {
     @GetMapping("/{userId}")
     @ApiOperation("查询用户信息")
     public JsonResult getUser(@PathVariable Integer userId) {
-        return null;
+        User user = userService.getUser(userId);
+        if (user!=null) {
+            return ResultTool.success(user);
+        }else {
+            return ResultTool.fail();
+        }
     }
 
     /**
@@ -39,7 +50,12 @@ public class UserController {
     @PostMapping("/change")
     @ApiOperation("更改用户信息")
     public JsonResult changeUser(@RequestBody User user) {
-        return null;
+        User user1 = userService.changeUser(user);
+        if (user1!=null) {
+            return ResultTool.success(user1);
+        }else {
+            return ResultTool.fail();
+        }
     }
 
     /**
@@ -54,7 +70,12 @@ public class UserController {
     @GetMapping("/userBlogs/{userId}")
     @ApiOperation("查询用户发布的所有博客")
     public JsonResult userBlogs(@PathVariable Integer userId, @RequestParam(value="pageNo",defaultValue="1")int pageNo, @RequestParam(value="pageSize",defaultValue="10")int pageSize) {
-        return null;
+        PageInfo<BlogVO> blogVOPageInfo = userService.userBlogs(userId, pageNo, pageSize);
+        if (blogVOPageInfo!=null) {
+            return ResultTool.success(blogVOPageInfo);
+        }else {
+            return ResultTool.fail();
+        }
     }
 
 
@@ -68,7 +89,13 @@ public class UserController {
     @PostMapping("/changeBlog/{blogId}")
     @ApiOperation("更改用户发布的博客")
     public JsonResult changeUserBlog(@RequestBody BlogVO blogVO, @PathVariable Long blogId) {
-        return null;
+        Boolean aBoolean = userService.changeUserBlog(blogVO, blogId);
+        if (aBoolean){
+            return ResultTool.success();
+        }else {
+            return ResultTool.fail();
+        }
+
     }
 
     /**
@@ -80,7 +107,12 @@ public class UserController {
     @PostMapping("/deleteBlog/{blogId}")
     @ApiOperation("删除用户发布的博客")
     public JsonResult deleteUserBlog(Long blogId) {
-        return null;
+        Boolean aBoolean = userService.deleteUserBlog(blogId);
+        if (aBoolean){
+            return ResultTool.success();
+        }else {
+            return ResultTool.fail();
+        }
     }
 
 }

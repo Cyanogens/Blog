@@ -1,7 +1,11 @@
 package com.turingcourt.controller;
 
 import com.turingcourt.config.json.JsonResult;
+import com.turingcourt.config.json.ResultTool;
+import com.turingcourt.service.BlogLikesService;
+import com.turingcourt.service.CommentLikesService;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,7 +23,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/like")
 public class LikesController {
 
-
+@Autowired
+private BlogLikesService blogLikesService;
+@Autowired
+private  CommentLikesService commentLikesService;
     /**
      * 对博客进行点赞
      * 如果该用户未点赞,则点赞
@@ -32,7 +39,8 @@ public class LikesController {
     @PostMapping("/blog")
     @ApiOperation("对博客进行点赞")
     public JsonResult likeBlog(Long blogId, Integer userId) {
-        return null;
+        Boolean aBoolean = blogLikesService.likeBlog(blogId, userId);
+            return ResultTool.success();
     }
 
     /**
@@ -47,7 +55,9 @@ public class LikesController {
     @PostMapping("/comment")
     @ApiOperation("对评论进行点赞")
     public JsonResult likeComment(Long commentId, Integer userId) {
-        return null;
+        Boolean aBoolean = commentLikesService.likeComment(commentId, userId);
+
+            return ResultTool.success();
     }
 
 }
