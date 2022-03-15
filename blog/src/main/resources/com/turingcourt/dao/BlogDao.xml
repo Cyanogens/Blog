@@ -97,7 +97,7 @@
                 likecount = #{likeCount},
             </if>
         </set>
-        where id = #{userId}
+        where uid = #{uid}
     </update>
 
     <!--更改博客浏览量-->
