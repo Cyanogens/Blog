@@ -1,6 +1,7 @@
 package com.turingcourt.dao;
 
 import com.turingcourt.entity.BlogCategory;
+import org.apache.ibatis.annotations.Mapper;
 
 /**
  * (BlogCategory)表数据库访问层
@@ -8,6 +9,7 @@ import com.turingcourt.entity.BlogCategory;
  * @author makejava
  * @since 2022-03-14 10:12:03
  */
+@Mapper
 public interface BlogCategoryDao {
 
     /**

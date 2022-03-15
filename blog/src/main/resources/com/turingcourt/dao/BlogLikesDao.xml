@@ -11,17 +11,17 @@
 
     <!--查询博客是否点赞-->
     <select id="queryLike" resultType="java.lang.Boolean">
-        select exists (select 1 from turingblog.bloglikes where bid = #{bid} and uid = #{uid})
+        select exists (select 1 from turingblog.blog_likes where bid = #{bid} and uid = #{uid})
     </select>
 
     <!--对博客点赞-->
     <insert id="likeBlog">
-        insert into turingblog.bloglikes (bid,uid) values (#{bid} , #{uid})
+        insert into turingblog.blog_likes (bid,uid) values (#{bid} , #{uid})
     </insert>
 
     <!--取消博客点赞-->
     <delete id="unlikeBlog">
-        delete from turingblog.bloglikes where bid = (#{bid}) and uid = #{uid}
+        delete from turingblog.blog_likes where bid = (#{bid}) and uid = #{uid}
     </delete>
 
     <!--删除博客点赞-->

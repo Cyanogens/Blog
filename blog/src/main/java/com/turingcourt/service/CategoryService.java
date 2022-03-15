@@ -52,5 +52,5 @@ public interface CategoryService {
      * @param id 主键
      * @return 是否删除成功
      */
-    Boolean deleteCategory(Integer id);
+    Boolean deleteCategory(Long id);
 }
