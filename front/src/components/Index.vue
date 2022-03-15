@@ -25,6 +25,9 @@
 				</router-link>
 			</li>
 		</ol>
+		<!-- 分页 -->
+		<el-pagination background layout="prev, pager, next" :total="1000" class="pages">
+		</el-pagination>
 	</div>
 </template>
 
@@ -141,5 +144,16 @@
 		.blog-preview:hover {
 			box-shadow: 0 0 5px #ccc;
 		}
+
+		.pages {
+			text-align: center;
+		}
 	}
+</style>
+
+<style scoped>
+.el-pagination {
+	text-align: center;
+	margin: 20px 0;
+}
 </style>
