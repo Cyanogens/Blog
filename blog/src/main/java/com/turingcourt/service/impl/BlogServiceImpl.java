@@ -3,18 +3,16 @@ package com.turingcourt.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.turingcourt.dao.BlogDao;
-import com.turingcourt.dao.CategoryDao;
 import com.turingcourt.dao.UserDao;
 import com.turingcourt.entity.Blog;
-import com.turingcourt.entity.Category;
 import com.turingcourt.entity.User;
 import com.turingcourt.service.BlogService;
+import com.turingcourt.utils.BlogToVO;
 import com.turingcourt.vo.BlogVO;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -36,7 +34,7 @@ public class BlogServiceImpl implements BlogService {
     private UserDao userDao;
 
     @Resource
-    private CategoryDao categoryDao;
+    private BlogToVO to;
 
     /**
      * 先访问之后加一，然后再得到实体类，进行查找
@@ -62,18 +60,10 @@ public class BlogServiceImpl implements BlogService {
     public PageInfo<BlogVO> blogRandomList(int pageNo, int pageSize) {
         PageHelper.startPage(pageNo, pageSize);
         List<Blog> blogs = blogDao.queryRandomBlog();
+
         List<BlogVO> blogVOS = new ArrayList<>();
         for (Blog blog : blogs) {
-            System.out.println(blog.getId());
-            List<Category> categories = categoryDao.queryByBlogId(blog.getId());
-            List<String> categoryNames = new ArrayList<>();
-            User user = userDao.getUser(blog.getUid());
-            for (Category category : categories) {
-                categoryNames.add(category.getCategoryName());
-            }
-            blogVOS.add(new BlogVO(blog.getId(), blog.getTitle(), blog.getMdContent(), blog.getHtmlContent(),
-                    blog.getSummary(), categoryNames, user.getUsername(), blog.getPublishData(),
-                    blog.getLikeCount(), blog.getPageView()));
+            blogVOS.add(to.blogToVO(blog));
         }
         return new PageInfo<>(blogVOS);
     }
@@ -87,15 +77,7 @@ public class BlogServiceImpl implements BlogService {
     @Override
     public BlogVO blogDetail(Long blogId) {
         Blog blog = blogDao.getBlog(blogId);
-        List<Category> categories = categoryDao.queryByBlogId(blog.getId());
-        List<String> categoryNames = new ArrayList<>();
-        User user = userDao.getUser(blog.getUid());
-        for (Category category : categories) {
-            categoryNames.add(category.getCategoryName());
-        }
-        return new BlogVO(blog.getId(), blog.getTitle(), blog.getMdContent(), blog.getHtmlContent(),
-                blog.getSummary(), categoryNames, user.getUsername(), blog.getPublishData(),
-                blog.getLikeCount(), blog.getPageView());
+        return to.blogToVO(blog);
     }
 
     /**
@@ -143,15 +125,7 @@ public class BlogServiceImpl implements BlogService {
 
         List<BlogVO> blogVOS = new ArrayList<>();
         for (Blog blog : blogs) {
-            List<Category> categories = categoryDao.queryByBlogId(blog.getId());
-            List<String> categoryNames = new ArrayList<>();
-            User user = userDao.getUser(blog.getUid());
-            for (Category category : categories) {
-                categoryNames.add(category.getCategoryName());
-            }
-            blogVOS.add(new BlogVO(blog.getId(), blog.getTitle(), blog.getMdContent(), blog.getHtmlContent(),
-                    blog.getSummary(), categoryNames, user.getUsername(), blog.getPublishData(),
-                    blog.getLikeCount(), blog.getPageView()));
+            blogVOS.add(to.blogToVO(blog));
         }
         return new PageInfo<>(blogVOS);
     }

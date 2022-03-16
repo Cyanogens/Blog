@@ -4,9 +4,9 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.turingcourt.dao.*;
 import com.turingcourt.entity.Blog;
-import com.turingcourt.entity.Category;
 import com.turingcourt.entity.User;
 import com.turingcourt.service.UserService;
+import com.turingcourt.utils.BlogToVO;
 import com.turingcourt.vo.BlogVO;
 import org.springframework.stereotype.Service;
 
@@ -33,7 +33,7 @@ public class UserServiceImpl implements UserService {
     @Resource
     private BlogLikesDao blogLikesDao;
     @Resource
-    private CategoryDao categoryDao;
+    private BlogToVO to;
 
     @Override
     public User getUser(Integer userId) {
@@ -66,23 +66,13 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public PageInfo<BlogVO> userBlogs(Integer userId, int pageNo, int pageSize) {
-        User user = userDao.getUser(userId);
 
         PageHelper.startPage(pageNo, pageSize);
         List<Blog> blogs = blogDao.queryByUserId(userId);
 
         List<BlogVO> blogVOS = new ArrayList<>();
         for (Blog blog : blogs) {
-            System.out.println(blog.getId());
-            List<Category> categories = categoryDao.queryByBlogId(blog.getId());
-            List<String> categoryNames = new ArrayList<>();
-
-            for (Category category : categories) {
-                categoryNames.add(category.getCategoryName());
-            }
-            blogVOS.add(new BlogVO(blog.getId(), blog.getTitle(), blog.getMdContent(), blog.getHtmlContent(),
-                    blog.getSummary(), categoryNames, user.getUsername(), blog.getPublishData(),
-                    blog.getLikeCount(), blog.getPageView()));
+            blogVOS.add(to.blogToVO(blog));
         }
 
         return new PageInfo<>(blogVOS);

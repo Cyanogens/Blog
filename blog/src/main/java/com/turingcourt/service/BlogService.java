@@ -21,6 +21,7 @@ public interface BlogService {
 
     /**
      * 获得随机博客列表
+     * 用户未登录时才会展示随机博客列表
      *
      * @param pageNo   要显示第几页内容
      * @param pageSize 一页显示多少条
