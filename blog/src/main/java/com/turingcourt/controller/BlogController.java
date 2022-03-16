@@ -1,8 +1,13 @@
 package com.turingcourt.controller;
 
+import com.github.pagehelper.PageInfo;
 import com.turingcourt.config.json.JsonResult;
+import com.turingcourt.config.json.ResultCode;
+import com.turingcourt.config.json.ResultTool;
+import com.turingcourt.service.BlogService;
 import com.turingcourt.vo.BlogVO;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -17,6 +22,9 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/blog")
 public class BlogController {
 
+    @Autowired
+    private BlogService blogService;
+
     /**
      * 博客浏览量增加
      *
@@ -26,7 +34,11 @@ public class BlogController {
     @PostMapping("/changeView")
     @ApiOperation("浏览量增加")
     public JsonResult viewBlog(Long blogId) {
-        return null;
+        Long aLong = blogService.viewBlog(blogId);
+        if(aLong > 0){
+            return ResultTool.success(aLong);
+        }
+        return ResultTool.fail(ResultCode.COMMON_FAIL);
     }
 
     /**
@@ -39,7 +51,11 @@ public class BlogController {
     @GetMapping("/random")
     @ApiOperation("获得随机博客列表")
     public JsonResult blogRandomList(@RequestParam(value = "pageNo", defaultValue = "1") int pageNo, @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
-        return null;
+        PageInfo<BlogVO> pageInfo = blogService.blogRandomList(pageNo, pageSize);
+        if(pageInfo != null){
+            return ResultTool.success(pageInfo);
+        }
+        return ResultTool.fail(ResultCode.COMMON_FAIL);
     }
 
     /**
@@ -51,7 +67,11 @@ public class BlogController {
     @GetMapping("/{blogId}")
     @ApiOperation("查看博客详情")
     public JsonResult blogDetail(@PathVariable Long blogId) {
-        return null;
+        BlogVO blogVO = blogService.blogDetail(blogId);
+        if(blogId != null) {
+            return ResultTool.success(blogVO);
+        }
+        return ResultTool.fail(ResultCode.COMMON_FAIL);
     }
 
     /**
@@ -63,7 +83,11 @@ public class BlogController {
     @PostMapping("/insertBlog")
     @ApiOperation("发布博客")
     public JsonResult insertBlog(BlogVO blogVO) {
-        return null;
+        Long aLong = blogService.insertBlog(blogVO);
+        if(aLong > 0) {
+            return ResultTool.success(aLong);
+        }
+        return ResultTool.fail(ResultCode.COMMON_FAIL);
     }
 
     /**
@@ -77,7 +101,11 @@ public class BlogController {
     @GetMapping("/search")
     @ApiOperation("搜索博客/标签")
     public JsonResult searchBlog(String key, @RequestParam(value = "pageNo", defaultValue = "1") int pageNo, @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
-        return null;
+        PageInfo<BlogVO> pageInfo = blogService.searchBlog(key, pageNo, pageSize);
+        if(pageInfo != null){
+            return ResultTool.success(pageInfo);
+        }
+        return ResultTool.fail(ResultCode.COMMON_FAIL);
     }
 
 }
