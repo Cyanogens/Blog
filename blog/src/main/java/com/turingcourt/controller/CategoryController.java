@@ -1,11 +1,18 @@
 package com.turingcourt.controller;
 
 import com.turingcourt.config.json.JsonResult;
+import com.turingcourt.config.json.ResultCode;
+import com.turingcourt.config.json.ResultTool;
+import com.turingcourt.entity.Category;
+import com.turingcourt.service.CategoryService;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  * Category控制层
@@ -19,6 +26,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/category")
 public class CategoryController {
 
+    @Autowired
+    private CategoryService categoryService;
     /**
      * 获得所有标签
      *
@@ -27,7 +36,12 @@ public class CategoryController {
     @GetMapping("/getAll")
     @ApiOperation("获得所有标签")
     public JsonResult getAllCategory() {
-        return null;
+        List<Category> categories = categoryService.queryAll();
+        if(categories != null) {
+            return ResultTool.success(categories);
+        }
+
+        return ResultTool.fail(ResultCode.COMMON_FAIL);
     }
 
 }
