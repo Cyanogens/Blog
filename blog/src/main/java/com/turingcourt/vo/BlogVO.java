@@ -59,4 +59,5 @@ public class BlogVO {
      */
     private Long pageView;
 
+
 }

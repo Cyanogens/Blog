@@ -23,11 +23,11 @@ public class CommentLikesServiceImpl implements CommentLikesService {
 
         Boolean aBoolean = commentLikesDao.queryLike(new CommentLikes(null, commentId, userId));
         if (aBoolean) {
-            commentLikesDao.unlikeComment(new CommentLikes(null, commentId, userId));
-            return false;
+            int unlike = commentLikesDao.unlikeComment(new CommentLikes(null, commentId, userId));
+            return unlike > 0;
         } else {
-            commentLikesDao.likeComment(new CommentLikes(null, commentId, userId));
-            return true;
+            int like = commentLikesDao.likeComment(new CommentLikes(null, commentId, userId));
+            return like > 0;
         }
     }
 }

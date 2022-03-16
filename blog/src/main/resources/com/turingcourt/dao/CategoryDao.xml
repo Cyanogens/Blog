@@ -29,9 +29,10 @@
             cate.id, cate.categoryname
         from turingblog.blog a
         inner join turingblog.category cate
-        inner join turingblog.blog-category bc
+        inner join turingblog.blog_category bc
         on a.id = bc.bid and bc.cid = cate.id
         WHERE a.id LIKE #{blogId}
+        order by rand()
     </select>
 
 </mapper>

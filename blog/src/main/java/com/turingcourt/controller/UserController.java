@@ -1,6 +1,5 @@
 package com.turingcourt.controller;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import com.github.pagehelper.PageInfo;
 import com.turingcourt.config.json.JsonResult;
 import com.turingcourt.config.json.ResultTool;
@@ -25,6 +24,7 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
     /**
      * 查询用户信息
      *
@@ -34,9 +34,9 @@ public class UserController {
     @ApiOperation("查询用户信息")
     public JsonResult getUser(@PathVariable Integer userId) {
         User user = userService.getUser(userId);
-        if (user!=null) {
+        if (user != null) {
             return ResultTool.success(user);
-        }else {
+        } else {
             return ResultTool.fail();
         }
     }
@@ -50,10 +50,10 @@ public class UserController {
     @PostMapping("/change")
     @ApiOperation("更改用户信息")
     public JsonResult changeUser(@RequestBody User user) {
-        User user1 = userService.changeUser(user);
-        if (user1!=null) {
-            return ResultTool.success(user1);
-        }else {
+        User newUser = userService.changeUser(user);
+        if (newUser != null) {
+            return ResultTool.success(newUser);
+        } else {
             return ResultTool.fail();
         }
     }
@@ -62,18 +62,18 @@ public class UserController {
      * 查询用户发布的全部博客
      * 通过用户id查找博客
      *
-     * @param userId 用户id
-     * @param pageNo 要显示第几页内容
+     * @param userId   用户id
+     * @param pageNo   要显示第几页内容
      * @param pageSize 一页显示多少条
      * @return 博客列表
      */
     @GetMapping("/userBlogs/{userId}")
     @ApiOperation("查询用户发布的所有博客")
-    public JsonResult userBlogs(@PathVariable Integer userId, @RequestParam(value="pageNo",defaultValue="1")int pageNo, @RequestParam(value="pageSize",defaultValue="10")int pageSize) {
+    public JsonResult userBlogs(@PathVariable Integer userId, @RequestParam(value = "pageNo", defaultValue = "1") int pageNo, @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
         PageInfo<BlogVO> blogVOPageInfo = userService.userBlogs(userId, pageNo, pageSize);
-        if (blogVOPageInfo!=null) {
+        if (blogVOPageInfo != null) {
             return ResultTool.success(blogVOPageInfo);
-        }else {
+        } else {
             return ResultTool.fail();
         }
     }
@@ -89,13 +89,8 @@ public class UserController {
     @PostMapping("/changeBlog/{blogId}")
     @ApiOperation("更改用户发布的博客")
     public JsonResult changeUserBlog(@RequestBody BlogVO blogVO, @PathVariable Long blogId) {
-        Boolean aBoolean = userService.changeUserBlog(blogVO, blogId);
-        if (aBoolean){
-            return ResultTool.success();
-        }else {
-            return ResultTool.fail();
-        }
-
+        Boolean change = userService.changeUserBlog(blogVO, blogId);
+        return change ? ResultTool.success() : ResultTool.fail();
     }
 
     /**
@@ -107,12 +102,9 @@ public class UserController {
     @PostMapping("/deleteBlog/{blogId}")
     @ApiOperation("删除用户发布的博客")
     public JsonResult deleteUserBlog(Long blogId) {
-        Boolean aBoolean = userService.deleteUserBlog(blogId);
-        if (aBoolean){
-            return ResultTool.success();
-        }else {
-            return ResultTool.fail();
-        }
+        Boolean delete = userService.deleteUserBlog(blogId);
+
+        return delete ? ResultTool.success() : ResultTool.fail();
     }
 
 }

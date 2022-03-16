@@ -14,6 +14,8 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -62,6 +64,7 @@ public class BlogServiceImpl implements BlogService {
         List<Blog> blogs = blogDao.queryRandomBlog();
         List<BlogVO> blogVOS = new ArrayList<>();
         for (Blog blog : blogs) {
+            System.out.println(blog.getId());
             List<Category> categories = categoryDao.queryByBlogId(blog.getId());
             List<String> categoryNames = new ArrayList<>();
             User user = userDao.getUser(blog.getUid());
@@ -112,24 +115,31 @@ public class BlogServiceImpl implements BlogService {
         blog.setState(true);
         blog.setUid(user.getId());
         blog.setPublishData(blogVO.getPublishData());
-        blog.setPageView(blogVO.getPageView());
-        blog.setLikeCount(blogVO.getLikeCount());
+        blog.setPageView(1L);
+        blog.setLikeCount(0L);
         blogDao.insertBlog(blog);
         return blog.getId();
     }
 
     @Override
     public PageInfo<BlogVO> searchBlog(String key, int pageNo, int pageSize) {
-        PageHelper.startPage(pageNo, pageSize);
+        int byTitle = pageSize / 2;
+        int byCategory = pageSize - byTitle;
+
         key = "%" + key + "%";
         List<Blog> blogs = new ArrayList<>();
+
+        PageHelper.startPage(pageNo, byCategory);
         List<Blog> blogs1 = blogDao.queryByCategory(key);
+        PageHelper.startPage(pageNo, byTitle);
         List<Blog> blogs2 = blogDao.queryByTitle(key);
+
         blogs.addAll(blogs1);
         blogs.addAll(blogs2);
 
         //去重
         blogs = blogs.stream().distinct().collect(Collectors.toList());
+        Collections.shuffle(blogs);
 
         List<BlogVO> blogVOS = new ArrayList<>();
         for (Blog blog : blogs) {

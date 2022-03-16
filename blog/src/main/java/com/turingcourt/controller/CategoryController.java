@@ -28,6 +28,7 @@ public class CategoryController {
 
     @Autowired
     private CategoryService categoryService;
+
     /**
      * 获得所有标签
      *
@@ -37,7 +38,7 @@ public class CategoryController {
     @ApiOperation("获得所有标签")
     public JsonResult getAllCategory() {
         List<Category> categories = categoryService.queryAll();
-        if(categories != null) {
+        if (categories != null) {
             return ResultTool.success(categories);
         }
 

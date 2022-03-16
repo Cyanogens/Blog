@@ -50,7 +50,7 @@ public class CommentServiceImpl implements CommentService {
         comment.setContent(commentVO.getContent());
         comment.setCreateDate(commentVO.getCreateDate());
         comment.setLikeCount(commentVO.getLikeCount());
-        comment.setTreePath("-1" + "/");
+        comment.setTreePath(-1 + "/");
         return commentDao.insert(comment) > 0;
     }
 
@@ -71,6 +71,7 @@ public class CommentServiceImpl implements CommentService {
         comment.setCreateDate(commentVO.getCreateDate());
         comment.setLikeCount(commentVO.getLikeCount());
         comment.setTreePath(preTreePath + pid + "/");
+
         return commentDao.insert(comment) > 0;
     }
 
@@ -78,7 +79,9 @@ public class CommentServiceImpl implements CommentService {
     public Boolean deleteComment(Long id) {
         Comment comment = commentDao.getComment(id);
         String treePath = comment.getTreePath();
+        //删除评论
         int deleteComment = commentDao.deleteComment(id);
+        //删除子评论
         int deleteChildComment = commentDao.deleteChildComment(treePath + "%");
         return deleteChildComment > 0 && deleteComment > 0;
     }

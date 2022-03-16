@@ -22,11 +22,11 @@ public class BlogLikesServiceImpl implements BlogLikesService {
     public Boolean likeBlog(Long blogId, Integer userId) {
         Boolean aBoolean = blogLikesDao.queryLike(new BlogLikes(null, blogId, userId));
         if (aBoolean) {
-            blogLikesDao.unlikeBlog(new BlogLikes(null, blogId, userId));
-            return false;
-            } else {
-            blogLikesDao.likeBlog(new BlogLikes(null, blogId, userId));
-            return true;
+            int unlike = blogLikesDao.unlikeBlog(new BlogLikes(null, blogId, userId));
+            return unlike > 0;
+        } else {
+            int like = blogLikesDao.likeBlog(new BlogLikes(null, blogId, userId));
+            return like > 0;
         }
     }
 }

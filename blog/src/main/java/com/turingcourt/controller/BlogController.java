@@ -34,9 +34,9 @@ public class BlogController {
     @PostMapping("/changeView")
     @ApiOperation("浏览量增加")
     public JsonResult viewBlog(Long blogId) {
-        Long aLong = blogService.viewBlog(blogId);
-        if(aLong > 0){
-            return ResultTool.success(aLong);
+        Long view = blogService.viewBlog(blogId);
+        if (view > 0) {
+            return ResultTool.success(view);
         }
         return ResultTool.fail(ResultCode.COMMON_FAIL);
     }
@@ -52,7 +52,7 @@ public class BlogController {
     @ApiOperation("获得随机博客列表")
     public JsonResult blogRandomList(@RequestParam(value = "pageNo", defaultValue = "1") int pageNo, @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
         PageInfo<BlogVO> pageInfo = blogService.blogRandomList(pageNo, pageSize);
-        if(pageInfo != null){
+        if (pageInfo != null) {
             return ResultTool.success(pageInfo);
         }
         return ResultTool.fail(ResultCode.COMMON_FAIL);
@@ -68,7 +68,7 @@ public class BlogController {
     @ApiOperation("查看博客详情")
     public JsonResult blogDetail(@PathVariable Long blogId) {
         BlogVO blogVO = blogService.blogDetail(blogId);
-        if(blogId != null) {
+        if (blogVO != null) {
             return ResultTool.success(blogVO);
         }
         return ResultTool.fail(ResultCode.COMMON_FAIL);
@@ -83,9 +83,9 @@ public class BlogController {
     @PostMapping("/insertBlog")
     @ApiOperation("发布博客")
     public JsonResult insertBlog(BlogVO blogVO) {
-        Long aLong = blogService.insertBlog(blogVO);
-        if(aLong > 0) {
-            return ResultTool.success(aLong);
+        Long blogId = blogService.insertBlog(blogVO);
+        if (blogId > 0) {
+            return ResultTool.success(blogId);
         }
         return ResultTool.fail(ResultCode.COMMON_FAIL);
     }
@@ -102,7 +102,7 @@ public class BlogController {
     @ApiOperation("搜索博客/标签")
     public JsonResult searchBlog(String key, @RequestParam(value = "pageNo", defaultValue = "1") int pageNo, @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
         PageInfo<BlogVO> pageInfo = blogService.searchBlog(key, pageNo, pageSize);
-        if(pageInfo != null){
+        if (pageInfo != null) {
             return ResultTool.success(pageInfo);
         }
         return ResultTool.fail(ResultCode.COMMON_FAIL);
