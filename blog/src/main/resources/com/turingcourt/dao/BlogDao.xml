@@ -82,7 +82,9 @@
             <if test="summary != null and summary != ''">
                 summary = #{summary},
             </if>
-
+            <if test="uid != null">
+                uid = #{uid},
+            </if>
             <if test="publishData != null">
                 publishdata = #{publishData},
             </if>

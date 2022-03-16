@@ -65,7 +65,7 @@ public interface CategoryDao {
      * @return 影响行数
      */
     @Delete("delete from turingblog.category where id = #{id}")
-    int deleteCategory(Integer id);
+    int deleteCategory(Long id);
 
     /**
      * 通过博客id查找标签集合

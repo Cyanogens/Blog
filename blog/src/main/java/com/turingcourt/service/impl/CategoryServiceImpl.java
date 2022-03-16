@@ -21,26 +21,26 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public Category queryCategoryById(Integer id) {
-        return null;
+        return categoryDao.queryCategoryById(id);
     }
 
     @Override
     public List<Category> queryAll() {
-        return null;
+        return categoryDao.queryAll();
     }
 
     @Override
     public Boolean insertCategory(Category category) {
-        return null;
+        return categoryDao.insertCategory(category) > 0;
     }
 
     @Override
     public Boolean updateCategory(Category category) {
-        return null;
+        return categoryDao.updateCategory(category) > 0;
     }
 
     @Override
     public Boolean deleteCategory(Long id) {
-        return null;
+        return categoryDao.deleteCategory(id) > 0;
     }
 }

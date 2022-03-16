@@ -13,12 +13,20 @@ import com.turingcourt.vo.BlogVO;
 public interface UserService {
 
     /**
-     * 查询用户信息
+     * 通过用户id查询用户信息
      *
      * @param userId 用户id
      * @return 用户信息
      */
     User getUser(Integer userId);
+
+    /**
+     * 通过用户名查询用户信息
+     *
+     * @param userName 用户名
+     * @return 用户信息
+     */
+    User getUserByName(String userName);
 
     /**
      * 更改用户信息
