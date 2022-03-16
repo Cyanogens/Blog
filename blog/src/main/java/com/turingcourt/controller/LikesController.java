@@ -40,7 +40,11 @@ private  CommentLikesService commentLikesService;
     @ApiOperation("对博客进行点赞")
     public JsonResult likeBlog(Long blogId, Integer userId) {
         Boolean aBoolean = blogLikesService.likeBlog(blogId, userId);
+        if (aBoolean){
             return ResultTool.success();
+        }else {
+            return ResultTool.fail();
+        }
     }
 
     /**
@@ -56,8 +60,12 @@ private  CommentLikesService commentLikesService;
     @ApiOperation("对评论进行点赞")
     public JsonResult likeComment(Long commentId, Integer userId) {
         Boolean aBoolean = commentLikesService.likeComment(commentId, userId);
+            if (aBoolean){
+                return ResultTool.success();
+            }else {
+                return ResultTool.fail();
+            }
 
-            return ResultTool.success();
     }
 
 }

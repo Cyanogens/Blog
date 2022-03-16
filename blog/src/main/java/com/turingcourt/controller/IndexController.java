@@ -16,6 +16,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.UUID;
 
+import static com.turingcourt.config.json.ResultCode.*;
+
 /**
  * 通用操作
  *
@@ -118,7 +120,7 @@ public class IndexController {
         if (aBoolean){
             return ResultTool.success();
         }else {
-            return ResultTool.fail();
+            return ResultTool.fail(USER_ANSWER_ERROR);
         }
     }
 
