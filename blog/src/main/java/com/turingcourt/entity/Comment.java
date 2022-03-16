@@ -1,6 +1,7 @@
 package com.turingcourt.entity;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -14,6 +15,7 @@ import java.util.Date;
  * @since 2022-03-07 19:30:53
  */
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class Comment implements Serializable {

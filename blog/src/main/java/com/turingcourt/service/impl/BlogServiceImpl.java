@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -89,16 +90,13 @@ public class BlogServiceImpl implements BlogService {
     @Override
     public Long insertBlog(BlogVO blogVO) {
         User user = userDao.getUserByName(blogVO.getUserName());
-        Blog blog = new Blog();
-        blog.setTitle(blogVO.getTitle());
-        blog.setMdContent(blogVO.getMdContent());
-        blog.setHtmlContent(blogVO.getHtmlContent());
-        blog.setSummary(blogVO.getSummary());
-        blog.setState(true);
-        blog.setUid(user.getId());
-        blog.setPublishData(blogVO.getPublishData());
-        blog.setPageView(1L);
-        blog.setLikeCount(0L);
+        Blog blog = Blog.builder()
+                .title(blogVO.getTitle()).mdContent(blogVO.getMdContent())
+                .htmlContent(blogVO.getHtmlContent()).summary(blogVO.getSummary())
+                .state(true).uid(user.getId()).publishData(new Date())
+                .pageView(0L).likeCount(0L)
+                .build();
+
         blogDao.insertBlog(blog);
         return blog.getId();
     }

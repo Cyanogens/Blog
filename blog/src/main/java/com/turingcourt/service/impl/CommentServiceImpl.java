@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -43,14 +44,14 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public Boolean insertComment(CommentVO commentVO, Long blogId) {
-        Comment comment = new Comment();
-        comment.setPid(-1L);
-        comment.setBid(blogId);
-        comment.setUid(userDao.getUserByName(commentVO.getUsername()).getId());
-        comment.setContent(commentVO.getContent());
-        comment.setCreateDate(commentVO.getCreateDate());
-        comment.setLikeCount(commentVO.getLikeCount());
-        comment.setTreePath(-1 + "/");
+
+        Comment comment = Comment.builder()
+                .pid(-1L).bid(blogId)
+                .uid(userDao.getUserByName(commentVO.getUsername()).getId())
+                .content(commentVO.getContent()).createDate(new Date())
+                .likeCount(0L).treePath(-1 + "/")
+                .build();
+
         return commentDao.insert(comment) > 0;
     }
 
@@ -63,14 +64,12 @@ public class CommentServiceImpl implements CommentService {
         //获得要回复的评论的树型
         String preTreePath = comment1.getTreePath();
 
-        Comment comment = new Comment();
-        comment.setPid(pid);
-        comment.setBid(blogId);
-        comment.setUid(userDao.getUserByName(commentVO.getUsername()).getId());
-        comment.setContent(commentVO.getContent());
-        comment.setCreateDate(commentVO.getCreateDate());
-        comment.setLikeCount(commentVO.getLikeCount());
-        comment.setTreePath(preTreePath + pid + "/");
+        Comment comment = Comment.builder()
+                .pid(pid).bid(blogId)
+                .uid(userDao.getUserByName(commentVO.getUsername()).getId())
+                .content(commentVO.getContent()).createDate(new Date())
+                .likeCount(0L).treePath(preTreePath + pid + "/")
+                .build();
 
         return commentDao.insert(comment) > 0;
     }
