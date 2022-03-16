@@ -25,7 +25,7 @@
     </select>
 
     <!--查询用户发布的博客列表-->
-    <select id="queryByUserId" resultType="blog">
+    <select id="queryByUserId" resultType="Blog">
         select
             id, title, mdcontent, htmlcontent, summary, publishdata, state, pageview, likecount
         from turingblog.blog
@@ -69,6 +69,7 @@
     <update id="updateBlog">
         update turingblog.blog
         <set>
+
             <if test="title != null and title != ''">
                 title = #{title},
             </if>
@@ -99,17 +100,16 @@
         </set>
         where id = #{id}
     </update>
-
     <!--更改博客浏览量-->
     <update id="changeView">
         update turingblog
         set pageview = pageview + 1
-        where id = #{blogId}
+        where uid = #{blogId}
     </update>
 
     <!--删除博客-->
     <delete id="deleteBlog">
-        delete from turingblog.blog where id = #{blogId}
+        delete from turingblog.blog where id = #{id}
     </delete>
 
 </mapper>

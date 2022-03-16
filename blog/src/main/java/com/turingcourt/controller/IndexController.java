@@ -16,6 +16,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.UUID;
 
+import static com.turingcourt.config.json.ResultCode.*;
+
 /**
  * 通用操作
  *
@@ -114,7 +116,12 @@ public class IndexController {
     @GetMapping("/verifyAnswer")
     @ApiOperation("验证密保答案")
     public JsonResult verifyAnswer(String username, String answer) {
-        return null;
+        Boolean aBoolean = userLoginService.verifyAnswer(username, answer);
+        if (aBoolean){
+            return ResultTool.success();
+        }else {
+            return ResultTool.fail(USER_ANSWER_ERROR);
+        }
     }
 
     /**
@@ -127,7 +134,12 @@ public class IndexController {
     @PostMapping("/changePassword")
     @ApiOperation("更改密码")
     public JsonResult changePassword(String username, String password) {
-        return null;
+        Boolean aBoolean = userLoginService.changePassword(username, password);
+        if (aBoolean){
+            return ResultTool.success();
+        }else {
+            return ResultTool.fail();
+        }
     }
 
 }

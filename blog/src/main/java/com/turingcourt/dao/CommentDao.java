@@ -47,6 +47,13 @@ public interface CommentDao {
     int deleteComment(Long commentId);
 
     /**
+     * 根据博客id删除评论
+     * @param bid
+     * @return
+     */
+    int deleteCommentByBid(Long bid);
+
+    /**
      * 删除评论的子评论
      *
      * @param tree 树型

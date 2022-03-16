@@ -40,6 +40,11 @@
         delete from turingblog.comment where id = #{commentId}
     </delete>
 
+    <!--根据博客id删除评论-->
+    <delete id="deleteCommentByBid">
+        delete from turingblog.comment where id = #{bid}
+    </delete>
+
     <!--删除评论的子评论-->
     <delete id="deleteChildComment">
         delete from turingblog.comment where treepath like #{tree};

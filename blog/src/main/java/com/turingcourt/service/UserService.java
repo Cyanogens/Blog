@@ -63,7 +63,7 @@ public interface UserService {
      * 博客下所有标签关系也要删除
      * 博客下所有点赞关系也要删除
      *
-     * @param blogId 用户id
+     * @param blogId 博客id
      * @return 是否删除成功
      */
     Boolean deleteUserBlog(Long blogId);
