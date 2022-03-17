@@ -19,8 +19,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.UUID;
 
-import static com.turingcourt.config.json.ResultCode.COMMON_FAIL;
-
 /**
  * 通用操作
  *
@@ -116,7 +114,7 @@ public class IndexController {
     @ApiOperation("验证密保答案")
     public JsonResult verifyAnswer(String username, String answer) {
         Boolean verify = userLoginService.verifyAnswer(username, answer);
-        return verify ? ResultTool.success() : ResultTool.fail(COMMON_FAIL);
+        return verify ? ResultTool.success() : ResultTool.fail();
     }
 
     /**
@@ -130,7 +128,7 @@ public class IndexController {
     @ApiOperation("更改密码")
     public JsonResult changePassword(String username, String password) {
         Boolean change = userLoginService.changePassword(username, password);
-        return change ? ResultTool.success() : ResultTool.fail(COMMON_FAIL);
+        return change ? ResultTool.success() : ResultTool.fail();
     }
 
 }

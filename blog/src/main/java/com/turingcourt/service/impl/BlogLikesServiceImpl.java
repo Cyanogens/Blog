@@ -20,8 +20,8 @@ public class BlogLikesServiceImpl implements BlogLikesService {
 
     @Override
     public Boolean likeBlog(Long blogId, Integer userId) {
-        Boolean aBoolean = blogLikesDao.queryLike(new BlogLikes(null, blogId, userId));
-        if (aBoolean) {
+        Boolean isLiked = blogLikesDao.queryLike(new BlogLikes(null, blogId, userId));
+        if (isLiked) {
             int unlike = blogLikesDao.unlikeBlog(new BlogLikes(null, blogId, userId));
             return unlike > 0;
         } else {

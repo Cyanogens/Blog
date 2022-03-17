@@ -5,8 +5,8 @@ import com.github.pagehelper.PageInfo;
 import com.turingcourt.dao.CommentDao;
 import com.turingcourt.dao.UserDao;
 import com.turingcourt.entity.Comment;
-import com.turingcourt.entity.User;
 import com.turingcourt.service.CommentService;
+import com.turingcourt.utils.ToVO;
 import com.turingcourt.vo.CommentVO;
 import org.springframework.stereotype.Service;
 
@@ -29,15 +29,16 @@ public class CommentServiceImpl implements CommentService {
     @Resource
     private UserDao userDao;
 
+    @Resource
+    private ToVO to;
+
     @Override
     public PageInfo<CommentVO> getAllComment(Long blogId, int pageNo, int pageSize) {
         PageHelper.startPage(pageNo, pageSize);
         List<Comment> comments = commentDao.queryComment(blogId);
         List<CommentVO> commentVOS = new ArrayList<>();
         for (Comment comment : comments) {
-            User user = userDao.getUser(comment.getUid());
-            commentVOS.add(new CommentVO(comment.getId(), user.getUsername(), comment.getContent(),
-                    comment.getCreateDate(), comment.getLikeCount()));
+            commentVOS.add(to.commentToVO(comment));
         }
         return new PageInfo<>(commentVOS);
     }
@@ -81,7 +82,8 @@ public class CommentServiceImpl implements CommentService {
         //删除评论
         int deleteComment = commentDao.deleteComment(id);
         //删除子评论
-        int deleteChildComment = commentDao.deleteChildComment(treePath + "%");
-        return deleteChildComment > 0 && deleteComment > 0;
+        commentDao.deleteChildComment(treePath + "%");
+        //有点评论可能没有子评论,故只判断删除的评论数
+        return deleteComment > 0;
     }
 }

@@ -73,7 +73,7 @@ public class CommentController {
     public JsonResult replyComment(CommentVO commentVO, Long pid) {
         Boolean insert = commentService.replyComment(commentVO, pid);
 
-        return insert ? ResultTool.success() : ResultTool.fail(COMMON_FAIL);
+        return insert ? ResultTool.success() : ResultTool.fail();
     }
 
     /**
@@ -86,6 +86,6 @@ public class CommentController {
     @ApiOperation("删除评论")
     public JsonResult deleteComment(Long id) {
         Boolean delete = commentService.deleteComment(id);
-        return delete ? ResultTool.success() : ResultTool.fail(COMMON_FAIL);
+        return delete ? ResultTool.success() : ResultTool.fail();
     }
 }

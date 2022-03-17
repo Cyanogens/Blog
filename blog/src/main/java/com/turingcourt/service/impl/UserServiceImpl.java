@@ -6,7 +6,7 @@ import com.turingcourt.dao.*;
 import com.turingcourt.entity.Blog;
 import com.turingcourt.entity.User;
 import com.turingcourt.service.UserService;
-import com.turingcourt.utils.BlogToVO;
+import com.turingcourt.utils.ToVO;
 import com.turingcourt.vo.BlogVO;
 import org.springframework.stereotype.Service;
 
@@ -33,7 +33,7 @@ public class UserServiceImpl implements UserService {
     @Resource
     private BlogLikesDao blogLikesDao;
     @Resource
-    private BlogToVO to;
+    private ToVO to;
 
     @Override
     public User getUser(Integer userId) {

@@ -7,7 +7,7 @@ import com.turingcourt.dao.UserDao;
 import com.turingcourt.entity.Blog;
 import com.turingcourt.entity.User;
 import com.turingcourt.service.BlogService;
-import com.turingcourt.utils.BlogToVO;
+import com.turingcourt.utils.ToVO;
 import com.turingcourt.vo.BlogVO;
 import org.springframework.stereotype.Service;
 
@@ -35,7 +35,7 @@ public class BlogServiceImpl implements BlogService {
     private UserDao userDao;
 
     @Resource
-    private BlogToVO to;
+    private ToVO to;
 
     /**
      * 先访问之后加一，然后再得到实体类，进行查找

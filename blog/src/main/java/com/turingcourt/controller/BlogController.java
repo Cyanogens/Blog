@@ -55,7 +55,7 @@ public class BlogController {
         if (pageInfo != null) {
             return ResultTool.success(pageInfo);
         }
-        return ResultTool.fail(ResultCode.COMMON_FAIL);
+        return ResultTool.fail();
     }
 
     /**
@@ -71,7 +71,7 @@ public class BlogController {
         if (blogVO != null) {
             return ResultTool.success(blogVO);
         }
-        return ResultTool.fail(ResultCode.COMMON_FAIL);
+        return ResultTool.fail();
     }
 
     /**
@@ -87,7 +87,7 @@ public class BlogController {
         if (blogId > 0) {
             return ResultTool.success(blogId);
         }
-        return ResultTool.fail(ResultCode.COMMON_FAIL);
+        return ResultTool.fail();
     }
 
     /**
@@ -105,7 +105,7 @@ public class BlogController {
         if (pageInfo != null) {
             return ResultTool.success(pageInfo);
         }
-        return ResultTool.fail(ResultCode.COMMON_FAIL);
+        return ResultTool.fail();
     }
 
 }

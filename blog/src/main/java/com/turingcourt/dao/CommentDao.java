@@ -48,8 +48,9 @@ public interface CommentDao {
 
     /**
      * 根据博客id删除评论
-     * @param bid
-     * @return
+     *
+     * @param bid 博客id
+     * @return 影响行数
      */
     int deleteCommentByBid(Long bid);
 

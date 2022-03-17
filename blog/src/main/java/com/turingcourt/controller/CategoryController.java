@@ -1,7 +1,6 @@
 package com.turingcourt.controller;
 
 import com.turingcourt.config.json.JsonResult;
-import com.turingcourt.config.json.ResultCode;
 import com.turingcourt.config.json.ResultTool;
 import com.turingcourt.entity.Category;
 import com.turingcourt.service.CategoryService;
@@ -42,7 +41,7 @@ public class CategoryController {
             return ResultTool.success(categories);
         }
 
-        return ResultTool.fail(ResultCode.COMMON_FAIL);
+        return ResultTool.fail();
     }
 
 }

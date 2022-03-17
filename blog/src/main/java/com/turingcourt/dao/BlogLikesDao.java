@@ -38,9 +38,10 @@ public interface BlogLikesDao {
 
     /**
      * 通过博客id删除博客点赞
-     * @param bid
-     * @return
+     *
+     * @param bid 博客id
+     * @return 影响行数
      */
-    int deleteByBid( Long bid);
+    int deleteByBid(Long bid);
 
 }
