@@ -22,7 +22,9 @@
     <ol class="blog-preview-list">
       <li v-for="item in list"
           :key="item.id"
-          class="blog-preview">
+          class="blog-preview"
+          :id="item.id"
+          @click.stop="enterDetails($event)">
         <router-link to="/blog"
                      class="link">
           <div class="pre">
@@ -32,11 +34,11 @@
             <!-- 预览内容 -->
             <h2 class="blog-title">{{ item.title }}</h2>
             <!-- 文章预览内容 -->
-            <p class="blog-article">{{ item.txt }}</p>
+            <p class="blog-article">{{ item.mdContent }}</p>
             <!-- 标签列表 -->
             <ul class="tag-list">
               <li class="tag"
-                  v-for="(it, index) in item.tag.slice(0, 4)"
+                  v-for="(it, index) in item.categoryNames.slice(0, 4)"
                   :key="index">
                 <el-tag :type="color[index]">{{ it }}</el-tag>
               </li>
@@ -49,7 +51,7 @@
     <!-- 近期发布 -->
     <ul class="tagAll-list">
       <li v-for="(item,index) in tag_list"
-          :key=index>
+          :key="index">
         <el-tag :type="color[index % 4]">{{ item }}</el-tag>
       </li>
     </ul>
@@ -68,6 +70,9 @@
 <script>
 import Head from '@/components/Head.vue'
 import axios from 'axios'
+import bus from '@/components/eventBus.js'
+
+
 export default {
   name: 'Index',
   components: {
@@ -76,10 +81,7 @@ export default {
   data () {
     return {
       // 所有标签
-      tag_list: [
-        'IDEA', 'JAVA', 'Vue', '数据结构', 'IDEA', 'JAVA', 'Vue', '数据结构', 'IDEA', 'JAVA', 'Vue', '数据结构',
-        'IDEA', 'JAVA', 'Vue', '数据结构', 'IDEA', 'JAVA', 'Vue', '数据结构',
-      ],
+      tag_list: [],
       // 博客总数目
       total: 100,
       // 当前页
@@ -87,14 +89,7 @@ export default {
       // 每页展示的数目
       pageSize: 10,
       color: ['', 'success', 'warning', 'danger'],
-      list: [
-        { img: 'img', title: '好用的IDEA快捷键大全', txt: '个人提取示范点水电费水电费水电费圣诞福利就从VB都发了的个人提取示范点水电费水电费水电费圣诞福利就从VB都发了的个人提取示范点水电费水电费水电费圣诞福利就从VB都发了的个人提取示范点水电费水电费水电费圣诞福利就从VB都发了的个人提取示范点水电费水电费水电费圣诞福利就从VB都发了的个人提取示范点水电费水电费水电费圣诞福利就从VB都发了的个人提取示范点水电费水电费水电费圣诞福利就从VB都发了的个人提取示范点水电费水电费水电费圣诞福利就从VB都发了的个人提取示范点水电费水电费水电费圣诞福利就从VB都发了的', date: 'now', id: 1, tag: ['IDEA', 'JAVA', 'Vue', '数据结构', '数据结构'] },
-        { img: 'img', title: '好用的IDEA快捷键大全', txt: '个人提取示范点水电费水电费水电费圣诞福利就从VB都发了的个人提取示范点水电费水电费水电费圣诞福利就从VB都发了的个人提取示范点水电费水电费水电费圣诞福利就从VB都发了的个人提取示范点水电费水电费水电费圣诞福利就从VB都发了的个人提取示范点水电费水电费水电费圣诞福利就从VB都发了的个人提取示范点水电费水电费水电费圣诞福利就从VB都发了的个人提取示范点水电费水电费水电费圣诞福利就从VB都发了的个人提取示范点水电费水电费水电费圣诞福利就从VB都发了的个人提取示范点水电费水电费水电费圣诞福利就从VB都发了的', date: 'now', id: 2, tag: ['IDEA', 'JAVA', 'Vue', '数据结构'] },
-        { img: 'img', title: '好用的IDEA快捷键大全', txt: '个人提取示范点水电费水电费水电费圣诞福利就从VB都发了的个人提取示范点水电费水电费水电费圣诞福利就从VB都发了的个人提取示范点水电费水电费水电费圣诞福利就从VB都发了的个人提取示范点水电费水电费水电费圣诞福利就从VB都发了的个人提取示范点水电费水电费水电费圣诞福利就从VB都发了的个人提取示范点水电费水电费水电费圣诞福利就从VB都发了的个人提取示范点水电费水电费水电费圣诞福利就从VB都发了的个人提取示范点水电费水电费水电费圣诞福利就从VB都发了的个人提取示范点水电费水电费水电费圣诞福利就从VB都发了的', date: 'now', id: 3, tag: ['IDEA', 'JAVA', 'Vue', '数据结构'] },
-        { img: 'img', title: '好用的IDEA快捷键大全', txt: '个人提取示范点水电费水电费水电费圣诞福利就从VB都发了的个人提取示范点水电费水电费水电费圣诞福利就从VB都发了的个人提取示范点水电费水电费水电费圣诞福利就从VB都发了的个人提取示范点水电费水电费水电费圣诞福利就从VB都发了的个人提取示范点水电费水电费水电费圣诞福利就从VB都发了的个人提取示范点水电费水电费水电费圣诞福利就从VB都发了的个人提取示范点水电费水电费水电费圣诞福利就从VB都发了的个人提取示范点水电费水电费水电费圣诞福利就从VB都发了的个人提取示范点水电费水电费水电费圣诞福利就从VB都发了的', date: 'now', id: 4, tag: ['IDEA', 'JAVA', 'Vue', '数据结构'] },
-        { img: 'img', title: '好用的IDEA快捷键大全', txt: '个人提取示范点水电费水电费水电费圣诞福利就从VB都发了的个人提取示范点水电费水电费水电费圣诞福利就从VB都发了的个人提取示范点水电费水电费水电费圣诞福利就从VB都发了的个人提取示范点水电费水电费水电费圣诞福利就从VB都发了的个人提取示范点水电费水电费水电费圣诞福利就从VB都发了的个人提取示范点水电费水电费水电费圣诞福利就从VB都发了的个人提取示范点水电费水电费水电费圣诞福利就从VB都发了的个人提取示范点水电费水电费水电费圣诞福利就从VB都发了的个人提取示范点水电费水电费水电费圣诞福利就从VB都发了的', date: 'now', id: 5, tag: ['IDEA', 'JAVA', 'Vue', '数据结构'] },
-        { img: 'img', title: '好用的IDEA快捷键大全', txt: '个人提取示范点水电费水电费水电费圣诞福利就从VB都发了的个人提取示范点水电费水电费水电费圣诞福利就从VB都发了的个人提取示范点水电费水电费水电费圣诞福利就从VB都发了的个人提取示范点水电费水电费水电费圣诞福利就从VB都发了的个人提取示范点水电费水电费水电费圣诞福利就从VB都发了的个人提取示范点水电费水电费水电费圣诞福利就从VB都发了的个人提取示范点水电费水电费水电费圣诞福利就从VB都发了的个人提取示范点水电费水电费水电费圣诞福利就从VB都发了的个人提取示范点水电费水电费水电费圣诞福利就从VB都发了的', date: 'now', id: 6, tag: ['IDEA', 'JAVA', 'Vue', '数据结构'] },
-      ]
+      list: []
     }
   },
   methods: {
@@ -112,34 +107,50 @@ export default {
 
     // ? 获取所有博客列表
     async getBlogList () {
-      const { data: res } = await axios.post('http://localhost:8080/blog/random', {
-        pageNo: this.pageNo,
-        pageSize: this.pageSize
-      })
-      // console.log(res);
-      //   console.log('11');
-      if (res.errorCode === 200) {
-        this.list = res.list;
-        console.log(this.list);
+      try {
+        const { data: res } = await axios.get('http://localhost:8080/blog/random', {
+          params: {
+            pageNo: this.pageNo,
+            pageSize: this.pageSize
+          }
+        })
+        // console.log(res);
+        //   console.log('11');
+        if (res.code === 200) { // ! 返回成功
+          this.list = res.data.list;
+          console.log(this.list);
+        }
+      } catch (error) {
+        console.log(error);
       }
     },
 
     // ? 获取所有标签列表
     async getTagList () {
-      const { data: res } = await axios.get('http://localhost:8080/category/getAll')
-      //   console.log(res);
-      if (res.errorCode === 200) {
-        this.tag_list = this.unique(this.tag_list);
-        console.log(this.tag_list);
+      try {
+        const { data: res } = await axios.get('http://localhost:8080/category/getAll')
+        //   console.log(res);
+        if (res.code === 200) { // ! 返回成功
+          this.tag_list = res.data.list
+          this.tag_list = this.unique(this.tag_list);
+          console.log(this.tag_list);
+        }
+      } catch (error) {
+        console.log(error);
       }
+    },
+
+    // ? 进入博客详情页，向博客详情页传值
+    enterDetails (e) {
+      //   console.log(e.currentTarget.id);
+      const id = e.currentTarget.id;
+      bus.$emit('getBlogId', id);
     }
+
   },
   created () {
-    // return this.getList();
-    this.getTagList() // todo 获取所有标签
-    this.getBlogList() // todo 获取所有博客
-    // console.log();
-
+    this.getTagList() // * 获取所有标签
+    this.getBlogList() // * 获取所有博客
   }
 }
 </script>
@@ -156,10 +167,12 @@ export default {
   // background-position: center top;
   background-color: #f5f6f7;
   overflow: auto;
+  z-index: -99;
   #particles-js {
     width: 100%;
     height: 100%;
     position: absolute;
+    z-index: -9;
   }
 }
 .blog-preview-list {
@@ -178,6 +191,7 @@ export default {
       width: 100%;
       height: 100%;
       padding: 10px;
+      z-index: 9;
     }
     .link {
       display: block;
@@ -239,6 +253,7 @@ export default {
 
   .pages {
     text-align: center;
+    z-index: 9;
   }
 }
 
