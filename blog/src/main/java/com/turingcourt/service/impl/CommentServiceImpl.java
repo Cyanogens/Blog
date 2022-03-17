@@ -1,12 +1,19 @@
 package com.turingcourt.service.impl;
 
+import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.turingcourt.dao.CommentDao;
+import com.turingcourt.dao.UserDao;
+import com.turingcourt.entity.Comment;
 import com.turingcourt.service.CommentService;
+import com.turingcourt.utils.ToVO;
 import com.turingcourt.vo.CommentVO;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  * (Comment)表服务实现类
@@ -19,23 +26,64 @@ public class CommentServiceImpl implements CommentService {
     @Resource
     private CommentDao commentDao;
 
+    @Resource
+    private UserDao userDao;
+
+    @Resource
+    private ToVO to;
+
     @Override
     public PageInfo<CommentVO> getAllComment(Long blogId, int pageNo, int pageSize) {
-        return null;
+        PageHelper.startPage(pageNo, pageSize);
+        List<Comment> comments = commentDao.queryComment(blogId);
+        List<CommentVO> commentVOS = new ArrayList<>();
+        for (Comment comment : comments) {
+            commentVOS.add(to.commentToVO(comment));
+        }
+        return new PageInfo<>(commentVOS);
     }
 
     @Override
     public Boolean insertComment(CommentVO commentVO, Long blogId) {
-        return null;
+
+        Comment comment = Comment.builder()
+                .pid(-1L).bid(blogId)
+                .uid(userDao.getUserByName(commentVO.getUsername()).getId())
+                .content(commentVO.getContent()).createDate(new Date())
+                .likeCount(0L).treePath(-1 + "/")
+                .build();
+
+        return commentDao.insert(comment) > 0;
     }
 
     @Override
     public Boolean replyComment(CommentVO commentVO, Long pid) {
-        return null;
+        //获得要回复的评论
+        Comment comment1 = commentDao.getComment(pid);
+        //获得博客id
+        Long blogId = comment1.getBid();
+        //获得要回复的评论的树型
+        String preTreePath = comment1.getTreePath();
+
+        Comment comment = Comment.builder()
+                .pid(pid).bid(blogId)
+                .uid(userDao.getUserByName(commentVO.getUsername()).getId())
+                .content(commentVO.getContent()).createDate(new Date())
+                .likeCount(0L).treePath(preTreePath + pid + "/")
+                .build();
+
+        return commentDao.insert(comment) > 0;
     }
 
     @Override
     public Boolean deleteComment(Long id) {
-        return null;
+        Comment comment = commentDao.getComment(id);
+        String treePath = comment.getTreePath();
+        //删除评论
+        int deleteComment = commentDao.deleteComment(id);
+        //删除子评论
+        commentDao.deleteChildComment(treePath + "%");
+        //有点评论可能没有子评论,故只判断删除的评论数
+        return deleteComment > 0;
     }
 }

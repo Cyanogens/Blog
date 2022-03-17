@@ -1,6 +1,7 @@
 package com.turingcourt.service.impl;
 
 import com.turingcourt.dao.CommentLikesDao;
+import com.turingcourt.entity.CommentLikes;
 import com.turingcourt.service.CommentLikesService;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +20,14 @@ public class CommentLikesServiceImpl implements CommentLikesService {
 
     @Override
     public Boolean likeComment(Long commentId, Integer userId) {
-        return null;
+
+        Boolean aBoolean = commentLikesDao.queryLike(new CommentLikes(null, commentId, userId));
+        if (aBoolean) {
+            int unlike = commentLikesDao.unlikeComment(new CommentLikes(null, commentId, userId));
+            return unlike > 0;
+        } else {
+            int like = commentLikesDao.likeComment(new CommentLikes(null, commentId, userId));
+            return like > 0;
+        }
     }
 }

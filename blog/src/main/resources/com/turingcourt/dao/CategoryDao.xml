@@ -5,60 +5,34 @@
     <resultMap id="BaseResultMap" type="com.turingcourt.entity.Category">
         <!--@Table category-->
         <result property="id" column="id" jdbcType="INTEGER"/>
-        <result property="categoryname" column="categoryname" jdbcType="VARCHAR"/>
+        <result property="categoryName" column="categoryname" jdbcType="VARCHAR"/>
     </resultMap>
 
-    <!--查询单个-->
-    <select id="queryById" resultMap="BaseResultMap">
-        select
-          id, categoryname
-        from turingblog.category
-        where id = #{id}
-    </select>
-
-    <!--查询指定行数据-->
-    <select id="queryAllByLimit" resultMap="BaseResultMap">
-        select
-          id, categoryname
-        from turingblog.category
-        limit #{offset}, #{limit}
-    </select>
-
-    <!--通过实体作为筛选条件查询-->
-    <select id="queryAll" resultMap="BaseResultMap">
-        select
-          id, categoryname
-        from turingblog.category
-        <where>
-            <if test="id != null">
-                and id = #{id}
-            </if>
-            <if test="categoryname != null and categoryname != ''">
-                and categoryname = #{categoryname}
-            </if>
-        </where>
-    </select>
-
-    <!--新增所有列-->
-    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
-        insert into turingblog.category(categoryname)
-        values (#{categoryname})
+    <!--添加标签内容-->
+    <insert id="insertCategory" keyProperty="id" useGeneratedKeys="true">
+        insert into turingblog.category(categoryName) values (#{categoryName});
     </insert>
 
-    <!--通过主键修改数据-->
-    <update id="update">
+    <!--修改标签内容-->
+    <update id="updateCategory">
         update turingblog.category
         <set>
             <if test="categoryname != null and categoryname != ''">
-                categoryname = #{categoryname},
+                categoryname = #{categoryName},
             </if>
         </set>
         where id = #{id}
     </update>
 
-    <!--通过主键删除-->
-    <delete id="deleteById">
-        delete from turingblog.category where id = #{id}
-    </delete>
+    <select id="queryByBlogId" resultType="category">
+        select
+            cate.id, cate.categoryname
+        from turingblog.blog a
+        inner join turingblog.category cate
+        inner join turingblog.blog_category bc
+        on a.id = bc.bid and bc.cid = cate.id
+        WHERE a.id LIKE #{blogId}
+        order by rand()
+    </select>
 
 </mapper>

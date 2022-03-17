@@ -15,10 +15,10 @@ public interface UserDao {
     /**
      * 查询用户信息
      *
-     * @param id 用户id
+     * @param userId 用户id
      * @return 用户信息
      */
-    User getUser(Integer id);
+    User getUser(Integer userId);
 
     /**
      * 查询用户信息
@@ -31,11 +31,11 @@ public interface UserDao {
     /**
      * 验证密保答案
      *
-     * @param answer   密保答案
+     * @param ans      密保答案
      * @param username 用户名
      * @return 符合条件的用户
      */
-    User verifyAnswer(String username, String answer);
+    User verifyAnswer(String username, String ans);
 
     /**
      * 用户注册

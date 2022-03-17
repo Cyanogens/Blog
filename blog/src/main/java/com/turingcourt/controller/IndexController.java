@@ -8,7 +8,10 @@ import com.turingcourt.service.UserLoginService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.FileCopyUtils;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -39,12 +42,8 @@ public class IndexController {
     @PostMapping("/register")
     @ApiOperation("用户注册")
     public JsonResult register(User user) {
-        boolean registered = userLoginService.register(user);
-        if (registered) {
-            return ResultTool.success();
-        } else {
-            return ResultTool.fail();
-        }
+        Boolean registered = userLoginService.register(user);
+        return registered ? ResultTool.success() : ResultTool.fail();
     }
 
     /**
@@ -107,14 +106,15 @@ public class IndexController {
     /**
      * 验证密保答案
      *
-     * @param answer 密保答案
+     * @param answer   密保答案
      * @param username 用户名
      * @return 答案是否正确
      */
     @GetMapping("/verifyAnswer")
     @ApiOperation("验证密保答案")
     public JsonResult verifyAnswer(String username, String answer) {
-        return null;
+        Boolean verify = userLoginService.verifyAnswer(username, answer);
+        return verify ? ResultTool.success() : ResultTool.fail();
     }
 
     /**
@@ -127,7 +127,8 @@ public class IndexController {
     @PostMapping("/changePassword")
     @ApiOperation("更改密码")
     public JsonResult changePassword(String username, String password) {
-        return null;
+        Boolean change = userLoginService.changePassword(username, password);
+        return change ? ResultTool.success() : ResultTool.fail();
     }
 
 }

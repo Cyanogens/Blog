@@ -59,4 +59,10 @@ public class BlogVO {
      */
     private Long pageView;
 
+    /**
+     * 用户是否点赞
+     * true为已点赞
+     * false为未点赞
+     */
+    private Boolean isLiked;
 }

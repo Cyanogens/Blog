@@ -36,4 +36,5 @@ public interface CommentLikesDao {
      */
     int unlikeComment(CommentLikes commentLikes);
 
+
 }

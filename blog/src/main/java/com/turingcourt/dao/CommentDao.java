@@ -16,12 +16,19 @@ public interface CommentDao {
 
     /**
      * 根据博客id查询评论
-     * 封装成comment对象
      *
-     * @param comment 实例对象
+     * @param blogId 实例对象
      * @return 对象列表
      */
-    List<Comment> queryAll(Comment comment);
+    List<Comment> queryComment(Long blogId);
+
+    /**
+     * 查询单条评论
+     *
+     * @param commentId 评论id
+     * @return 评论类
+     */
+    Comment getComment(Long commentId);
 
     /**
      * 发布评论/回复
@@ -34,10 +41,18 @@ public interface CommentDao {
     /**
      * 删除评论
      *
-     * @param id 评论id
+     * @param commentId 评论id
      * @return 影响行数
      */
-    int deleteComment(Long id);
+    int deleteComment(Long commentId);
+
+    /**
+     * 根据博客id删除评论
+     *
+     * @param bid 博客id
+     * @return 影响行数
+     */
+    int deleteCommentByBid(Long bid);
 
     /**
      * 删除评论的子评论

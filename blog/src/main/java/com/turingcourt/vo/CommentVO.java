@@ -15,6 +15,11 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CommentVO {
+
+    /**
+     * 评论id
+     */
+    private Long id;
     /**
      * 用户名
      */
@@ -31,4 +36,10 @@ public class CommentVO {
      * 点赞数
      */
     private Long likeCount;
+    /**
+     * 是否点赞
+     * true为已点赞
+     * false为未点赞
+     */
+    private Boolean isLiked;
 }

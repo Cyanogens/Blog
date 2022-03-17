@@ -20,12 +20,12 @@ public class CommentLikes implements Serializable {
 
     private Long id;
     /**
-    * 评论id
-    */
+     * 评论id
+     */
     private Long cid;
     /**
-    * 用户id
-    */
+     * 用户id
+     */
     private Integer uid;
 
 }

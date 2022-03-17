@@ -27,7 +27,7 @@ public interface CommentService {
      *
      * @param commentVO 评论内容
      * @param blogId    评论的博客id
-     * @return 是否发步成功
+     * @return 是否发布成功
      */
     Boolean insertComment(CommentVO commentVO, Long blogId);
 
@@ -42,6 +42,8 @@ public interface CommentService {
 
     /**
      * 删除评论
+     * 也要删除其子评论
+     * 评论下所有点赞关系也要删除
      *
      * @param id 评论的id
      * @return 是否删除成功

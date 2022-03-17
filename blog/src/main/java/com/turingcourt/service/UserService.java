@@ -13,12 +13,20 @@ import com.turingcourt.vo.BlogVO;
 public interface UserService {
 
     /**
-     * 查询用户信息
+     * 通过用户id查询用户信息
      *
      * @param userId 用户id
      * @return 用户信息
      */
     User getUser(Integer userId);
+
+    /**
+     * 通过用户名查询用户信息
+     *
+     * @param userName 用户名
+     * @return 用户信息
+     */
+    User getUserByName(String userName);
 
     /**
      * 更改用户信息
@@ -51,8 +59,11 @@ public interface UserService {
 
     /**
      * 删除用户发布的博客
+     * 博客下所有评论及点赞也要删除
+     * 博客下所有标签关系也要删除
+     * 博客下所有点赞关系也要删除
      *
-     * @param blogId 用户id
+     * @param blogId 博客id
      * @return 是否删除成功
      */
     Boolean deleteUserBlog(Long blogId);

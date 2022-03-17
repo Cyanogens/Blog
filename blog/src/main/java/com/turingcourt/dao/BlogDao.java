@@ -17,23 +17,23 @@ public interface BlogDao {
     /**
      * 查询博客详情
      *
-     * @param blogId 主键
-     * @return 实例对象
+     * @param blogId 博客id
+     * @return 博客内容
      */
     Blog getBlog(Long blogId);
 
     /**
      * 查询用户发布的博客列表
      *
-     * @param blog 实例对象
-     * @return 对象列表
+     * @param userId 用户id
+     * @return 博客列表
      */
-    List<Blog> queryAll(Blog blog);
+    List<Blog> queryByUserId(Integer userId);
 
     /**
      * 发布博客
      *
-     * @param blog 实例对象
+     * @param blog 博客内容
      * @return 影响行数
      */
     int insertBlog(Blog blog);
@@ -49,10 +49,10 @@ public interface BlogDao {
     /**
      * 删除博客
      *
-     * @param id 博客id
+     * @param blogId 博客id
      * @return 影响行数
      */
-    int deleteBlog(Long id);
+    int deleteBlog(Long blogId);
 
     /**
      * 获取随机博客列表
@@ -84,5 +84,6 @@ public interface BlogDao {
      * @return 博客集合
      */
     List<Blog> queryByCategory(String key);
+
 
 }
