@@ -8,7 +8,7 @@ import EditBlog from '@/components/EditBlog.vue'
 import QA from '@/components/QA.vue'
 import Hot from '@/components/Hot.vue'
 import Special from '@/components/Special.vue'
-import BlogDetails from '@/components/BlogDetails.vue';
+import BlogDetails from '@/components/BlogDetails.vue'
 Vue.use(VueRouter)
 
 const routes = [
@@ -75,12 +75,13 @@ const routes = [
     meta: {
       title: '专区',
     },
-  },{
+  },
+  {
     path: '/blog',
     name: 'BlogDetails',
     component: BlogDetails,
     meta: {
-      title: '专区',
+      title: '博客详情',
     },
   },
 ]

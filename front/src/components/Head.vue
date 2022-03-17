@@ -130,7 +130,7 @@
 		width: 284px;
 		height: 30px;
 		// margin-left: 140px;
-		margin: 10px 0 10px 785px;
+		margin: 10px 0 10px 910px;
 		// margin-top: 10px;
 	}
 
@@ -184,7 +184,7 @@
 	.menu {
 		position: absolute;
 		top: 0;
-		right: 175px;
+		right: 184px;
 		width: 80px;
 		height: 100%;
 	}
