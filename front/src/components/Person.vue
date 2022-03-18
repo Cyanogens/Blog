@@ -26,11 +26,13 @@
         <input type="radio"
                class="ipt1"
                id="boy"
+               value="boy"
                v-model="sex"
                name="sex"> <label for="boy">男</label>
         <input type="radio"
                class="ipt2"
                id="girl"
+               value="girl"
                v-model="sex"
                name="sex"> <label for="girl">女</label>
 
@@ -38,10 +40,10 @@
                       prop="phone">
           <el-input v-model.number="ruleForm.phone"></el-input>
         </el-form-item>
-        <!-- <el-form-item>
+        <el-form-item>
           <el-button type="primary"
                      @click="submitForm('ruleForm')">保存信息</el-button>
-        </el-form-item> -->
+        </el-form-item>
       </el-form>
 
     </div>
@@ -72,7 +74,7 @@ export default {
     };
     return {
 
-      sex: '男', // * 性别
+      sex: 'boy', // * 性别
       ruleForm: {
         userName: '',
         phone: '',
@@ -96,7 +98,10 @@ export default {
     submitForm (formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          alert('submit!');
+          this.$message({
+            message: '修改成功',
+            type: 'success'
+          });
         } else {
           console.log('error submit!!');
           return false;

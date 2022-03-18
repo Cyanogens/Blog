@@ -109,6 +109,8 @@ export default {
   },
   data () {
     return {
+      imgUrlFromServer: '#',
+      base64: '', // ! 图片base64字符串
       text: '',
       title: '',
       dynamicTags: [], // ! 标签列表
@@ -205,15 +207,32 @@ export default {
       // 拿到 files 之后上传到文件服务器，然后向编辑框中插入对应的内容
       console.log(files);
 
-      // 此处只做示例
+      // ! 上传图片，接受图片地址
+      let file = files[0];
+      let reader = new FileReader();
+      // 读取图片
+      reader.readAsDataURL(file);
+      reader.onloadend = (e) => {
+        img.src = e.target.result
+        // 这里的e.target就是reader
+        // console.log(reader.result)
+        // reader.result就是图片的base64字符串
+        this.base64 = reader.result
+      }
+
+      uploadImg(); // * 调用接口，并接受图片地址
+
       insertImage({
-        url:
-          'https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1269952892,3525182336&fm=26&gp=0.jpg',
-        desc: '七龙珠',
-        // width: 'auto',
-        // height: 'auto',
+        url: this.imgUrlFromServer
       });
     },
+    uploadImg () {
+      axios.post('http://localhost:8080/uploadImg', {
+        image: this.base64
+      }).then(response => {
+        this.imgUrlFromServer = response.data.imgUrl
+      })
+    }
   }
 };
 </script>
