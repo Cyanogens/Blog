@@ -161,10 +161,6 @@ export default {
   top: 0;
   height: 100%;
   width: 100%;
-  // background: url(@/assets/images/background-1.jpg) no-repeat;
-  // background-size: 100% 100%;
-  // background-attachment: fixed;
-  // background-position: center top;
   background-color: #f5f6f7;
   overflow: auto;
   z-index: -99;

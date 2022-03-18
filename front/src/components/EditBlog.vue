@@ -3,6 +3,18 @@
 
     <Head></Head>
 
+    <!-- 标题 -->
+
+    <div class="title">
+      <span class="title-txt">
+        标题
+      </span>
+      <el-input v-model="title"
+                placeholder="请输入标题"
+                class="title-ipt">
+      </el-input>
+
+    </div>
     <!-- 动态添加标签 -->
     <div class="tags">
       <el-tag :key="tag"
@@ -32,7 +44,7 @@
       <v-md-editor v-model="text"
                    height="505px"></v-md-editor>
       <div class="commit"
-           @click="pushBlog">
+           @click="push">
         <span>
           发布
         </span>
@@ -95,9 +107,17 @@ export default {
   data () {
     return {
       text: '',
+      title: '',
       dynamicTags: [], // ! 标签列表
       inputVisible: false,
-      inputValue: ''
+      inputValue: '',
+      blog: { // ! 博客内容
+        mdContent: '', // * 博客内容--Markdown格式
+        categoryNames: [], // * 标签数组
+        userName: '', // * 用户名--未完成登录等功能，默认值
+        publishData: '', // * 发布日期
+        title: '', // * 博客标题
+      },
     };
   },
   methods: {
@@ -123,15 +143,39 @@ export default {
 
     // ? 发布博客
     push () {
-      //   console.log(this.text);
+      this.blog.categoryNames = this.dynamicTags;
+      this.blog.mdContent = this.text;
+      let yy = new Date().getFullYear();
+      let mm = new Date().getMonth() + 1;
+      let dd = new Date().getDate();
+      let hh = new Date().getHours();
+      let mf = new Date().getMinutes() < 10 ? '0' + new Date().getMinutes() : new Date().getMinutes();
+      let ss = new Date().getSeconds() < 10 ? '0' + new Date().getSeconds() : new Date().getSeconds();
+      this.blog.publishData = yy + '-' + mm + '-' + dd + ' ' + hh + ':' + mf + ':' + ss;
+
+      this.blog.userName = 'vivi';
+      this.blog.title = this.title;
+      this.pushBlog();
+      //   console.log(this.blog);
     },
 
     async pushBlog () {
       try {
-        const { data: res } = await axios.post('http://localhost:8080/blog/insertBlog', this.txt)
+        const { data: res } = await axios.post('http://localhost:8080/blog/insertBlog', this.blog)
       } catch (error) {
         console.log(error);
       }
+    },
+
+    handleRemove (file) {
+      console.log(file);
+    },
+    handlePictureCardPreview (file) {
+      this.dialogImageUrl = file.url;
+      this.dialogVisible = true;
+    },
+    handleDownload (file) {
+      console.log(file);
     }
   }
 };
@@ -172,7 +216,7 @@ export default {
   .tags {
     position: absolute;
     top: 70px;
-    left: 175px;
+    left: 550px;
     padding: 0 5px;
   }
 
@@ -191,5 +235,30 @@ export default {
     margin-left: 10px;
     vertical-align: bottom;
   }
+
+  // * 标题部分
+  .title {
+    position: absolute;
+    top: 60px;
+    left: 165px;
+    height: 50px;
+    line-height: 50px;
+    span {
+      display: inline-block;
+      padding: 0 10px;
+      font-size: 14px;
+    }
+    .title-ipt {
+      position: absolute;
+      left: 50px;
+      width: 310px;
+    }
+  }
+}
+</style>
+
+<style scoped>
+.title >>> .el-input__inner {
+  display: inline-block;
 }
 </style>
