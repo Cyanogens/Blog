@@ -58,7 +58,7 @@
     </div>
 
     <!-- 评论区 -->
-    <div class="comment">
+    <!-- <div class="comment">
       <div v-clickoutside="hideReplyBtn"
            @click="inputFocus"
            class="my-reply">
@@ -150,7 +150,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -216,8 +216,6 @@ export default {
       id: 1,
       markdown: '## Blog',
       blog: {}, // * 博客对象
-
-
       btnShow: false,
       index: '0',
       replyComment: '',
@@ -389,11 +387,11 @@ export default {
     }
   },
   created () {
-    // bus.$on('getBlogId', id => {
-    //   this.id = id;
-    //   //   console.log(id);
-    //   this.getBlog(); // * 获取博客内容
-    // })
+    bus.$on('getBlogId', id => {
+      this.id = id;
+      //   console.log(id);
+      this.getBlog(); // * 获取博客内容
+    })
   }
 }
 </script>

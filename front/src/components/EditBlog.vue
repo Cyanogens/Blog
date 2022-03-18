@@ -56,6 +56,7 @@
 <script>
 import Vue from 'vue';
 import axios from 'axios'
+import bus from '@/components/eventBus.js'
 
 import VMdEditor from '@kangc/v-md-editor/lib/codemirror-editor';
 import '@kangc/v-md-editor/lib/style/codemirror-editor.css';
@@ -148,8 +149,11 @@ export default {
     push () {
       this.blog.categoryNames = this.dynamicTags;
       this.blog.mdContent = this.text;
-      this.blog.htmlContent = this.text;
-      this.blog.summary = this.text;
+      // * 将Markdown格式转换为html格式
+      let MarkdownIt = require('markdown-it'), md = new MarkdownIt();
+      let result = md.render(this.text);
+      this.blog.htmlContent = result;
+      //   this.blog.summary = result;
       //   let yy = new Date().getFullYear();
       //   let mm = new Date().getMonth() + 1;
       //   let dd = new Date().getDate();
@@ -171,12 +175,13 @@ export default {
           categoryNames: this.blog.categoryNames,
           mdContent: this.blog.mdContent,
           title: this.blog.title,
-          htmlContent: this.blog.htmlContent,
-          summary: this.blog.summary
+          htmlContent: this.blog.htmlContent
         })
-        this.$router.push('/')
+        // console.log(this.blog);
         if (res.code === 200) {
+          bus.$emit('getBlogId', res.data); // * 发送博客id
           // ! 跳转路由
+          this.$router.push('/person')
         }
         // console.log(this.blog);
       } catch (error) {
