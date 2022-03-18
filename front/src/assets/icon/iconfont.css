@@ -1,8 +1,8 @@
 @font-face {
   font-family: "iconfont"; /* Project id 3229414 */
-  src: url('iconfont.woff2?t=1647179045391') format('woff2'),
-       url('iconfont.woff?t=1647179045391') format('woff'),
-       url('iconfont.ttf?t=1647179045391') format('truetype');
+  src: url('iconfont.woff2?t=1647564604068') format('woff2'),
+       url('iconfont.woff?t=1647564604068') format('woff'),
+       url('iconfont.ttf?t=1647564604068') format('truetype');
 }
 
 .iconfont {
@@ -11,6 +11,46 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-star:before {
+  content: "\e7df";
+}
+
+.icon-yanjing_xianshi_o:before {
+  content: "\ebcc";
+}
+
+.icon-gaojian-zuozhe:before {
+  content: "\e673";
+}
+
+.icon-riqi:before {
+  content: "\e776";
+}
+
+.icon-pinglunqu:before {
+  content: "\e611";
+}
+
+.icon-huifupingluns:before {
+  content: "\e652";
+}
+
+.icon-shijianriqi:before {
+  content: "\e659";
+}
+
+.icon-riqi1:before {
+  content: "\e602";
+}
+
+.icon-xingxing:before {
+  content: "\e61c";
+}
+
+.icon-riqi2:before {
+  content: "\efe6";
 }
 
 .icon-shouye1:before {
