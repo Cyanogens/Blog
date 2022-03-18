@@ -27,14 +27,14 @@
         <input type="radio"
                class="ipt1"
                id="boy"
-               value="boy"
+               value="男"
                v-model="sex"
                name="sex"
                :disabled="edit"> <label for="boy">男</label>
         <input type="radio"
                class="ipt2"
                id="girl"
-               value="girl"
+               value="女"
                v-model="sex"
                name="sex"
                :disabled="edit"> <label for="girl">女</label>
@@ -42,6 +42,7 @@
         <el-form-item label="手机号"
                       prop="phone">
           <el-input type="tel"
+                    oninput="value=value.replace(/[^\d]/g,'')"
                     v-model.number="ruleForm.phone"></el-input>
         </el-form-item>
         <el-form-item class="save">
@@ -70,7 +71,7 @@ export default {
       if (value === '') {
         callback(new Error('电话不能为空'));
       } else {
-        if (value.length != 11) {
+        if (String(value).length != 11) {
           callback(new Error('请输入11位的电话'))
         }
         callback();
@@ -84,8 +85,10 @@ export default {
       }
     };
     return {
+      id: 1, // * 用户id
+      password: 1,
       edit: true,
-      sex: 'boy', // * 性别
+      sex: '男', // * 性别
       ruleForm: {
         userName: '',
         phone: '',
@@ -126,25 +129,45 @@ export default {
       this.edit = !this.edit;
     },
     async pushInfo () {
-      this.$message({
-        message: '修改成功',
-        type: 'success'
-      });
-      //   try {
-      //     const { data: res } = axois.post('http://localhost:8080/user/change', {
-
-      //     })
-      //     if (res.code === 200) {
-      //       // * 请求成功，即更改信息成功
-      //       this.$message({
-      //         message: '修改成功',
-      //         type: 'success'
-      //       });
-      //     }
-      //   } catch (error) {
-      //     console.log(error);
-      //   }
+      if (this.ruleForm.userName === '' || this.ruleForm.phone === '') {
+        this.$message({
+          showClose: true,
+          message: '用户名和电话不能为空哦~',
+          type: 'error'
+        });
+        return;
+      }
+      try {
+        const { data: res } = axois.post('http://localhost:8080/user/change', {
+          id: '', // todo 接口传参
+        })
+        if (res.code === 200) {
+          // * 请求成功，即更改信息成功
+          this.$message({
+            message: '修改成功',
+            type: 'success'
+          });
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    // ? 获取用户信息
+    async getInfo () {
+      try {
+        const { data: res } = axios.get('http://localhost:8080/user/id') // todo 这里的id记得改
+        if (res.code === 200) {
+          this.id = res.id;
+          this.ruleForm.userName = res.username,
+            this.sex = res.sex
+        }
+      } catch (error) {
+        console.log(error);
+      }
     }
+  },
+  created () {
+    this.getInfo();
   },
 };
 </script>
