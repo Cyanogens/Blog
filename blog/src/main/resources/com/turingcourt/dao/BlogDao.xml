@@ -105,9 +105,9 @@
     </update>
     <!--更改博客浏览量-->
     <update id="changeView">
-        update turingblog
+        update turingblog.blog
         set pageview = pageview + 1
-        where uid = #{blogId}
+        where id = #{blogId}
     </update>
 
     <!--删除博客-->

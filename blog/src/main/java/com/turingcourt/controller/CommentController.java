@@ -55,7 +55,7 @@ public class CommentController {
      */
     @PostMapping("/insert")
     @ApiOperation("发布评论")
-    public JsonResult insertComment(CommentVO commentVO, Long blogId) {
+    public JsonResult insertComment(@RequestBody CommentVO commentVO, Long blogId) {
         Boolean insert = commentService.insertComment(commentVO, blogId);
 
         return insert ? ResultTool.success() : ResultTool.fail(COMMON_FAIL);
@@ -70,7 +70,7 @@ public class CommentController {
      */
     @PostMapping("/reply")
     @ApiOperation("回复评论")
-    public JsonResult replyComment(CommentVO commentVO, Long pid) {
+    public JsonResult replyComment(@RequestBody CommentVO commentVO, Long pid) {
         Boolean insert = commentService.replyComment(commentVO, pid);
 
         return insert ? ResultTool.success() : ResultTool.fail();

@@ -95,6 +95,7 @@ public class BlogServiceImpl implements BlogService {
     public Long insertBlog(BlogVO blogVO) {
         System.out.println("blogVO = " + blogVO);
         User user = userDao.getUserByName(blogVO.getUserName());
+        System.out.println("user = " + user);
         Blog blog = Blog.builder()
                 .title(blogVO.getTitle()).mdContent(blogVO.getMdContent())
                 .htmlContent(blogVO.getHtmlContent()).summary(blogVO.getSummary())

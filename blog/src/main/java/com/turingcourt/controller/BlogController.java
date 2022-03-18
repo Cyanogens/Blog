@@ -82,7 +82,7 @@ public class BlogController {
      */
     @PostMapping("/insertBlog")
     @ApiOperation("发布博客")
-    public JsonResult insertBlog(BlogVO blogVO) {
+    public JsonResult insertBlog(@RequestBody BlogVO blogVO) {
         Long blogId = blogService.insertBlog(blogVO);
         if (blogId > 0) {
             return ResultTool.success(blogId);
@@ -100,7 +100,7 @@ public class BlogController {
      */
     @GetMapping("/search")
     @ApiOperation("搜索博客/标签")
-    public JsonResult searchBlog(String key, @RequestParam(value = "pageNo", defaultValue = "1") int pageNo, @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
+    public JsonResult searchBlog(@RequestParam("key") String key, @RequestParam(value = "pageNo", defaultValue = "1") int pageNo, @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
         PageInfo<BlogVO> pageInfo = blogService.searchBlog(key, pageNo, pageSize);
         if (pageInfo != null) {
             return ResultTool.success(pageInfo);

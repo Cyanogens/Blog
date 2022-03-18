@@ -8,10 +8,7 @@ import com.turingcourt.service.UserLoginService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.FileCopyUtils;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -41,7 +38,7 @@ public class IndexController {
      */
     @PostMapping("/register")
     @ApiOperation("用户注册")
-    public JsonResult register(User user) {
+    public JsonResult register(@RequestBody User user) {
         Boolean registered = userLoginService.register(user);
         return registered ? ResultTool.success() : ResultTool.fail();
     }
