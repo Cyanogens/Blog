@@ -58,42 +58,44 @@
     </div>
 
     <!-- 博客预览列表 -->
-    <ol class="blog-preview-list">
-      <li v-for="item in list"
-          :key="item.id"
-          class="blog-preview"
-          :id="item.id"
-          @click.stop="enterDetails($event)">
-        <router-link to="/blog"
-                     class="link">
-          <div class="pre">
-            <!-- 预览图片 -->
-            <!-- <img src="@/assets/images/blog-preview.png"
+    <div class="blog-list">
+      <ol class="blog-preview-list">
+        <li v-for="item in list"
+            :key="item.id"
+            class="blog-preview"
+            :id="item.id"
+            @click.stop="enterDetails($event)">
+          <router-link to="/blog"
+                       class="link">
+            <div class="pre">
+              <!-- 预览图片 -->
+              <!-- <img src="@/assets/images/blog-preview.png"
                  alt="item.title"> -->
-            <!-- 预览内容 -->
-            <h2 class="blog-title">{{ item.title }}</h2>
-            <!-- 文章预览内容 -->
-            <p class="blog-article">{{ item.mdContent }}</p>
-            <!-- 标签列表 -->
-            <ul class="tag-list">
-              <li class="tag"
-                  v-for="(it, index) in item.categoryNames.slice(0, 4)"
-                  :key="index">
-                <el-tag :type="color[index]">{{ it }}</el-tag>
-              </li>
-            </ul>
-          </div>
-        </router-link>
-      </li>
-    </ol>
-    <!-- 分页 -->
-    <el-pagination background
-                   layout="prev, pager, next"
-                   :total="total"
-                   :current-page="pageNo"
-                   class="pages"
-                   @current-change="change">
-    </el-pagination>
+              <!-- 预览内容 -->
+              <h2 class="blog-title">{{ item.title }}</h2>
+              <!-- 文章预览内容 -->
+              <p class="blog-article">{{ item.mdContent }}</p>
+              <!-- 标签列表 -->
+              <ul class="tag-list">
+                <li class="tag"
+                    v-for="(it, index) in item.categoryNames.slice(0, 4)"
+                    :key="index">
+                  <el-tag :type="color[index]">{{ it }}</el-tag>
+                </li>
+              </ul>
+            </div>
+          </router-link>
+        </li>
+      </ol>
+      <!-- 分页 -->
+      <el-pagination background
+                     layout="prev, pager, next"
+                     :total="total"
+                     :current-page="pageNo"
+                     class="pages"
+                     @current-change="change">
+      </el-pagination>
+    </div>
   </div>
 </template>
 
@@ -127,15 +129,15 @@ export default {
       // 用户登录标志
       token: this.GLOBAL.token,
       // 所有标签
-      tag_list: ['sss'],
+      tag_list: [],
       // 博客总数目
-      total: 10,
+      total: 0,
       // 当前页
       pageNo: 1,
       // 每页展示的数目
       pageSize: 10,
       color: ['', 'success', 'warning', 'danger'],
-      list: [{ title: '22', mdContent: '22', categoryNames: ['ss'] }],
+      list: [],
       id: 1, // * 用户id
       password: 1,
       edit: true,
@@ -289,11 +291,18 @@ export default {
     }
   }
 
+  // ? 博客预览列表
+  .blog-list {
+    position: absolute;
+    right: 240px;
+    top: 80px;
+  }
+
   .blog-preview-list {
     list-style: none;
-    position: absolute;
-    top: 80px;
-    right: 240px;
+    position: relative;
+    // top: 80px;
+    // right: 240px;
     .blog-preview {
       position: relative;
       display: block;
@@ -392,5 +401,11 @@ export default {
 .demo-ruleForm .save >>> .el-form-item__content {
   margin-left: 164px !important;
   margin-top: 25px;
+}
+
+.body >>> .el-pagination {
+  text-align: right;
+  margin: 20px 0;
+  margin-right: 285px;
 }
 </style>
