@@ -4,6 +4,8 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.turingcourt.dao.*;
 import com.turingcourt.entity.Blog;
+import com.turingcourt.entity.BlogCategory;
+import com.turingcourt.entity.Category;
 import com.turingcourt.entity.User;
 import com.turingcourt.service.UserService;
 import com.turingcourt.utils.ToVO;
@@ -13,6 +15,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * (User)表服务实现类
@@ -30,6 +33,8 @@ public class UserServiceImpl implements UserService {
     private CommentDao commentDao;
     @Resource
     private BlogCategoryDao blogCategoryDao;
+    @Resource
+    private CategoryDao categoryDao;
     @Resource
     private BlogLikesDao blogLikesDao;
     @Resource
@@ -92,6 +97,22 @@ public class UserServiceImpl implements UserService {
                 blogVO.getHtmlContent(), blogVO.getSummary(), uid, blogVO.getPublishData(),
                 true, blogVO.getPageView(), blogVO.getLikeCount());
         int update = blogDao.updateBlog(blog);
+        //删除原来所有的博客-标签关系
+        blogCategoryDao.deleteByBlogId(blogId);
+
+        //重新建立博客-标签关系
+        //标签名集合去重处理
+        List<String> categoryList = blogVO.getCategoryNames().stream().distinct().collect(Collectors.toList());
+        //对发布的博客的标签集进行处理
+        for (String categoryName : categoryList) {
+            //先判断标签表里是否存在
+            Category category = categoryDao.queryCategoryByName(categoryName);
+            if (category == null) {
+                category = new Category(null, categoryName);
+                categoryDao.insertCategory(category);
+            }
+            blogCategoryDao.insert(new BlogCategory(null, blogId, category.getId()));
+        }
 
         return update > 0;
     }

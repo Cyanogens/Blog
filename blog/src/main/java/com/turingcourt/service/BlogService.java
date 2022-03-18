@@ -39,6 +39,7 @@ public interface BlogService {
 
     /**
      * 发布博客
+     * 要同步查看category表以及blog_category表
      *
      * @param blogVO 博客内容
      * @return 博客id

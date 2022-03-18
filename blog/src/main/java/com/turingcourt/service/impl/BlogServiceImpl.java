@@ -2,9 +2,13 @@ package com.turingcourt.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.turingcourt.dao.BlogCategoryDao;
 import com.turingcourt.dao.BlogDao;
+import com.turingcourt.dao.CategoryDao;
 import com.turingcourt.dao.UserDao;
 import com.turingcourt.entity.Blog;
+import com.turingcourt.entity.BlogCategory;
+import com.turingcourt.entity.Category;
 import com.turingcourt.entity.User;
 import com.turingcourt.service.BlogService;
 import com.turingcourt.utils.ToVO;
@@ -33,6 +37,12 @@ public class BlogServiceImpl implements BlogService {
      */
     @Resource
     private UserDao userDao;
+
+    @Resource
+    private CategoryDao categoryDao;
+
+    @Resource
+    private BlogCategoryDao blogCategoryDao;
 
     @Resource
     private ToVO to;
@@ -81,14 +91,9 @@ public class BlogServiceImpl implements BlogService {
         return to.blogToVO(blog);
     }
 
-    /**
-     * 此处有过更改 long -> int
-     *
-     * @param blogVO 博客内容
-     * @return 博客id
-     */
     @Override
     public Long insertBlog(BlogVO blogVO) {
+        System.out.println("blogVO = " + blogVO);
         User user = userDao.getUserByName(blogVO.getUserName());
         Blog blog = Blog.builder()
                 .title(blogVO.getTitle()).mdContent(blogVO.getMdContent())
@@ -96,9 +101,22 @@ public class BlogServiceImpl implements BlogService {
                 .state(true).uid(user.getId()).publishData(new Date())
                 .pageView(0L).likeCount(0L)
                 .build();
-
         blogDao.insertBlog(blog);
-        return blog.getId();
+        Long blogId = blog.getId();
+
+        //标签名集合去重处理
+        List<String> categoryList = blogVO.getCategoryNames().stream().distinct().collect(Collectors.toList());
+        //对发布的博客的标签集进行处理
+        for (String categoryName : categoryList) {
+            //先判断标签表里是否存在
+            Category category = categoryDao.queryCategoryByName(categoryName);
+            if (category == null) {
+                category = new Category(null, categoryName);
+                categoryDao.insertCategory(category);
+            }
+            blogCategoryDao.insert(new BlogCategory(null, blogId, category.getId()));
+        }
+        return blogId;
     }
 
     @Override

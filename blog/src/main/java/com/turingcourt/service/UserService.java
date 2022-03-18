@@ -50,6 +50,7 @@ public interface UserService {
 
     /**
      * 更改用户发布的博客
+     * 要同步维护category表以及blog_category表
      *
      * @param blogId 博客id
      * @param blogVO 更新后的博客
