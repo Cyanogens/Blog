@@ -18,7 +18,7 @@
         <el-form-item label="用户名"
                       prop="userName">
           <el-input type="text"
-                    v-model="ruleForm.pass"
+                    v-model="ruleForm.userName"
                     autocomplete="off"></el-input>
         </el-form-item>
         <!-- 性别 -->
@@ -36,7 +36,7 @@
 
         <el-form-item label="手机号"
                       prop="phone">
-          <el-input v-model.number="ruleForm.age"></el-input>
+          <el-input v-model.number="ruleForm.phone"></el-input>
         </el-form-item>
         <!-- <el-form-item>
           <el-button type="primary"
@@ -56,59 +56,33 @@ export default {
     Head
   },
   data () {
-    var checkAge = (rule, value, callback) => {
-      if (!value) {
-        return callback(new Error('年龄不能为空'));
-      }
-      setTimeout(() => {
-        if (!Number.isInteger(value)) {
-          callback(new Error('请输入数字值'));
-        } else {
-          if (value < 18) {
-            callback(new Error('必须年满18岁'));
-          } else {
-            callback();
-          }
-        }
-      }, 1000);
-    };
-    var validatePass = (rule, value, callback) => {
+    var validatePhone = (rule, value, callback) => {
       if (value === '') {
-        callback(new Error('请输入密码'));
+        callback(new Error('电话不能为空'));
       } else {
-        if (this.ruleForm.checkPass !== '') {
-          this.$refs.ruleForm.validateField('checkPass');
-        }
         callback();
       }
     };
-    var validatePass2 = (rule, value, callback) => {
+    var validateName = (rule, value, callback) => {
       if (value === '') {
-        callback(new Error('请再次输入密码'));
-      } else if (value !== this.ruleForm.pass) {
-        callback(new Error('两次输入密码不一致!'));
+        callback(new Error('请输入密码'));
       } else {
         callback();
       }
     };
     return {
 
-      sex: 'boy', // * 性别
-
+      sex: '男', // * 性别
       ruleForm: {
-        pass: '',
-        checkPass: '',
-        age: '',
+        userName: '',
+        phone: '',
       },
       rules: {
-        pass: [
-          { validator: validatePass, trigger: 'blur' }
+        userName: [
+          { validator: validateName, trigger: 'blur' }
         ],
-        checkPass: [
-          { validator: validatePass2, trigger: 'blur' }
-        ],
-        age: [
-          { validator: checkAge, trigger: 'blur' }
+        phone: [
+          { validator: validatePhone, trigger: 'blur' }
         ]
       }
     };
@@ -171,9 +145,10 @@ export default {
         margin-left: 40px;
         font-size: 14px;
         padding: 10px;
+        letter-spacing: 10px;
       }
       .ipt1 {
-        margin-left: 40px;
+        margin-left: 20px;
         vertical-align: middle;
         zoom: 1.3;
       }
@@ -191,9 +166,14 @@ export default {
 .demo-ruleForm >>> .el-input__inner {
   width: 160px;
   height: 30px;
+  padding: 0 7px;
 }
 
 .demo-ruleForm >>> .el-form-item {
   margin-bottom: 10px;
+}
+
+.demo-ruleForm >>> .el-form-item__label {
+  letter-spacing: 2px;
 }
 </style>
