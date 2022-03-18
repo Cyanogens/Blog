@@ -39,12 +39,17 @@
 
     </div>
 
-    <!-- 博客编辑部分 -->
+    <!-- 博客编辑部分
     <div class="edit">
       <v-md-editor v-model="text"
                    height="505px"
                    :disabled-menus="[]"
-                   @upload-image="handleUploadImage"></v-md-editor>
+                   @upload-image="handleUploadImage"></v-md-editor> -->
+    <div class="edit">
+      <mavon-editor v-model="text"
+                    style="height: 500px;"
+                    :ishljs="true" />
+
       <div class="commit"
            @click="push">
         <span>
@@ -157,14 +162,6 @@ export default {
       let MarkdownIt = require('markdown-it'), md = new MarkdownIt();
       let result = md.render(this.text);
       this.blog.htmlContent = result;
-      //   this.blog.summary = result;
-      //   let yy = new Date().getFullYear();
-      //   let mm = new Date().getMonth() + 1;
-      //   let dd = new Date().getDate();
-      //   let hh = new Date().getHours();
-      //   let mf = new Date().getMinutes() < 10 ? '0' + new Date().getMinutes() : new Date().getMinutes();
-      //   let ss = new Date().getSeconds() < 10 ? '0' + new Date().getSeconds() : new Date().getSeconds();
-      //   this.blog.publishData = yy + '-' + mm + '-' + dd + ' ' + hh + ':' + mf + ':' + ss;
 
       this.blog.userName = 'vivi';
       this.blog.title = this.title;
@@ -202,36 +199,6 @@ export default {
     },
     handleDownload (file) {
       console.log(file);
-    },
-    handleUploadImage (event, insertImage, files) {
-      // 拿到 files 之后上传到文件服务器，然后向编辑框中插入对应的内容
-      console.log(files);
-
-      // ! 上传图片，接受图片地址
-      let file = files[0];
-      let reader = new FileReader();
-      // 读取图片
-      reader.readAsDataURL(file);
-      reader.onloadend = (e) => {
-        img.src = e.target.result
-        // 这里的e.target就是reader
-        // console.log(reader.result)
-        // reader.result就是图片的base64字符串
-        this.base64 = reader.result
-      }
-
-      uploadImg(); // * 调用接口，并接受图片地址
-
-      insertImage({
-        url: this.imgUrlFromServer
-      });
-    },
-    uploadImg () {
-      axios.post('http://localhost:8080/uploadImg', {
-        image: this.base64
-      }).then(response => {
-        this.imgUrlFromServer = response.data.imgUrl
-      })
     }
   }
 };

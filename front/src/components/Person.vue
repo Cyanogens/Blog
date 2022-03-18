@@ -14,7 +14,8 @@
                :rules="rules"
                ref="ruleForm"
                label-width="100px"
-               class="demo-ruleForm">
+               class="demo-ruleForm"
+               :disabled="edit">
         <el-form-item label="用户名"
                       prop="userName">
           <el-input type="text"
@@ -28,23 +29,29 @@
                id="boy"
                value="boy"
                v-model="sex"
-               name="sex"> <label for="boy">男</label>
+               name="sex"
+               :disabled="edit"> <label for="boy">男</label>
         <input type="radio"
                class="ipt2"
                id="girl"
                value="girl"
                v-model="sex"
-               name="sex"> <label for="girl">女</label>
+               name="sex"
+               :disabled="edit"> <label for="girl">女</label>
 
         <el-form-item label="手机号"
                       prop="phone">
           <el-input v-model.number="ruleForm.phone"></el-input>
         </el-form-item>
-        <el-form-item>
+        <el-form-item class="save">
           <el-button type="primary"
-                     @click="submitForm('ruleForm')">保存信息</el-button>
+                     @click="submitForm('ruleForm'); pushInfo()">保存信息</el-button>
         </el-form-item>
       </el-form>
+      <el-button type="primary"
+                 class="changeInfo"
+                 :disabled="!edit"
+                 @click="change">修改信息</el-button>
 
     </div>
   </div>
@@ -73,7 +80,7 @@ export default {
       }
     };
     return {
-
+      edit: true,
       sex: 'boy', // * 性别
       ruleForm: {
         userName: '',
@@ -110,6 +117,16 @@ export default {
     },
     resetForm (formName) {
       this.$refs[formName].resetFields();
+    },
+    change () {
+      this.edit = !this.edit;
+    },
+    async pushInfo () {
+      try {
+
+      } catch (error) {
+        console.log(error);
+      }
     }
   },
 };
@@ -163,6 +180,11 @@ export default {
         zoom: 1.3;
       }
     }
+    .changeInfo {
+      position: absolute;
+      margin-left: 30px;
+      margin-top: -50px;
+    }
   }
 }
 </style>
@@ -180,5 +202,10 @@ export default {
 
 .demo-ruleForm >>> .el-form-item__label {
   letter-spacing: 2px;
+}
+
+.demo-ruleForm .save >>> .el-form-item__content {
+  margin-left: 164px !important;
+  margin-top: 25px;
 }
 </style>
