@@ -112,7 +112,7 @@ export default {
   position: fixed;
   top: 0;
   width: 100%;
-  height: 51px;
+  height: 60px;
   margin-bottom: 10px;
   box-shadow: 0px 0px 1px;
   background-color: #fff;
@@ -145,7 +145,7 @@ export default {
   height: 30px;
   // margin-left: 140px;
   //   margin: 10px 0 10px 910px;
-  margin: 10px 0 10px 665px;
+  margin: 15px 0 15px 665px;
   // margin-top: 10px;
 }
 
@@ -183,10 +183,10 @@ export default {
   list-style: none;
 }
 .nav li {
-  height: 50px;
+  height: 60px;
   float: left;
   text-align: center;
-  line-height: 50px;
+  line-height: 60px;
   color: #343434;
   font-size: 14px;
 }
@@ -201,7 +201,7 @@ export default {
 .menu {
   position: absolute;
   top: 0;
-  right: 184px;
+  right: 175px;
   width: 80px;
   height: 100%;
 }
@@ -218,7 +218,7 @@ export default {
 .menu ul {
   list-style: none;
   width: 80px;
-  height: 51px;
+  height: 60px;
   overflow: hidden;
   transition: height 0.5s;
 }
@@ -241,7 +241,7 @@ export default {
 .menu .user {
   padding: 0;
   width: 100%;
-  height: 51px;
+  height: 60px;
 }
 
 .menu ul li:hover {
@@ -269,7 +269,7 @@ export default {
   width: 100%;
   text-align: center;
   font-size: 14px;
-  line-height: 50px;
+  line-height: 60px;
   color: #343434;
 }
 
