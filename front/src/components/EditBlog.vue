@@ -113,10 +113,13 @@ export default {
       inputValue: '',
       blog: { // ! 博客内容
         mdContent: '', // * 博客内容--Markdown格式
+        htmlContent: '', // * 博客内容--HTML格式
         categoryNames: [], // * 标签数组
         userName: '', // * 用户名--未完成登录等功能，默认值
-        publishData: '', // * 发布日期
+        // publishData: '', // * 发布日期
         title: '', // * 博客标题
+        summary: '',
+
       },
     };
   },
@@ -145,13 +148,15 @@ export default {
     push () {
       this.blog.categoryNames = this.dynamicTags;
       this.blog.mdContent = this.text;
-      let yy = new Date().getFullYear();
-      let mm = new Date().getMonth() + 1;
-      let dd = new Date().getDate();
-      let hh = new Date().getHours();
-      let mf = new Date().getMinutes() < 10 ? '0' + new Date().getMinutes() : new Date().getMinutes();
-      let ss = new Date().getSeconds() < 10 ? '0' + new Date().getSeconds() : new Date().getSeconds();
-      this.blog.publishData = yy + '-' + mm + '-' + dd + ' ' + hh + ':' + mf + ':' + ss;
+      this.blog.htmlContent = this.text;
+      this.blog.summary = this.text;
+      //   let yy = new Date().getFullYear();
+      //   let mm = new Date().getMonth() + 1;
+      //   let dd = new Date().getDate();
+      //   let hh = new Date().getHours();
+      //   let mf = new Date().getMinutes() < 10 ? '0' + new Date().getMinutes() : new Date().getMinutes();
+      //   let ss = new Date().getSeconds() < 10 ? '0' + new Date().getSeconds() : new Date().getSeconds();
+      //   this.blog.publishData = yy + '-' + mm + '-' + dd + ' ' + hh + ':' + mf + ':' + ss;
 
       this.blog.userName = 'vivi';
       this.blog.title = this.title;
@@ -161,7 +166,19 @@ export default {
 
     async pushBlog () {
       try {
-        const { data: res } = await axios.post('http://localhost:8080/blog/insertBlog', this.blog)
+        const { data: res } = await axios.post('http://localhost:8080/blog/insertBlog', {
+          userName: this.blog.userName,
+          categoryNames: this.blog.categoryNames,
+          mdContent: this.blog.mdContent,
+          title: this.blog.title,
+          htmlContent: this.blog.htmlContent,
+          summary: this.blog.summary
+        })
+        this.$router.push('/')
+        if (res.code === 200) {
+          // ! 跳转路由
+        }
+        // console.log(this.blog);
       } catch (error) {
         console.log(error);
       }
