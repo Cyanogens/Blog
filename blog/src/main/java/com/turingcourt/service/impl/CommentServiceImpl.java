@@ -6,6 +6,7 @@ import com.turingcourt.dao.CommentDao;
 import com.turingcourt.dao.UserDao;
 import com.turingcourt.entity.Comment;
 import com.turingcourt.service.CommentService;
+import com.turingcourt.utils.BeanCopyUtils;
 import com.turingcourt.utils.ToVO;
 import com.turingcourt.vo.CommentVO;
 import org.springframework.stereotype.Service;
@@ -36,11 +37,16 @@ public class CommentServiceImpl implements CommentService {
     public PageInfo<CommentVO> getAllComment(Long blogId, int pageNo, int pageSize) {
         PageHelper.startPage(pageNo, pageSize);
         List<Comment> comments = commentDao.queryComment(blogId);
+        PageInfo<Comment> pageInfo = new PageInfo<>(comments);
+
         List<CommentVO> commentVOS = new ArrayList<>();
         for (Comment comment : comments) {
             commentVOS.add(to.commentToVO(comment));
         }
-        return new PageInfo<>(commentVOS);
+        //要进行复制,否则会有total等于pageSize的问题
+        PageInfo<CommentVO> res = BeanCopyUtils.copyBean(pageInfo, PageInfo.class);
+        res.setList(commentVOS);
+        return res;
     }
 
     @Override

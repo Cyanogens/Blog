@@ -70,20 +70,11 @@ public interface BlogDao {
     int changeView(Long blogId);
 
     /**
-     * 根据标题搜索博客
-     *
-     * @param key 搜索的标题
-     * @return 博客集合
-     */
-    List<Blog> queryByTitle(String key);
-
-    /**
      * 根据标签搜索博客
      *
      * @param key 搜索的标签
      * @return 博客集合
      */
     List<Blog> queryByCategory(String key);
-
 
 }

@@ -8,6 +8,7 @@ import com.turingcourt.entity.BlogCategory;
 import com.turingcourt.entity.Category;
 import com.turingcourt.entity.User;
 import com.turingcourt.service.UserService;
+import com.turingcourt.utils.BeanCopyUtils;
 import com.turingcourt.utils.ToVO;
 import com.turingcourt.vo.BlogVO;
 import org.springframework.stereotype.Service;
@@ -74,13 +75,16 @@ public class UserServiceImpl implements UserService {
 
         PageHelper.startPage(pageNo, pageSize);
         List<Blog> blogs = blogDao.queryByUserId(userId);
+        PageInfo<Blog> pageInfo = new PageInfo<>(blogs);
 
         List<BlogVO> blogVOS = new ArrayList<>();
         for (Blog blog : blogs) {
             blogVOS.add(to.blogToVO(blog));
         }
-
-        return new PageInfo<>(blogVOS);
+        //要进行复制,否则会有total等于pageSize的问题
+        PageInfo<BlogVO> res = BeanCopyUtils.copyBean(pageInfo, PageInfo.class);
+        res.setList(blogVOS);
+        return res;
     }
 
     /**

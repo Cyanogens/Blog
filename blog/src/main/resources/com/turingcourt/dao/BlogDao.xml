@@ -41,24 +41,16 @@
         order by rand()
     </select>
 
-    <!--根据标题搜索博客-->
-    <select id="queryByTitle" resultType="blog">
-        select
-            id, title, mdcontent, htmlcontent, summary, uid, publishdata, state, pageview, likecount
-        from turingblog.blog
-        where title like #{key}
-        order by rand()
-    </select>
-
-    <!--根据标签搜索博客-->
+    <!--根据标签/标题搜索博客-->
     <select id="queryByCategory" resultType="blog">
-        select
+        select distinct
             a.id, a.title, a.mdcontent, a.htmlcontent, a.summary, a.uid, a.publishdata, a.state,a.pageview, a.likecount
         from turingblog.blog a
-        inner join turingblog.category cate
-        inner join turingblog.blog_category bc
-        on a.id = bc.bid and bc.cid = cate.id
+                 inner join turingblog.category cate
+                 inner join turingblog.blog_category bc
+                            on a.id = bc.bid and bc.cid = cate.id
         where cate.categoryname like #{key}
+           or title like #{key}
         order by rand()
     </select>
 

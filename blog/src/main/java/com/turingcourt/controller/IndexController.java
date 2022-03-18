@@ -69,7 +69,7 @@ public class IndexController {
      */
     @PostMapping("/uploadImg")
     @ApiOperation("上传图片")
-    public JsonResult uploadImg(HttpServletRequest req, MultipartFile image) {
+    public JsonResult uploadImg(HttpServletRequest req, @RequestBody MultipartFile image) {
         StringBuilder url = new StringBuilder();
         String per = ".";
         String filePath = "/pic";

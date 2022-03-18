@@ -11,13 +11,14 @@ import com.turingcourt.entity.BlogCategory;
 import com.turingcourt.entity.Category;
 import com.turingcourt.entity.User;
 import com.turingcourt.service.BlogService;
+import com.turingcourt.utils.BeanCopyUtils;
+import com.turingcourt.utils.HTMLtoSummary;
 import com.turingcourt.utils.ToVO;
 import com.turingcourt.vo.BlogVO;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -71,12 +72,16 @@ public class BlogServiceImpl implements BlogService {
     public PageInfo<BlogVO> blogRandomList(int pageNo, int pageSize) {
         PageHelper.startPage(pageNo, pageSize);
         List<Blog> blogs = blogDao.queryRandomBlog();
+        PageInfo<Blog> pageInfo = new PageInfo<>(blogs);
 
         List<BlogVO> blogVOS = new ArrayList<>();
         for (Blog blog : blogs) {
             blogVOS.add(to.blogToVO(blog));
         }
-        return new PageInfo<>(blogVOS);
+        //要进行复制,否则会有total等于pageSize的问题
+        PageInfo<BlogVO> res = BeanCopyUtils.copyBean(pageInfo, PageInfo.class);
+        res.setList(blogVOS);
+        return res;
     }
 
     /**
@@ -95,12 +100,15 @@ public class BlogServiceImpl implements BlogService {
     public Long insertBlog(BlogVO blogVO) {
         System.out.println("blogVO = " + blogVO);
         User user = userDao.getUserByName(blogVO.getUserName());
-        System.out.println("user = " + user);
+
+        //html提取文本
+        String summary = HTMLtoSummary.buildArticleTabloid(blogVO.getHtmlContent());
+
         Blog blog = Blog.builder()
                 .title(blogVO.getTitle()).mdContent(blogVO.getMdContent())
-                .htmlContent(blogVO.getHtmlContent()).summary(blogVO.getSummary())
+                .htmlContent(blogVO.getHtmlContent()).summary(summary)
                 .state(true).uid(user.getId()).publishData(new Date())
-                .pageView(0L).likeCount(0L)
+                .pageView(1L).likeCount(0L)
                 .build();
         blogDao.insertBlog(blog);
         Long blogId = blog.getId();
@@ -122,29 +130,20 @@ public class BlogServiceImpl implements BlogService {
 
     @Override
     public PageInfo<BlogVO> searchBlog(String key, int pageNo, int pageSize) {
-        int byTitle = pageSize / 2;
-        int byCategory = pageSize - byTitle;
-
         key = "%" + key + "%";
-        List<Blog> blogs = new ArrayList<>();
 
-        PageHelper.startPage(pageNo, byCategory);
-        List<Blog> blogs1 = blogDao.queryByCategory(key);
-        PageHelper.startPage(pageNo, byTitle);
-        List<Blog> blogs2 = blogDao.queryByTitle(key);
-
-        blogs.addAll(blogs1);
-        blogs.addAll(blogs2);
-
-        //去重
-        blogs = blogs.stream().distinct().collect(Collectors.toList());
-        Collections.shuffle(blogs);
+        PageHelper.startPage(pageNo, pageSize);
+        List<Blog> blogs = blogDao.queryByCategory(key);
+        PageInfo<Blog> pageInfo = new PageInfo<>(blogs);
 
         List<BlogVO> blogVOS = new ArrayList<>();
         for (Blog blog : blogs) {
             blogVOS.add(to.blogToVO(blog));
         }
-        return new PageInfo<>(blogVOS);
+        //要进行复制,否则会有total等于pageSize的问题
+        PageInfo<BlogVO> res = BeanCopyUtils.copyBean(pageInfo, PageInfo.class);
+        res.setList(blogVOS);
+        return res;
     }
 }
 
