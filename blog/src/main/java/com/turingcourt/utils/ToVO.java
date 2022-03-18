@@ -37,10 +37,13 @@ public class ToVO {
     public BlogVO blogToVO(Blog blog) {
 
         //判断当前登录用户是否点赞该博客
-        User principal = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Boolean isLiked = false;
-        if (principal != null) {
-            Integer userId = principal.getId();
+        //未登录时,principal 为字符串
+        //所以要用户登录后才强转
+        if (!"anonymousUser".equals(principal)) {
+            User loggedInUser = (User) principal;
+            Integer userId = loggedInUser.getId();
             isLiked = blogLikesDao.queryLike(new BlogLikes(null, blog.getId(), userId));
         }
         User user = userDao.getUser(blog.getUid());
@@ -59,10 +62,13 @@ public class ToVO {
     public CommentVO commentToVO(Comment comment) {
 
         //判断当前登录用户是否点赞该评论
-        User principal = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Boolean isLiked = false;
-        if (principal != null) {
-            Integer userId = principal.getId();
+        //未登录时,principal 为字符串
+        //所以要用户登录后才强转
+        if (!"anonymousUser".equals(principal)) {
+            User loggedInUser = (User) principal;
+            Integer userId = loggedInUser.getId();
             isLiked = commentLikesDao.queryLike(new CommentLikes(null, comment.getId(), userId));
         }
 
