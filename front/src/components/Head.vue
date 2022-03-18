@@ -5,7 +5,7 @@
     <div class="logo">
       <router-link to="/">
         <img src="@/assets/images/logo1.jpg"
-             title="山本仙人酋" />
+             title="s'pirate" />
       </router-link>
     </div>
     <!-- 搜索框 -->
