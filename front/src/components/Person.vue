@@ -41,11 +41,12 @@
 
         <el-form-item label="手机号"
                       prop="phone">
-          <el-input v-model.number="ruleForm.phone"></el-input>
+          <el-input type="tel"
+                    v-model.number="ruleForm.phone"></el-input>
         </el-form-item>
         <el-form-item class="save">
           <el-button type="primary"
-                     @click="submitForm('ruleForm'); pushInfo()">保存信息</el-button>
+                     @click="pushInfo">保存信息</el-button>
         </el-form-item>
       </el-form>
       <el-button type="primary"
@@ -69,6 +70,9 @@ export default {
       if (value === '') {
         callback(new Error('电话不能为空'));
       } else {
+        if (value.length != 11) {
+          callback(new Error('请输入11位的电话'))
+        }
         callback();
       }
     };
@@ -122,11 +126,24 @@ export default {
       this.edit = !this.edit;
     },
     async pushInfo () {
-      try {
+      this.$message({
+        message: '修改成功',
+        type: 'success'
+      });
+      //   try {
+      //     const { data: res } = axois.post('http://localhost:8080/user/change', {
 
-      } catch (error) {
-        console.log(error);
-      }
+      //     })
+      //     if (res.code === 200) {
+      //       // * 请求成功，即更改信息成功
+      //       this.$message({
+      //         message: '修改成功',
+      //         type: 'success'
+      //       });
+      //     }
+      //   } catch (error) {
+      //     console.log(error);
+      //   }
     }
   },
 };

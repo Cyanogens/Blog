@@ -231,6 +231,7 @@ export default {
   height: 35px;
   line-height: 35px;
   text-align: center;
+  z-index: 9999;
 }
 
 .menu ul .menu-hid li {

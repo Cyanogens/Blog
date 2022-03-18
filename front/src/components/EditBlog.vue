@@ -170,6 +170,14 @@ export default {
     },
 
     async pushBlog () {
+      if (this.blog.title === '' || this.blog.categoryNames.length == 0 || this.blog.mdContent == '') {
+        this.$message({
+          showClose: true,
+          message: '必须输入标题，标签，内容才能发布博客哦~',
+          type: 'error'
+        });
+        return;
+      }
       try {
         const { data: res } = await axios.post('http://localhost:8080/blog/insertBlog', {
           userName: this.blog.userName,
@@ -215,6 +223,7 @@ export default {
     position: relative;
     margin-top: 120px;
     padding: 0 175px;
+    z-index: 9;
     .commit {
       position: absolute;
       bottom: -50px;
