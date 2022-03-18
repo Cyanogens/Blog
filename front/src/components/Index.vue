@@ -83,7 +83,7 @@ export default {
       // 所有标签
       tag_list: [],
       // 博客总数目
-      total: 100,
+      total: 0,
       // 当前页
       pageNo: 1,
       // 每页展示的数目

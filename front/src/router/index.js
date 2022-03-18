@@ -9,14 +9,15 @@ import QA from '@/components/QA.vue'
 import Hot from '@/components/Hot.vue'
 import Special from '@/components/Special.vue'
 import BlogDetails from '@/components/BlogDetails.vue'
+import Person from '@/components/Person.vue'
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/',
     name: 'Index',
-    // component: Index,
-    component: BlogDetails,
+    component: Index,
+    // component: BlogDetails,
     meta: {
       title: '首页',
     },
@@ -83,6 +84,14 @@ const routes = [
     component: BlogDetails,
     meta: {
       title: '博客详情',
+    },
+  },
+  {
+    path: '/person',
+    name: 'Person',
+    component: Person,
+    meta: {
+      title: '个人中心',
     },
   },
 ]

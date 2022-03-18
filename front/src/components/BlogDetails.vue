@@ -146,7 +146,7 @@
             <el-button class="reply-btn"
                        size="medium"
                        @click="sendCommentReply(i,j)"
-                       type="primary">发表评论</el-button>
+                       type="primary">回复评论</el-button>
           </div>
         </div>
       </div>
@@ -263,42 +263,6 @@ export default {
 
             }
           ]
-        },
-        {
-          name: 'Taylor Swift',
-          id: 19891221,
-          headImg: 'https://ae01.alicdn.com/kf/H94c78935ffa64e7e977544d19ecebf06L.jpg',
-          comment: '我发行了我的新专辑Lover',
-          time: '2019年9月16日 18:43',
-          commentNum: 1,
-          like: 5,
-          inputShow: false,
-          reply: [
-            {
-              from: 'Lana Del Rey',
-              fromId: 19870621,
-              fromHeadImg: 'https://ae01.alicdn.com/kf/Hd60a3f7c06fd47ae85624badd32ce54dv.jpg',
-              to: 'Taylor Swift',
-              toId: 19891221,
-              comment: '新专辑和speak now 一样棒！',
-              time: '2019年9月16日 18:43',
-              commentNum: 25,
-              like: 5,
-              inputShow: false
-
-            }
-          ]
-        },
-        {
-          name: 'Norman Fucking Rockwell',
-          id: 20190830,
-          headImg: 'https://ae01.alicdn.com/kf/Hdd856ae4c81545d2b51fa0c209f7aa28Z.jpg',
-          comment: 'Plz buy Norman Fucking Rockwell on everywhere',
-          time: '2019年9月16日 18:43',
-          commentNum: 0,
-          like: 5,
-          inputShow: false,
-          reply: []
         },
       ]
     }
@@ -438,8 +402,10 @@ export default {
 .blog-view {
   position: absolute;
   top: 100px;
-  padding: 0 175px;
-  width: 100%;
+  //   padding: 0 175px;
+  left: 175px;
+  width: 77%;
+  box-shadow: 0 0 5px #ccc;
   //   height: 100%;
   //   background-color: pink;
 
@@ -447,6 +413,7 @@ export default {
     text-align: center;
     font-size: 28px;
     font-weight: normal;
+    margin-top: 30px;
     // background-color: skyblue;
   }
 
@@ -467,7 +434,8 @@ export default {
   .blog-stars {
     list-style: none;
     position: absolute;
-    right: 175px;
+    right: 20px;
+    top: 20px;
     li {
       float: right;
       padding: 0 5px;
@@ -503,17 +471,18 @@ export default {
 }
 .comment {
   position: absolute;
-  bottom: 50px;
+  left: 175px;
+  top: 381px;
   //   margin-top: 50px;
-  width: 100%;
-  padding: 0 175px;
+  width: 77%;
+  //   padding: 0 175px;
   box-shadow: 0 0 5px #ccc;
 }
 </style>
 
 <style scoped>
 .blog-view >>> .v-md-editor-preview {
-  background-color: skyblue;
+  /* background-color: skyblue; */
   margin-top: 55px;
 }
 
@@ -528,7 +497,7 @@ export default {
 
 <style lang="less" scoped>
 .my-reply {
-  padding: 0 10px;
+  padding: 10px 10px;
   background-color: #fafbfc;
 
   .header-img {
