@@ -85,7 +85,7 @@
             <router-link to="/person">个人中心</router-link>
           </li>
           <li>
-            <router-link to="/login">{{txt}}</router-link>
+            <router-link @click="toLogin">{{txt}}</router-link>
           </li>
         </div>
       </ul>
@@ -101,6 +101,18 @@ export default {
     return {
       input: '',
       txt: '登录',
+    }
+  },
+  methods: {
+    toLogin () {
+      if (this.GLOBAL.token === 'T') { // * 当前状态为已登录，点击退出
+        this.$message.success('退出成功');
+        this.GLOBAL.token = 'F';
+        this.$router.push('/'); // * 退出后，跳转到首页
+      } else {
+        // * 当前状态为未登录，点击跳转到登录界面
+        this.$router.push('/login');
+      }
     }
   },
   created () {

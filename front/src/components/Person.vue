@@ -154,10 +154,6 @@ export default {
     };
   },
 
-  mounted () {
-
-  },
-
   methods: {
     changeEdit () {
       this.edit = !this.edit;
@@ -230,6 +226,7 @@ export default {
   },
   created () {
     this.getInfo();
+    this.getBlogList();
   },
 };
 </script>
