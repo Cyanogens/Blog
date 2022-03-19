@@ -136,12 +136,12 @@ export default {
       pageSize: 4,
       color: ['', 'success', 'warning', 'danger'],
       list: [],
-      id: this.GLOBAL.id, // * 用户id
+      id: sessionStorage.getItem('id'), // * 用户id
       password: 1,
       edit: true,
-      sex: '男', // * 性别
+      sex: sessionStorage.getItem('sex'), // * 性别
       ruleForm: {
-        userName: '',
+        userName: sessionStorage.getItem('username'),
         phone: '',
       },
       rules: {
@@ -190,8 +190,12 @@ export default {
         const { data: res } = await axios.get('http://localhost:8080/user/' + this.GLOBAL.id)
         if (res.code === 200) {
           this.GLOBAL.id = res.data.id;
-          this.ruleForm.userName = res.data.username,
-            this.sex = res.data.sex
+          this.ruleForm.userName = res.data.username;
+          this.sex = res.data.sex;
+          sessionStorage.setItem('id', this.GLOBAL.id)
+          sessionStorage.setItem('username', this.ruleForm.userName)
+          sessionStorage.setItem('sex', this.sex)
+
         } else {
           if (res.code === 2001) {
             this.$message.error('请先登录');
