@@ -217,9 +217,9 @@ export default {
       date: '', // * 发布时间
       author: '', // * 作者
       id: 1, // * 博客id
-      pageView: 11111, // * 浏览量
+      pageView: 0, // * 浏览量
       isLiked: false, // * 是否点赞
-      likeCount: 11111, // * 点赞数
+      likeCount: 0, // * 点赞数
       categoryNames: [], // * 标签数组
       markdown: '',
       blog: {}, // * 博客对象
