@@ -83,5 +83,86 @@ export default {
   width: 100%;
   background-color: #f5f6f7;
   overflow: auto;
+  .blog-preview-list {
+    list-style: none;
+    margin-left: 176px;
+    margin-top: 60px;
+    .blog-preview {
+      position: relative;
+      display: block;
+      width: 667px;
+      height: 150px;
+      margin-bottom: 10px;
+      // padding: 10px;
+      background-color: #fff;
+      .pre {
+        width: 100%;
+        height: 100%;
+        padding: 10px;
+        z-index: 9;
+      }
+      .link {
+        display: block;
+        width: 100%;
+        height: 100%;
+      }
+      // 图片
+      img {
+        float: left;
+        width: 200px;
+        height: 100%;
+      }
+      // 标题
+      .blog-title {
+        display: inline-block;
+        font-size: 18px;
+        color: #333;
+        margin-left: 20px;
+        margin-top: 10px;
+        font-family: -apple-system, "Helvetica Neue", Helvetica, Arial,
+          "PingFang SC", "Hiragino Sans GB", "WenQuanYi Micro Hei",
+          "Microsoft Yahei", sans-serif;
+      }
+      // 内容
+      .blog-article {
+        font-size: 14px;
+        line-height: 1.7;
+        color: #6b7486;
+        padding: 10px 0 0 20px;
+        width: 440px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+      }
+      // 标签
+      .tag-list {
+        position: absolute;
+        bottom: 7px;
+        left: 225px;
+        .tag {
+          float: left;
+          margin-right: 10px;
+          height: 25px;
+        }
+      }
+      .el-tag {
+        // width: 35px;
+        padding: 0 5px;
+        height: 20px;
+        line-height: 20px;
+      }
+    }
+    .blog-preview:hover {
+      box-shadow: 0 0 5px #ccc;
+    }
+
+    .pages {
+      text-align: center;
+      z-index: 9;
+    }
+  }
 }
 </style>
