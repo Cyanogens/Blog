@@ -39,11 +39,11 @@
                name="sex"
                :disabled="edit"> <label for="girl">女</label>
 
-        <el-form-item label="手机号"
-                      prop="phone">
+        <el-form-item label="密码"
+                      prop="pass">
           <el-input type="tel"
                     oninput="value=value.replace(/[^\d]/g,'')"
-                    v-model.number="ruleForm.phone"></el-input>
+                    v-model.number="ruleForm.pass"></el-input>
         </el-form-item>
         <el-form-item class="save">
           <el-button type="primary"
@@ -53,7 +53,7 @@
       <el-button type="primary"
                  class="changeInfo"
                  :disabled="!edit"
-                 @click="change">修改信息</el-button>
+                 @click="changeEdit">修改信息</el-button>
 
     </div>
 
@@ -108,19 +108,16 @@ export default {
     Head
   },
   data () {
-    var validatePhone = (rule, value, callback) => {
+    var validatePass = (rule, value, callback) => {
       if (value === '') {
-        callback(new Error('电话不能为空'));
+        callback(new Error('密码不能为空'));
       } else {
-        if (String(value).length != 11) {
-          callback(new Error('请输入11位的电话'))
-        }
         callback();
       }
     };
     var validateName = (rule, value, callback) => {
       if (value === '') {
-        callback(new Error('请输入密码'));
+        callback(new Error('请输入用户名'));
       } else {
         callback();
       }
@@ -138,7 +135,7 @@ export default {
       pageSize: 10,
       color: ['', 'success', 'warning', 'danger'],
       list: [],
-      id: 1, // * 用户id
+      id: this.GLOBAL.id, // * 用户id
       password: 1,
       edit: true,
       sex: '男', // * 性别
@@ -150,8 +147,8 @@ export default {
         userName: [
           { validator: validateName, trigger: 'blur' }
         ],
-        phone: [
-          { validator: validatePhone, trigger: 'blur' }
+        pass: [
+          { validator: validatePass, trigger: 'blur' }
         ]
       }
     };
@@ -162,21 +159,21 @@ export default {
   },
 
   methods: {
-    change () {
+    changeEdit () {
       this.edit = !this.edit;
     },
     async pushInfo () {
       try {
-        if (this.ruleForm.userName === '' || this.ruleForm.phone === '') {
+        if (this.ruleForm.userName === '' || this.ruleForm.pass === '') {
           this.$message({
             showClose: true,
-            message: '用户名和电话不能为空哦~',
+            message: '用户名和密码不能为空哦~',
             type: 'error'
           });
           return;
         }
         const { data: res } = axois.post('http://localhost:8080/user/change', {
-          id: '', // todo 接口传参
+          id: this.GLOBAL.id,
         })
         if (res.code === 200) {
           // * 请求成功，即更改信息成功
@@ -184,6 +181,7 @@ export default {
             message: '修改成功',
             type: 'success'
           });
+          this.getInfo(); // * 保存更改后，重新获取信息
         }
       } catch (error) {
         console.log(error);
@@ -192,11 +190,11 @@ export default {
     // ? 获取用户信息
     async getInfo () {
       try {
-        const { data: res } = axios.get('http://localhost:8080/user/id') // todo 这里的id记得改
+        const { data: res } = axios.get('http://localhost:8080/user/' + this.GLOBAL.id + '')
         if (res.code === 200) {
-          this.id = res.id;
-          this.ruleForm.userName = res.username,
-            this.sex = res.sex
+          this.GLOBAL.id = res.data.id;
+          this.ruleForm.userName = res.data.username,
+            this.sex = res.data.sex
         }
       } catch (error) {
         console.log(error);
@@ -207,7 +205,7 @@ export default {
     change (e) {
       this.pageNo = e; // ! e即为当前页数
       // console.log(this.pageNo);
-      // getList();
+      this.getBlogList() // * 获取所有博客
     },
 
     // ? 获取所有博客列表

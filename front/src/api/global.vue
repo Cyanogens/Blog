@@ -1,7 +1,9 @@
 <script>
-let token = 'T'
+let token = 'F'
+let id = 1
 
 export default {
   token,
+  id
 }
 </script>

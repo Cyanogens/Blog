@@ -73,7 +73,6 @@ export default {
       if (value === '') {
         callback(new Error('请输入密码'));
       } else {
-        // 发送请求到后端，然后接收数据并判断
         callback();
       }
     };
@@ -111,16 +110,27 @@ export default {
       });
     },
 
+    // ? 登录功能
     async login () {
       try {
-        const { data: res } = await axios.post('http://localhost:8080/login', {
-          username: this.ruleForm.name,
-          password: this.ruleForm.pass
-        })
+        if (this.GLOBAL.token === 'T') {
+          this.$message.success('退出成功');
+          this.GLOBAL.token = 'F';
+          this.$router.push('/'); // * 退出后，跳转到首页
+        } else {
+          const { data: res } = await axios.post('http://localhost:8080/login', {
+            username: this.ruleForm.name,
+            password: this.ruleForm.pass
+          })
 
-        if (res.msg === "成功") {
-          this.GLOBAL.token = 'T'; // * 登录成功，标记
-          this.$router.push('/'); // * 登录成功后回到首页
+          if (res.code === 200) {
+            this.GLOBAL.token = 'T'; // * 登录成功，标记
+            this.GLOBAL.id = res.data.id;
+            this.$router.push('/'); // * 登录成功后回到首页
+          } else {
+            this.GLOABL.token = 'F'; // * 登录失败，切换标记  
+            this.$message.error(res.msg);
+          }
         }
       } catch (error) {
         console.log(error);

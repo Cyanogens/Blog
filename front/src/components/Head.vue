@@ -85,7 +85,7 @@
             <router-link to="/person">个人中心</router-link>
           </li>
           <li>
-            <router-link to="/login">登录</router-link>
+            <router-link to="/login">{{txt}}</router-link>
           </li>
         </div>
       </ul>
@@ -96,12 +96,21 @@
 
 <script>
 export default {
+  name: 'Head',
   data () {
     return {
       input: '',
+      txt: '登录',
     }
   },
-  name: 'Head'
+  created () {
+    if (this.GLOBAL.token === 'T') {
+      this.txt = '退出'
+    } else {
+      this.txt = '登录'
+    }
+  }
+
 }
 </script>
 
