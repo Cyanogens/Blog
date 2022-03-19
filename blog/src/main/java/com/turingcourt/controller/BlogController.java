@@ -34,11 +34,12 @@ public class BlogController {
     @PostMapping("/changeView")
     @ApiOperation("浏览量增加")
     public JsonResult viewBlog(Long blogId) {
+        System.out.println("blogId = " + blogId);
         Long view = blogService.viewBlog(blogId);
         if (view > 0) {
             return ResultTool.success(view);
         }
-        return ResultTool.fail(ResultCode.COMMON_FAIL);
+        return ResultTool.fail();
     }
 
     /**

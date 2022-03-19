@@ -92,6 +92,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         //登录验证
         http.authorizeRequests()
+                //访问限制
+                .antMatchers("/user/**").authenticated()
+                .antMatchers("/blog/insertBlog").authenticated()
+                .antMatchers("/comment/insert").authenticated()
+                .antMatchers("/comment/reply").authenticated()
+                .antMatchers("/comment/delete").authenticated()
+                .antMatchers("/like/**").authenticated()
                 .antMatchers("/**").permitAll()
                 .anyRequest()
                 .authenticated();
@@ -131,12 +138,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 //登出成功处理逻辑
                 .logoutSuccessHandler((req, res, auth) -> {
+                    System.out.println("登出成功");
                     JsonResult result = ResultTool.success();
                     res.setContentType("text/json;charset=utf-8");
                     res.getWriter().write(JSON.toJSONString(result));
                 })
                 .clearAuthentication(true)
-                .invalidateHttpSession(true);
+                .invalidateHttpSession(true)
+                .deleteCookies();
 
         //替换原来的过滤器
         http.addFilterAfter(loginFilter(), UsernamePasswordAuthenticationFilter.class);

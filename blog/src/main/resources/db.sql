@@ -3,9 +3,9 @@ create table blog
     id          bigint auto_increment
         primary key,
     title       varchar(255) not null comment '标题',
-    mdcontent   varchar(255) not null comment 'md格式的内容',
-    htmlcontent varchar(255) not null comment 'html格式的内容',
-    summary     varchar(255) not null comment '内容',
+    mdcontent   text         not null comment 'md格式的内容',
+    htmlcontent text         not null comment 'html格式的内容',
+    summary     text         not null comment '内容',
     uid         int          not null comment '用户id
 ',
     publishdata datetime     not null comment '发布时间',

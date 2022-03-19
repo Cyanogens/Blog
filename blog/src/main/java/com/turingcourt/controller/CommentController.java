@@ -40,7 +40,7 @@ public class CommentController {
         if (allComment != null) {
             return ResultTool.success(allComment);
         } else {
-            return ResultTool.fail(COMMON_FAIL);
+            return ResultTool.fail();
         }
 
     }
@@ -58,7 +58,7 @@ public class CommentController {
     public JsonResult insertComment(@RequestBody CommentVO commentVO, Long blogId) {
         Boolean insert = commentService.insertComment(commentVO, blogId);
 
-        return insert ? ResultTool.success() : ResultTool.fail(COMMON_FAIL);
+        return insert ? ResultTool.success() : ResultTool.fail();
     }
 
     /**

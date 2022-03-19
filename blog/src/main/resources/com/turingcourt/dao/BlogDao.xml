@@ -27,7 +27,7 @@
     <!--查询用户发布的博客列表-->
     <select id="queryByUserId" resultType="Blog">
         select
-            id, title, mdcontent, htmlcontent, summary, publishdata, state, pageview, likecount
+            id, title, mdcontent, htmlcontent, summary, uid, publishdata, state, pageview, likecount
         from turingblog.blog
         where uid = #{userId}
         order by rand()

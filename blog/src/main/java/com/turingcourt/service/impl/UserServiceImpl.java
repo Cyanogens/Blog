@@ -76,6 +76,7 @@ public class UserServiceImpl implements UserService {
         PageHelper.startPage(pageNo, pageSize);
         List<Blog> blogs = blogDao.queryByUserId(userId);
         PageInfo<Blog> pageInfo = new PageInfo<>(blogs);
+        System.out.println("blogs = " + blogs);
 
         List<BlogVO> blogVOS = new ArrayList<>();
         for (Blog blog : blogs) {

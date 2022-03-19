@@ -39,6 +39,7 @@ public class IndexController {
     @PostMapping("/register")
     @ApiOperation("用户注册")
     public JsonResult register(@RequestBody User user) {
+        System.out.println("user = " + user);
         Boolean registered = userLoginService.register(user);
         return registered ? ResultTool.success() : ResultTool.fail();
     }

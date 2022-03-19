@@ -25,6 +25,7 @@ public class UserLoginServiceImpl implements UserLoginService, UserDetailsServic
     @Override
     public Boolean register(User user) {
         user.setIsEnable(true);
+        user.setSex("男");
         //密码加密
         user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
         int insert = userDao.register(user);
