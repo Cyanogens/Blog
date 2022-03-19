@@ -22,6 +22,7 @@ Vue.use(ElementUI)
 
 Vue.prototype.axios = axios
 axios.defaults.baseURL = '/api'
+axios.defaults.withCredentials = true
 
 router.beforeEach((to, from, next) => {
   /* 路由发生变化修改页面title */

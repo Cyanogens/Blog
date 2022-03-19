@@ -92,6 +92,7 @@
                      layout="prev, pager, next"
                      :total="total"
                      :current-page="pageNo"
+                     :page-size="pageSize"
                      class="pages"
                      @current-change="change">
       </el-pagination>
@@ -132,7 +133,7 @@ export default {
       // 当前页
       pageNo: 1,
       // 每页展示的数目
-      pageSize: 10,
+      pageSize: 4,
       color: ['', 'success', 'warning', 'danger'],
       list: [],
       id: this.GLOBAL.id, // * 用户id
@@ -168,7 +169,7 @@ export default {
           });
           return;
         }
-        const { data: res } = axois.post('http://localhost:8080/user/change', {
+        const { data: res } = await axois.post('http://localhost:8080/user/change', {
           id: this.GLOBAL.id,
         })
         if (res.code === 200) {
@@ -212,7 +213,7 @@ export default {
     // ? 获取用户发布的所有博客列表
     async getBlogList () {
       try {
-        const { data: res } = await axios.get('http://localhost:8080//user/userBlogs/' + this.GLOBAL.id + '', {
+        const { data: res } = await axios.get('http://localhost:8080/user/userBlogs/' + this.GLOBAL.id + '', {
           params: {
             pageNo: this.pageNo,
             pageSize: this.pageSize
@@ -222,7 +223,7 @@ export default {
         //   console.log('11');
         if (res.code === 200) { // ! 返回成功
           this.list = res.data.list;
-          this.toal = res.data.total,
+          this.total = res.data.total,
             console.log(this.list);
         }
       } catch (error) {

@@ -51,7 +51,7 @@
                     ref=md
                     @imgAdd="imgAdd"
                     @imgDel="imgDel"
-                    v-model="blog.mdContent"
+                    v-model="text"
                     :ishljs="true" />
 
       <div class="commit"
@@ -174,27 +174,32 @@ export default {
     },
 
     async pushBlog () {
-      if (this.blog.title === '' || this.blog.categoryNames.length == 0 || this.blog.mdContent == '') {
-        this.$message({
-          showClose: true,
-          message: '必须输入标题，标签，内容才能发布博客哦~',
-          type: 'error'
-        });
-        return;
-      }
       try {
-        const { data: res } = await axios.post('http://localhost:8080/blog/insertBlog', {
-          userName: this.blog.userName,
-          categoryNames: this.blog.categoryNames,
-          mdContent: this.blog.mdContent,
-          title: this.blog.title,
-          htmlContent: this.blog.htmlContent
-        })
-        // console.log(this.blog);
-        if (res.code === 200) {
-          bus.$emit('getBlogId', res.data); // * 发送博客id
-          // ! 跳转路由
-          this.$router.push('/blog')
+        if (this.blog.title == '' || this.blog.categoryNames.length == 0 || this.text == '') {
+          this.$message({
+            showClose: true,
+            message: '必须输入标题，标签，内容才能发布博客哦~',
+            type: 'error'
+          });
+        }
+        else {
+          const { data: res } = await axios.post('http://localhost:8080/blog/insertBlog', {
+            userName: this.blog.userName,
+            categoryNames: this.blog.categoryNames,
+            mdContent: this.text,
+            title: this.blog.title,
+            htmlContent: this.blog.htmlContent
+          })
+          // console.log(this.blog);
+          if (res.code === 200) {
+            bus.$emit('getBlogId', res.data); // * 发送博客id
+            // ! 跳转路由
+            this.$router.push('/blog')
+          } else {
+            if (res.code === 2001) {
+              this.$message.error('请先完成登录才能发布博客哦~')
+            }
+          }
         }
         // console.log(this.blog);
       } catch (error) {

@@ -10,14 +10,15 @@ import Hot from '@/components/Hot.vue'
 import Special from '@/components/Special.vue'
 import BlogDetails from '@/components/BlogDetails.vue'
 import Person from '@/components/Person.vue'
+import Search from '@/components/Search.vue'
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/',
     name: 'Index',
-    component: Index,
-    // component: BlogDetails,
+    // component: Index,
+    component: BlogDetails,
     meta: {
       title: '首页',
     },
@@ -92,6 +93,14 @@ const routes = [
     component: Person,
     meta: {
       title: '个人中心',
+    },
+  },
+  {
+    path: '/search',
+    name: 'Search',
+    component: Search,
+    meta: {
+      title: '搜索结果',
     },
   },
 ]
