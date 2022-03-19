@@ -191,6 +191,11 @@ export default {
           this.GLOBAL.id = res.data.id;
           this.ruleForm.userName = res.data.username,
             this.sex = res.data.sex
+        } else {
+          if (res.code === 2001) {
+            this.$message.error('请先登录');
+            this.$router.push('/login')
+          }
         }
       } catch (error) {
         console.log(error);
