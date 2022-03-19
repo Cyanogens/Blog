@@ -104,7 +104,7 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
   // * 访问特定组件时，询问是否已经登录
   if (to.path == '/person' || to.path == '/editBlog') {
-    if (this.GLOBAL.token === 'F') {
+    if (sessionStorage['token'] === 'F') {
       this.$message.error('请先登录')
       next('/login')
     }

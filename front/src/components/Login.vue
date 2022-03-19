@@ -120,10 +120,12 @@ export default {
 
         if (res.code === 200) {
           this.GLOBAL.token = 'T'; // * 登录成功，标记
+          sessionStorage['token'] = 'T'; // * 登录成功，保存token到session
           this.GLOBAL.id = res.data.id;
           this.$router.push('/'); // * 登录成功后回到首页
         } else {
           this.GLOABL.token = 'F'; // * 登录失败，切换标记  
+          sessionStorage['token'] = 'F'
           this.$message.error(res.msg);
         }
       } catch (error) {
