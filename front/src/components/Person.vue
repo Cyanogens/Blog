@@ -209,10 +209,10 @@ export default {
       this.getBlogList() // * 获取所有博客
     },
 
-    // ? 获取所有博客列表
+    // ? 获取用户发布的所有博客列表
     async getBlogList () {
       try {
-        const { data: res } = await axios.get('http://localhost:8080/blog/random', {
+        const { data: res } = await axios.get('http://localhost:8080//user/userBlogs/' + this.GLOBAL.id + '', {
           params: {
             pageNo: this.pageNo,
             pageSize: this.pageSize
