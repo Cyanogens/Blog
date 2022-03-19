@@ -1,6 +1,6 @@
 <script>
 let token = 'F'
-let id = 1
+let id = 0
 
 export default {
   token,

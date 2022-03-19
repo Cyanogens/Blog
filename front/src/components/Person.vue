@@ -243,6 +243,7 @@ export default {
   width: 100%;
   height: 100%;
   background-color: #f5f6f7;
+  overflow: auto;
 
   .info {
     position: relative;
