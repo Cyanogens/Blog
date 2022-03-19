@@ -14,7 +14,8 @@
                 placeholder="请输入内容"
                 v-model="input"
                 clearable> </el-input>
-      <router-link to="/search">
+      <router-link to="/search"
+                   @click.native="search">
         <span class="search-btn">
           <svg class="icon"
                aria-hidden="true">
@@ -98,6 +99,8 @@
 </template>
 
 <script>
+import axios from 'axios'
+import bus from '@/components/eventBus'
 export default {
   name: 'Head',
   data () {
@@ -108,6 +111,9 @@ export default {
     }
   },
   methods: {
+    search () {
+      bus.$emit('getSearchTxt', this.input);
+    },
     toLogin () {
       if (this.GLOBAL.token === 'T') { // * 当前状态为已登录，点击退出
         this.logout();
