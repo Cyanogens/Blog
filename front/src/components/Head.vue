@@ -85,7 +85,8 @@
             <router-link to="/person">个人中心</router-link>
           </li>
           <li>
-            <router-link @click="toLogin">{{txt}}</router-link>
+            <router-link @click.native="toLogin"
+                         :to="path">{{txt}}</router-link>
           </li>
         </div>
       </ul>
@@ -101,6 +102,7 @@ export default {
     return {
       input: '',
       txt: '登录',
+      path: '/login'
     }
   },
   methods: {
@@ -108,10 +110,21 @@ export default {
       if (this.GLOBAL.token === 'T') { // * 当前状态为已登录，点击退出
         this.$message.success('退出成功');
         this.GLOBAL.token = 'F';
-        this.$router.push('/'); // * 退出后，跳转到首页
+        this.path = '/'; // * 退出后，跳转到首页
       } else {
         // * 当前状态为未登录，点击跳转到登录界面
-        this.$router.push('/login');
+        this.path = '/login'
+      }
+    }
+  },
+  watch: { // * 监听路由的变化，只要有变化，就实时调整登录/退出的切换
+    $route: {
+      handler () {
+        if (this.GLOBAL.token === 'T') {
+          this.txt = '退出'
+        } else {
+          this.txt = '登录'
+        }
       }
     }
   },
