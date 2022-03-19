@@ -108,14 +108,21 @@ export default {
     }
   },
   methods: {
-    toLogin () {
-      if (this.GLOBAL.token === 'T') { // * 当前状态为已登录，点击退出
-        this.$message.success('退出成功');
-        this.GLOBAL.token = 'F';
-        this.path = '/'; // * 退出后，跳转到首页
-      } else {
-        // * 当前状态为未登录，点击跳转到登录界面
-        this.path = '/login'
+    async toLogin () {
+      try {
+        if (this.GLOBAL.token === 'T') { // * 当前状态为已登录，点击退出
+          const { data: res } = await axios.post('http://localhost:8080/logout')
+          if (res.code == 200) {
+            this.$message.success('退出成功');
+            this.GLOBAL.token = 'F';
+            this.path = '/'; // * 退出后，跳转到首页
+          }
+        } else {
+          // * 当前状态为未登录，点击跳转到登录界面
+          this.path = '/login'
+        }
+      } catch (error) {
+        console.log(error);
       }
     }
   },

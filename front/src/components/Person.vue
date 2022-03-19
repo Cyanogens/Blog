@@ -187,7 +187,7 @@ export default {
     // ? 获取用户信息
     async getInfo () {
       try {
-        const { data: res } = axios.get('http://localhost:8080/user/' + this.GLOBAL.id + '')
+        const { data: res } = await axios.get('http://localhost:8080/user/' + this.GLOBAL.id)
         if (res.code === 200) {
           this.GLOBAL.id = res.data.id;
           this.ruleForm.userName = res.data.username,
