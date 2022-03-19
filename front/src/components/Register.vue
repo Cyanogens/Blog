@@ -165,8 +165,15 @@ export default {
     async register () {
       try {
         const { data: res } = await axios.post('http://localhost:8080/register', {
-
+          username: this.ruleForm.name,
+          password: this.ruleForm.pass,
+          problem: this.ruleForm.question,
+          ans: this.ruleForm.answer
         })
+        if (res.code === 200) {
+          this.$message.success('注册成功')
+          this.$router.push('/')
+        }
       } catch (error) {
         console.log(error);
       }
