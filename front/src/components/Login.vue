@@ -42,7 +42,7 @@
           </el-form-item>
           <el-form-item>
             <el-button type="primary"
-                       @click="login">登录</el-button>
+                       @click="login;submitForm('ruleForm')">登录</el-button>
           </el-form-item>
         </el-form>
         <div class="other-enter">
@@ -101,9 +101,7 @@ export default {
   methods: {
     submitForm (formName) {
       this.$refs[formName].validate((valid) => {
-        if (valid) {
-          alert('submit!');
-        } else {
+        if (!valid) {
           console.log('error submit!!');
           return false;
         }
