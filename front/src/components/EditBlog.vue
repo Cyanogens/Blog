@@ -46,8 +46,12 @@
                    :disabled-menus="[]"
                    @upload-image="handleUploadImage"></v-md-editor> -->
     <div class="edit">
-      <mavon-editor v-model="text"
-                    style="height: 500px;"
+      <!-- style="height: 500px;" -->
+      <mavon-editor style="height: 100%;width: 100%;"
+                    ref=md
+                    @imgAdd="imgAdd"
+                    @imgDel="imgDel"
+                    v-model="blog.mdContent"
                     :ishljs="true" />
 
       <div class="commit"
@@ -170,6 +174,14 @@ export default {
     },
 
     async pushBlog () {
+      if (this.blog.title === '' || this.blog.categoryNames.length == 0 || this.blog.mdContent == '') {
+        this.$message({
+          showClose: true,
+          message: '必须输入标题，标签，内容才能发布博客哦~',
+          type: 'error'
+        });
+        return;
+      }
       try {
         const { data: res } = await axios.post('http://localhost:8080/blog/insertBlog', {
           userName: this.blog.userName,
@@ -188,6 +200,37 @@ export default {
       } catch (error) {
         console.log(error);
       }
+    },
+
+    async imgAdd (pos, $file) {
+
+      var _this = this;
+      // 第一步.将图片上传到服务器.
+      var formdata = new FormData();
+      formdata.append('image', $file);
+      this.uploadFileRequest("http://localhost:8080/uploadImg", formdata).then(resp => {
+        var json = resp.data;
+        if (json.code === 200) {
+          //            _this.$refs.md.$imgUpdateByUrl(pos, json.msg)
+          _this.$refs.md.$imglst2Url([[pos, json.data]])
+        } else {
+          _this.$message({ type: json.code, message: json.msg });
+        }
+      });
+    },
+
+    uploadFileRequest (url, params) {
+      return axios({
+        method: 'post',
+        url: `${url}`,
+        data: params,
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      });
+    },
+    imgDel (pos) {
+
     },
 
     handleRemove (file) {
@@ -215,6 +258,7 @@ export default {
     position: relative;
     margin-top: 120px;
     padding: 0 175px;
+    z-index: 9;
     .commit {
       position: absolute;
       bottom: -50px;

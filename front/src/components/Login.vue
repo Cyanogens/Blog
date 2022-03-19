@@ -42,7 +42,7 @@
           </el-form-item>
           <el-form-item>
             <el-button type="primary"
-                       @click="submitForm('ruleForm')">登录</el-button>
+                       @click="login">登录</el-button>
           </el-form-item>
         </el-form>
         <div class="other-enter">
@@ -62,6 +62,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
   name: 'Login',
   components: {
@@ -109,8 +110,21 @@ export default {
         }
       });
     },
-    resetForm (formName) {
-      this.$refs[formName].resetFields();
+
+    async login () {
+      try {
+        const { data: res } = await axios.post('http://localhost:8080/login', {
+          username: this.ruleForm.name,
+          password: this.ruleForm.pass
+        })
+
+        if (res.msg === "成功") {
+          this.GLOBAL.token = 'T'; // * 登录成功，标记
+          this.$router.push('/'); // * 登录成功后回到首页
+        }
+      } catch (error) {
+        console.log(error);
+      }
     }
   }
 }

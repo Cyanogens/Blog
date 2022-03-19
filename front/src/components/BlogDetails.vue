@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="body">
     <!-- <el-empty description="暂无数据"></el-empty>
      -->
 
@@ -13,14 +13,14 @@
                aria-hidden="true">
             <use xlink:href="#icon-riqi"></use>
           </svg>
-          发布时间
+          {{ date }}
         </li>
         <li>
           <svg class="icon"
                aria-hidden="true">
             <use xlink:href="#icon-gaojian-zuozhe"></use>
           </svg>
-          作者
+          {{ author }}
         </li>
       </ul>
 
@@ -213,6 +213,8 @@ export default {
   },
   data () {
     return {
+      date: '2022-03-19 00:23:00', // * 发布时间
+      author: '微微', // * 作者
       id: 1,
       markdown: '## Blog',
       blog: {}, // * 博客对象
@@ -397,6 +399,12 @@ export default {
 </script>
 
 <style scoped lang="less">
+.body {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: #f5f6f7;
+}
 .blog-view {
   position: absolute;
   top: 100px;

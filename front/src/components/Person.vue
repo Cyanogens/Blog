@@ -27,25 +27,27 @@
         <input type="radio"
                class="ipt1"
                id="boy"
-               value="boy"
+               value="男"
                v-model="sex"
                name="sex"
                :disabled="edit"> <label for="boy">男</label>
         <input type="radio"
                class="ipt2"
                id="girl"
-               value="girl"
+               value="女"
                v-model="sex"
                name="sex"
                :disabled="edit"> <label for="girl">女</label>
 
         <el-form-item label="手机号"
                       prop="phone">
-          <el-input v-model.number="ruleForm.phone"></el-input>
+          <el-input type="tel"
+                    oninput="value=value.replace(/[^\d]/g,'')"
+                    v-model.number="ruleForm.phone"></el-input>
         </el-form-item>
         <el-form-item class="save">
           <el-button type="primary"
-                     @click="submitForm('ruleForm'); pushInfo()">保存信息</el-button>
+                     @click="pushInfo">保存信息</el-button>
         </el-form-item>
       </el-form>
       <el-button type="primary"
@@ -54,11 +56,52 @@
                  @click="change">修改信息</el-button>
 
     </div>
+
+    <!-- 博客预览列表 -->
+    <div class="blog-list">
+      <ol class="blog-preview-list">
+        <li v-for="item in list"
+            :key="item.id"
+            class="blog-preview"
+            :id="item.id"
+            @click.stop="enterDetails($event)">
+          <router-link to="/blog"
+                       class="link">
+            <div class="pre">
+              <!-- 预览图片 -->
+              <!-- <img src="@/assets/images/blog-preview.png"
+                 alt="item.title"> -->
+              <!-- 预览内容 -->
+              <h2 class="blog-title">{{ item.title }}</h2>
+              <!-- 文章预览内容 -->
+              <p class="blog-article">{{ item.mdContent }}</p>
+              <!-- 标签列表 -->
+              <ul class="tag-list">
+                <li class="tag"
+                    v-for="(it, index) in item.categoryNames.slice(0, 4)"
+                    :key="index">
+                  <el-tag :type="color[index]">{{ it }}</el-tag>
+                </li>
+              </ul>
+            </div>
+          </router-link>
+        </li>
+      </ol>
+      <!-- 分页 -->
+      <el-pagination background
+                     layout="prev, pager, next"
+                     :total="total"
+                     :current-page="pageNo"
+                     class="pages"
+                     @current-change="change">
+      </el-pagination>
+    </div>
   </div>
 </template>
 
 <script>
 import Head from '@/components/Head.vue'
+import axios from 'axios';
 export default {
   name: 'Person',
   components: {
@@ -69,6 +112,9 @@ export default {
       if (value === '') {
         callback(new Error('电话不能为空'));
       } else {
+        if (String(value).length != 11) {
+          callback(new Error('请输入11位的电话'))
+        }
         callback();
       }
     };
@@ -80,8 +126,22 @@ export default {
       }
     };
     return {
+      // 用户登录标志
+      token: this.GLOBAL.token,
+      // 所有标签
+      tag_list: [],
+      // 博客总数目
+      total: 0,
+      // 当前页
+      pageNo: 1,
+      // 每页展示的数目
+      pageSize: 10,
+      color: ['', 'success', 'warning', 'danger'],
+      list: [],
+      id: 1, // * 用户id
+      password: 1,
       edit: true,
-      sex: 'boy', // * 性别
+      sex: '男', // * 性别
       ruleForm: {
         userName: '',
         phone: '',
@@ -102,32 +162,76 @@ export default {
   },
 
   methods: {
-    submitForm (formName) {
-      this.$refs[formName].validate((valid) => {
-        if (valid) {
-          this.$message({
-            message: '修改成功',
-            type: 'success'
-          });
-        } else {
-          console.log('error submit!!');
-          return false;
-        }
-      });
-    },
-    resetForm (formName) {
-      this.$refs[formName].resetFields();
-    },
     change () {
       this.edit = !this.edit;
     },
     async pushInfo () {
       try {
-
+        if (this.ruleForm.userName === '' || this.ruleForm.phone === '') {
+          this.$message({
+            showClose: true,
+            message: '用户名和电话不能为空哦~',
+            type: 'error'
+          });
+          return;
+        }
+        const { data: res } = axois.post('http://localhost:8080/user/change', {
+          id: '', // todo 接口传参
+        })
+        if (res.code === 200) {
+          // * 请求成功，即更改信息成功
+          this.$message({
+            message: '修改成功',
+            type: 'success'
+          });
+        }
       } catch (error) {
         console.log(error);
       }
-    }
+    },
+    // ? 获取用户信息
+    async getInfo () {
+      try {
+        const { data: res } = axios.get('http://localhost:8080/user/id') // todo 这里的id记得改
+        if (res.code === 200) {
+          this.id = res.id;
+          this.ruleForm.userName = res.username,
+            this.sex = res.sex
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
+    // ? 分页，当期页数改变
+    change (e) {
+      this.pageNo = e; // ! e即为当前页数
+      // console.log(this.pageNo);
+      // getList();
+    },
+
+    // ? 获取所有博客列表
+    async getBlogList () {
+      try {
+        const { data: res } = await axios.get('http://localhost:8080/blog/random', {
+          params: {
+            pageNo: this.pageNo,
+            pageSize: this.pageSize
+          }
+        })
+        // console.log(res);
+        //   console.log('11');
+        if (res.code === 200) { // ! 返回成功
+          this.list = res.data.list;
+          console.log(this.list);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    },
+  },
+  created () {
+    this.getInfo();
   },
 };
 </script>
@@ -186,6 +290,96 @@ export default {
       margin-top: -50px;
     }
   }
+
+  // ? 博客预览列表
+  .blog-list {
+    position: absolute;
+    right: 240px;
+    top: 80px;
+  }
+
+  .blog-preview-list {
+    list-style: none;
+    position: relative;
+    // top: 80px;
+    // right: 240px;
+    .blog-preview {
+      position: relative;
+      display: block;
+      width: 667px;
+      height: 150px;
+      margin-bottom: 10px;
+      // padding: 10px;
+      background-color: #fff;
+      .pre {
+        width: 100%;
+        height: 100%;
+        padding: 10px;
+        z-index: 9;
+      }
+      .link {
+        display: block;
+        width: 100%;
+        height: 100%;
+      }
+      // 图片
+      img {
+        float: left;
+        width: 200px;
+        height: 100%;
+      }
+      // 标题
+      .blog-title {
+        display: inline-block;
+        font-size: 18px;
+        color: #333;
+        margin-left: 20px;
+        margin-top: 10px;
+        font-family: -apple-system, "Helvetica Neue", Helvetica, Arial,
+          "PingFang SC", "Hiragino Sans GB", "WenQuanYi Micro Hei",
+          "Microsoft Yahei", sans-serif;
+      }
+      // 内容
+      .blog-article {
+        font-size: 14px;
+        line-height: 1.7;
+        color: #6b7486;
+        padding: 10px 0 0 20px;
+        width: 440px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+      }
+      // 标签
+      .tag-list {
+        position: absolute;
+        bottom: 7px;
+        left: 225px;
+        .tag {
+          float: left;
+          margin-right: 10px;
+          height: 25px;
+        }
+      }
+      .el-tag {
+        // width: 35px;
+        padding: 0 5px;
+        height: 20px;
+        line-height: 20px;
+      }
+    }
+    .blog-preview:hover {
+      box-shadow: 0 0 5px #ccc;
+    }
+
+    .pages {
+      text-align: center;
+      z-index: 9;
+    }
+  }
 }
 </style>
 
@@ -207,5 +401,11 @@ export default {
 .demo-ruleForm .save >>> .el-form-item__content {
   margin-left: 164px !important;
   margin-top: 25px;
+}
+
+.body >>> .el-pagination {
+  text-align: right;
+  margin: 20px 0;
+  margin-right: 285px;
 }
 </style>

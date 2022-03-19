@@ -8,6 +8,10 @@ import '@/assets/icon/iconfont'
 import axios from 'axios'
 import mavonEditor from 'mavon-editor'
 import 'mavon-editor/dist/css/index.css'
+
+import globalVal from '@/api/global.vue'
+Vue.prototype.GLOBAL = globalVal
+
 Vue.use(mavonEditor)
 
 import VueParticles from 'vue-particles'
