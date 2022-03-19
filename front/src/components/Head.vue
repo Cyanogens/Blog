@@ -108,18 +108,21 @@ export default {
     }
   },
   methods: {
-    async toLogin () {
+    toLogin () {
+      if (this.GLOBAL.token === 'T') { // * 当前状态为已登录，点击退出
+        this.logout();
+      } else {
+        // * 当前状态为未登录，点击跳转到登录界面
+        this.path = '/login'
+      }
+    },
+    async logout () {
       try {
-        if (this.GLOBAL.token === 'T') { // * 当前状态为已登录，点击退出
-          const { data: res } = await axios.post('http://localhost:8080/logout')
-          if (res.code == 200) {
-            this.$message.success('退出成功');
-            this.GLOBAL.token = 'F';
-            this.path = '/'; // * 退出后，跳转到首页
-          }
-        } else {
-          // * 当前状态为未登录，点击跳转到登录界面
-          this.path = '/login'
+        const { data: res } = await axios.post('http://localhost:8080/logout')
+        if (res.code == 200) {
+          this.$message.success('退出成功');
+          this.GLOBAL.token = 'F';
+          this.path = '/'; // * 退出后，跳转到首页
         }
       } catch (error) {
         console.log(error);
@@ -144,7 +147,6 @@ export default {
       this.txt = '登录'
     }
   }
-
 }
 </script>
 
