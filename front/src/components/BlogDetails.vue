@@ -6,7 +6,7 @@
     <Head></Head>
     <div class="blog-view">
       <!-- 博客标题 -->
-      <h2 class="blog-title">关于此博客，作者有话要讲</h2>
+      <h2 class="blog-title">{{title}}</h2>
       <ul class="blog-tags">
         <li>
           <svg class="icon"
@@ -27,18 +27,19 @@
       <!-- 博客浏览量和点赞量 -->
       <ul class="blog-stars">
         <li>
-          <el-badge :value="1"
+          <el-badge :value="likeCount"
                     class="item star"
                     type="primary">
             <svg class="icon icon-star"
-                 aria-hidden="true">
-              <use xlink:href="#icon-star"></use>
+                 aria-hidden="true"
+                 @click="star">
+              <use :xlink:href="starName"></use>
             </svg>
             <span>Star</span>
           </el-badge>
         </li>
         <li>
-          <el-badge :value="1"
+          <el-badge :value="pageView"
                     class="item watch"
                     type="primary">
             <svg class="icon icon-star"
@@ -213,11 +214,17 @@ export default {
   },
   data () {
     return {
-      date: '2022-03-19 00:23:00', // * 发布时间
-      author: '微微', // * 作者
-      id: 1,
-      markdown: '## Blog',
+      date: '', // * 发布时间
+      author: '', // * 作者
+      id: 1, // * 用户id
+      pageView: 0, // * 浏览
+      isLiked: false, // * 是否点赞
+      likeCount: 0, // * 点赞数
+      categoryNames: [], // * 标签数组
+      markdown: '',
       blog: {}, // * 博客对象
+      starName: '#icon-star', // * 星星图标
+
       btnShow: false,
       index: '0',
       replyComment: '',
@@ -278,12 +285,31 @@ export default {
         if (res.code === 200) {
           this.markdown = res.data.mdContent;
           this.blog = res.data;
+          this.id = res.data.id;
+          this.title = res.data.title;
+          this.author = res.userName;
+          this.date = res.publishData;
+          this.likeCount = res.likeCount;
+          this.pageView = res.pageView;
+          this.isLiked = res.isLiked;
         }
       } catch (error) {
         console.log(error);
       }
     },
 
+    // ? 点赞
+    star () {
+      this.isLiked = !this.isLiked; // * 点击星星，更改状态
+      if (this.isLiked == false) {
+        this.likeCount--; // * 未点赞，点赞数减一
+        this.starName = '#icon-star'
+      } else {
+        this.likeCount++; // * 点赞，点赞数加一
+        this.starName = '#icon-star2'
+      }
+
+    },
 
 
     inputFocus () {
@@ -453,10 +479,10 @@ export default {
         height: 25px;
       }
       .star {
-        width: 82px;
+        width: 90px;
       }
       .watch {
-        width: 97px;
+        width: 110px;
       }
     }
     .icon-star {
