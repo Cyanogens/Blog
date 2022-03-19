@@ -100,4 +100,18 @@ const router = new VueRouter({
   routes,
 })
 
+// ? 全局路由守卫
+router.beforeEach((to, from, next) => {
+  // * 访问特定组件时，询问是否已经登录
+  if (to.path == '/person' || to.path == '/editBlog') {
+    if (this.GLOBAL.token === 'F') {
+      this.$message.error('请先登录')
+      next('/login')
+    }
+  } else {
+    // * 已登录，放行
+    next()
+  }
+})
+
 export default router

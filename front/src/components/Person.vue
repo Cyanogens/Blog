@@ -217,7 +217,8 @@ export default {
         //   console.log('11');
         if (res.code === 200) { // ! 返回成功
           this.list = res.data.list;
-          console.log(this.list);
+          this.toal = res.data.total,
+            console.log(this.list);
         }
       } catch (error) {
         console.log(error);
