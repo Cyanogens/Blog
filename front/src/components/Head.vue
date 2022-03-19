@@ -14,13 +14,15 @@
                 placeholder="请输入内容"
                 v-model="input"
                 clearable> </el-input>
-      <span class="search-btn">
-        <svg class="icon"
-             aria-hidden="true">
-          <use xlink:href="#icon-sousuo"></use>
-        </svg>
-        搜索
-      </span>
+      <router-link to="/search">
+        <span class="search-btn">
+          <svg class="icon"
+               aria-hidden="true">
+            <use xlink:href="#icon-sousuo"></use>
+          </svg>
+          搜索
+        </span>
+      </router-link>
     </div>
 
     <!-- 导航栏 -->
@@ -181,6 +183,10 @@ export default {
   //   margin: 10px 0 10px 910px;
   margin: 15px 0 15px 665px;
   // margin-top: 10px;
+  a {
+    display: inline;
+    padding: 0;
+  }
 }
 
 .search .search-ipt {

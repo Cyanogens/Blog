@@ -6,7 +6,7 @@
     <Head></Head>
     <div class="blog-view">
       <!-- 博客标题 -->
-      <h2 class="blog-title">{{title}}</h2>
+      <h2 class="blog-title">{{ blog.title}}</h2>
       <ul class="blog-tags">
         <li>
           <svg class="icon"
@@ -216,10 +216,10 @@ export default {
     return {
       date: '', // * 发布时间
       author: '', // * 作者
-      id: 1, // * 用户id
-      pageView: 0, // * 浏览
+      id: 1, // * 博客id
+      pageView: 11111, // * 浏览量
       isLiked: false, // * 是否点赞
-      likeCount: 0, // * 点赞数
+      likeCount: 11111, // * 点赞数
       categoryNames: [], // * 标签数组
       markdown: '',
       blog: {}, // * 博客对象
@@ -284,6 +284,9 @@ export default {
       this.viewAdd(); // * 浏览量增加
       this.getBlog(); // * 获取博客内容
     })
+    window.onbeforeunload = function () {
+      console.log(22);
+    }
   },
 
   methods: {
@@ -295,11 +298,11 @@ export default {
           this.blog = res.data;
           this.id = res.data.id;
           this.title = res.data.title;
-          this.author = res.userName;
-          this.date = res.publishData;
-          this.likeCount = res.likeCount;
-          this.pageView = res.pageView;
-          this.isLiked = res.isLiked;
+          this.author = res.data.userName;
+          this.date = res.data.publishData;
+          this.likeCount = res.data.likeCount;
+          this.pageView = res.data.pageView;
+          this.isLiked = res.data.isLiked;
         }
       } catch (error) {
         console.log(error);
