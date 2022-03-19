@@ -20,14 +20,6 @@
               <h2 class="blog-title">{{ item.title }}</h2>
               <!-- 文章预览内容 -->
               <p class="blog-article">{{ item.mdContent }}</p>
-              <!-- 标签列表 -->
-              <ul class="tag-list">
-                <li class="tag"
-                    v-for="(it, index) in item.categoryNames.slice(0, 4)"
-                    :key="index">
-                  <el-tag :type="color[index]">{{ it }}</el-tag>
-                </li>
-              </ul>
             </div>
           </router-link>
         </li>
@@ -46,6 +38,7 @@
 
 <script>
 import Head from '@/components/Head.vue'
+import axios from 'axios'
 export default {
   name: 'Search',
   components: {
@@ -54,23 +47,42 @@ export default {
 
   data () {
     return {
+      txt: '', // * 搜索关键字
       // 博客总数目
       total: 0,
       // 当前页
       pageNo: 1,
       // 每页展示的数目
-      pageSize: 10,
+      pageSize: 5,
       color: ['', 'success', 'warning', 'danger'],
-      list: [{ title: 'ss', mdContent: 'ss', id: '2', categoryNames: ['22'] }]
+      list: []
     };
   },
 
-  mounted () {
-
-  },
-
   methods: {
-
+    async getBlog () {
+      try {
+        const { data: res } = await axios.get('http://localhost:8080/blog/search', {
+          params: {
+            pageNo: this.pageNo,
+            pageSize: pageSize
+          }
+        })
+        if (res.code === 200) { // * 返回成功
+          this.list = res.data.list;
+          this.total = res.data.total;
+          //   console.log(this.list);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  },
+  created () {
+    bus.$on('getSearchTxt', txt => {
+      this.txt = txt;
+      this.getBlog(); // * 获取博客内容
+    })
   },
 };
 </script>
@@ -85,8 +97,8 @@ export default {
   overflow: auto;
   .blog-preview-list {
     list-style: none;
-    margin-left: 176px;
-    margin-top: 60px;
+    margin: 0 418px;
+    margin-top: 80px;
     .blog-preview {
       position: relative;
       display: block;
@@ -164,5 +176,11 @@ export default {
       z-index: 9;
     }
   }
+}
+</style>
+
+<style scoped>
+.blog-list >>> .el-pagination {
+  text-align: center;
 }
 </style>
