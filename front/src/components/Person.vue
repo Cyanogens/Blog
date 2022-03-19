@@ -360,7 +360,7 @@ export default {
       .tag-list {
         position: absolute;
         bottom: 7px;
-        left: 225px;
+        left: 20px;
         .tag {
           float: left;
           margin-right: 10px;

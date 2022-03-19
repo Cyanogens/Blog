@@ -42,7 +42,7 @@
           </el-form-item>
           <el-form-item>
             <el-button type="primary"
-                       @click="login;submitForm('ruleForm')">登录</el-button>
+                       @click="login">登录</el-button>
           </el-form-item>
         </el-form>
         <div class="other-enter">

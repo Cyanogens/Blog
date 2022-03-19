@@ -312,9 +312,7 @@ export default {
     // ? 浏览量增加
     async viewAdd () {
       try {
-        const { data: res } = axios.post('http://localhost:8080/blog/changeView', {
-          blogId: this.id,
-        })
+        const { data: res } = axios.post('http://localhost:8080/blog/changeView?blogId=' + this.id)
         if (res.code === 200) {
           this.pageView = res.data;
         }

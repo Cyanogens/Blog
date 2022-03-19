@@ -29,8 +29,8 @@
                      class="link">
           <div class="pre">
             <!-- 预览图片 -->
-            <img src="@/assets/images/blog-preview.png"
-                 alt="item.title">
+            <!-- <img src="@/assets/images/blog-preview.png"
+                 alt="item.title"> -->
             <!-- 预览内容 -->
             <h2 class="blog-title">{{ item.title }}</h2>
             <!-- 文章预览内容 -->
@@ -231,7 +231,7 @@ export default {
     .tag-list {
       position: absolute;
       bottom: 7px;
-      left: 225px;
+      left: 20px;
       .tag {
         float: left;
         margin-right: 10px;
