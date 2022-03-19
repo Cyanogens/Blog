@@ -118,9 +118,11 @@ export default {
           password: this.ruleForm.pass
         })
 
-        if (res.msg === "成功") {
+        if (res.code === 200) {
           this.GLOBAL.token = 'T'; // * 登录成功，标记
           this.$router.push('/'); // * 登录成功后回到首页
+        } else {
+          this.$message.error(res.msg);
         }
       } catch (error) {
         console.log(error);

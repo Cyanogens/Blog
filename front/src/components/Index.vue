@@ -97,7 +97,8 @@ export default {
     change (e) {
       this.pageNo = e; // ! e即为当前页数
       // console.log(this.pageNo);
-      // getList();
+      this.getTagList() // * 获取所有标签
+      this.getBlogList() // * 获取所有博客
     },
 
     // ? 数组去重
@@ -118,6 +119,7 @@ export default {
         //   console.log('11');
         if (res.code === 200) { // ! 返回成功
           this.list = res.data.list;
+          this.total = res.data.total;
           console.log(this.list);
         }
       } catch (error) {

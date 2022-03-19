@@ -1,5 +1,5 @@
 <script>
-let token = 'T'
+let token = 'F'
 
 export default {
   token,
