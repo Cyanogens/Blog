@@ -111,18 +111,26 @@ export default {
       });
     },
 
+    // ? 登录功能
     async login () {
       try {
-        const { data: res } = await axios.post('http://localhost:8080/login', {
-          username: this.ruleForm.name,
-          password: this.ruleForm.pass
-        })
-
-        if (res.code === 200) {
-          this.GLOBAL.token = 'T'; // * 登录成功，标记
-          this.$router.push('/'); // * 登录成功后回到首页
+        if (this.GLOBAL.token === 'T') {
+          this.$message.success('退出成功');
+          this.GLOBAL.token = 'F';
+          this.$router.push('/'); // * 退出后，跳转到首页
         } else {
-          this.$message.error(res.msg);
+          const { data: res } = await axios.post('http://localhost:8080/login', {
+            username: this.ruleForm.name,
+            password: this.ruleForm.pass
+          })
+
+          if (res.code === 200) {
+            this.GLOBAL.token = 'T'; // * 登录成功，标记
+            this.$router.push('/'); // * 登录成功后回到首页
+          } else {
+            this.GLOABL.token = 'F'; // * 登录失败，切换标记  
+            this.$message.error(res.msg);
+          }
         }
       } catch (error) {
         console.log(error);
