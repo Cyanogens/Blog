@@ -52,7 +52,7 @@
     <ul class="tagAll-list">
       <li v-for="(item,index) in tag_list"
           :key="index">
-        <el-tag :type="color[index % 4]">{{ item }}</el-tag>
+        <el-tag :type="color[index % 4]">{{ item.categoryName }}</el-tag>
       </li>
     </ul>
 
@@ -87,7 +87,7 @@ export default {
       // 当前页
       pageNo: 1,
       // 每页展示的数目
-      pageSize: 10,
+      pageSize: 5,
       color: ['', 'success', 'warning', 'danger'],
       list: []
     }
@@ -133,7 +133,7 @@ export default {
         const { data: res } = await axios.get('http://localhost:8080/category/getAll')
         //   console.log(res);
         if (res.code === 200) { // ! 返回成功
-          this.tag_list = res.data.list
+          this.tag_list = res.data;
           this.tag_list = this.unique(this.tag_list);
           console.log(this.tag_list);
         }
@@ -176,7 +176,7 @@ export default {
 .blog-preview-list {
   list-style: none;
   margin-left: 176px;
-  margin-top: 60px;
+  margin-top: 80px;
   .blog-preview {
     position: relative;
     display: block;
@@ -257,10 +257,10 @@ export default {
 
 // 所有标签
 .tagAll-list {
-  position: absolute;
-  right: 400px;
+  position: fixed;
+  right: 235px;
   top: 180px;
-  width: 205px;
+  width: 280px;
   //   padding: 10px 0 20px 0;
   background-color: #fff;
   box-shadow: 0 0 1px #ccc;
