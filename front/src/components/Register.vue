@@ -62,7 +62,7 @@
         </el-form-item>
         <el-form-item class="btn">
           <el-button type="primary"
-                     @click="submitForm('ruleForm')">注册</el-button>
+                     @click="register;submitForm('ruleForm')">注册</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -123,6 +123,7 @@ export default {
       }
     };
     return {
+      status: 0, // * 能否注册
       ruleForm: {
         pass: '',
         name: '',
@@ -162,7 +163,28 @@ export default {
         }
       });
     },
-    async register () {
+    register () {
+      this.checkName();
+      if (this.status == 1) {
+        this.register_push();
+      }
+    },
+
+    async checkName () {
+      try {
+        const { data: res } = await axios.get('http://localhost:8080/checkAccount' + this.ruleForm.name)
+        if (res.code === 2008) {
+          this.status = 0
+          this.$$message.error('改用户名已存在')
+        } else {
+          this.status = 1
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
+    async register_push () {
       try {
         const { data: res } = await axios.post('http://localhost:8080/register', {
           username: this.ruleForm.name,
