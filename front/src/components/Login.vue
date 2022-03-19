@@ -73,7 +73,6 @@ export default {
       if (value === '') {
         callback(new Error('请输入密码'));
       } else {
-        // 发送请求到后端，然后接收数据并判断
         callback();
       }
     };
@@ -126,6 +125,7 @@ export default {
 
           if (res.code === 200) {
             this.GLOBAL.token = 'T'; // * 登录成功，标记
+            this.GLOBAL.id = res.data.id;
             this.$router.push('/'); // * 登录成功后回到首页
           } else {
             this.GLOABL.token = 'F'; // * 登录失败，切换标记  
