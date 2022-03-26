@@ -28,9 +28,9 @@
         <router-link to="/blog"
                      class="link">
           <div class="pre">
-            <!--            &lt;!&ndash; 预览图片 &ndash;&gt;-->
-            <!--            <img src="@/assets/images/blog-preview.png"-->
-            <!--                 alt="item.title">-->
+            <!-- 预览图片 -->
+            <!-- <img src="@/assets/images/blog-preview.png"
+                 alt="item.title"> -->
             <!-- 预览内容 -->
             <h2 class="blog-title">{{ item.title }}</h2>
             <!-- 文章预览内容 -->

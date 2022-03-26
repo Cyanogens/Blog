@@ -165,9 +165,9 @@ export default {
       });
     },
     register () {
-      // if (this.status === 1) {
-      this.register_push();
-      // }
+      if (this.status === 1) {
+        this.register_push();
+      }
     },
 
     async check () {
@@ -191,7 +191,8 @@ export default {
           password: this.ruleForm.pass,
           problem: this.ruleForm.question,
           ans: this.ruleForm.answer,
-          nickName:this.ruleForm.nickName
+          nickName: this.ruleForm.nickName,
+          sex: '男'
         })
         if (res.code === 200) {
           this.$message.success('注册成功')
