@@ -175,7 +175,7 @@ export default {
 
     async pushBlog () {
       try {
-        if (this.blog.title == '' || this.blog.categoryNames.length == 0 || this.text == '') {
+        if (this.blog.title === '' || this.blog.categoryNames.length === 0 || this.text === '') {
           this.$message({
             showClose: true,
             message: '必须输入标题，标签，内容才能发布博客哦~',
@@ -194,7 +194,7 @@ export default {
           if (res.code === 200) {
             bus.$emit('getBlogId', res.data); // * 发送博客id
             // ! 跳转路由
-            this.$router.push('/blog')
+            await this.$router.push('/blog')
           } else {
             if (res.code === 2001) {
               this.$message.error('请先完成登录才能发布博客哦~')

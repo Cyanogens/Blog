@@ -191,7 +191,7 @@ export default {
         if (res.code === 200) {
           this.GLOBAL.id = res.data.id;
           this.ruleForm.userName = res.data.username,
-            this.sex = res.data.sex
+              this.sex = res.data.sex
         } else {
           if (res.code === 2001) {
             this.$message.error('请先登录');
@@ -224,7 +224,7 @@ export default {
         if (res.code === 200) { // ! 返回成功
           this.list = res.data.list;
           this.total = res.data.total,
-            console.log(this.list);
+              console.log(this.list);
         }
       } catch (error) {
         console.log(error);
@@ -339,8 +339,8 @@ export default {
         margin-left: 20px;
         margin-top: 10px;
         font-family: -apple-system, "Helvetica Neue", Helvetica, Arial,
-          "PingFang SC", "Hiragino Sans GB", "WenQuanYi Micro Hei",
-          "Microsoft Yahei", sans-serif;
+        "PingFang SC", "Hiragino Sans GB", "WenQuanYi Micro Hei",
+        "Microsoft Yahei", sans-serif;
       }
       // 内容
       .blog-article {
@@ -360,7 +360,7 @@ export default {
       .tag-list {
         position: absolute;
         bottom: 7px;
-        left: 225px;
+        left: 20px;
         .tag {
           float: left;
           margin-right: 10px;

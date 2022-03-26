@@ -312,9 +312,7 @@ export default {
     // ? 浏览量增加
     async viewAdd () {
       try {
-        const { data: res } = axios.post('http://localhost:8080/blog/changeView', {
-          blogId: this.id,
-        })
+        const { data: res } = axios.post('http://localhost:8080/blog/changeView?blogId=' +　this.id)
         if (res.code === 200) {
           this.pageView = res.data;
         }
@@ -326,7 +324,7 @@ export default {
     // ? 点赞
     star () {
       this.isLiked = !this.isLiked; // * 点击星星，更改状态
-      if (this.isLiked == false) {
+      if (this.isLiked === false) {
         this.likeCount--; // * 未点赞，点赞数减一
         this.starName = '#icon-star'
       } else {
@@ -335,109 +333,6 @@ export default {
       }
 
     },
-
-
-    // inputFocus () {
-    //   var replyInput = document.getElementById('replyInput');
-    //   replyInput.style.padding = "8px 8px"
-    //   replyInput.style.border = "2px solid blue"
-    //   replyInput.focus()
-    // },
-    // showReplyBtn () {
-    //   this.btnShow = true
-    // },
-    // hideReplyBtn () {
-    //   this.btnShow = false
-    //   replyInput.style.padding = "10px"
-    //   replyInput.style.border = "none"
-    // },
-    // showReplyInput (i, name, id) {
-    //   this.comments[this.index].inputShow = false
-    //   this.index = i
-    //   this.comments[i].inputShow = true
-    //   this.to = name
-    //   this.toId = id
-    // },
-    // _inputShow (i) {
-    //   return this.comments[i].inputShow
-    // },
-    // sendComment () {
-    //   if (!this.replyComment) {
-    //     this.$message({
-    //       showClose: true,
-    //       type: 'warning',
-    //       message: '评论不能为空'
-    //     })
-    //   } else {
-    //     let a = {}
-    //     let input = document.getElementById('replyInput')
-    //     let timeNow = new Date().getTime();
-    //     let time = this.dateStr(timeNow);
-    //     a.name = this.myName
-    //     a.comment = this.replyComment
-    //     a.headImg = this.myHeader
-    //     a.time = time
-    //     a.commentNum = 0
-    //     a.like = 0
-    //     this.comments.push(a)
-    //     this.replyComment = ''
-    //     input.innerHTML = '';
-
-    //   }
-    // },
-    // sendCommentReply (i, j) {
-    //   if (!this.replyComment) {
-    //     this.$message({
-    //       showClose: true,
-    //       type: 'warning',
-    //       message: '评论不能为空'
-    //     })
-    //   } else {
-    //     let a = {}
-    //     let timeNow = new Date().getTime();
-    //     let time = this.dateStr(timeNow);
-    //     a.from = this.myName
-    //     a.to = this.to
-    //     a.fromHeadImg = this.myHeader
-    //     a.comment = this.replyComment
-    //     a.time = time
-    //     a.commentNum = 0
-    //     a.like = 0
-    //     this.comments[i].reply.push(a)
-    //     this.replyComment = ''
-    //     document.getElementsByClassName("reply-comment-input")[i].innerHTML = ""
-    //   }
-    // },
-    // onDivInput: function (e) {
-    //   this.replyComment = e.target.innerHTML;
-    // },
-    // dateStr (date) {
-    //   //获取js 时间戳
-    //   var time = new Date().getTime();
-    //   //去掉 js 时间戳后三位，与php 时间戳保持一致
-    //   time = parseInt((time - date) / 1000);
-    //   //存储转换值 
-    //   var s;
-    //   if (time < 60 * 10) {//十分钟内
-    //     return '刚刚';
-    //   } else if ((time < 60 * 60) && (time >= 60 * 10)) {
-    //     //超过十分钟少于1小时
-    //     s = Math.floor(time / 60);
-    //     return s + "分钟前";
-    //   } else if ((time < 60 * 60 * 24) && (time >= 60 * 60)) {
-    //     //超过1小时少于24小时
-    //     s = Math.floor(time / 60 / 60);
-    //     return s + "小时前";
-    //   } else if ((time < 60 * 60 * 24 * 30) && (time >= 60 * 60 * 24)) {
-    //     //超过1天少于30天内
-    //     s = Math.floor(time / 60 / 60 / 24);
-    //     return s + "天前";
-    //   } else {
-    //     //超过30天ddd
-    //     var date = new Date(parseInt(date));
-    //     return date.getFullYear() + "/" + (date.getMonth() + 1) + "/" + date.getDate();
-    //   }
-    // }
   },
 
 }

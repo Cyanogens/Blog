@@ -28,9 +28,9 @@
         <router-link to="/blog"
                      class="link">
           <div class="pre">
-            <!-- 预览图片 -->
-            <img src="@/assets/images/blog-preview.png"
-                 alt="item.title">
+            <!--            &lt;!&ndash; 预览图片 &ndash;&gt;-->
+            <!--            <img src="@/assets/images/blog-preview.png"-->
+            <!--                 alt="item.title">-->
             <!-- 预览内容 -->
             <h2 class="blog-title">{{ item.title }}</h2>
             <!-- 文章预览内容 -->
@@ -61,6 +61,7 @@
                    layout="prev, pager, next"
                    :total="total"
                    :current-page="pageNo"
+                   :page-size="pageSize"
                    class="pages"
                    @current-change="change">
     </el-pagination>
@@ -210,8 +211,8 @@ export default {
       margin-left: 20px;
       margin-top: 10px;
       font-family: -apple-system, "Helvetica Neue", Helvetica, Arial,
-        "PingFang SC", "Hiragino Sans GB", "WenQuanYi Micro Hei",
-        "Microsoft Yahei", sans-serif;
+      "PingFang SC", "Hiragino Sans GB", "WenQuanYi Micro Hei",
+      "Microsoft Yahei", sans-serif;
     }
     // 内容
     .blog-article {
@@ -231,7 +232,7 @@ export default {
     .tag-list {
       position: absolute;
       bottom: 7px;
-      left: 225px;
+      left: 20px;
       .tag {
         float: left;
         margin-right: 10px;

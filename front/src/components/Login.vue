@@ -42,7 +42,7 @@
           </el-form-item>
           <el-form-item>
             <el-button type="primary"
-                       @click="login;submitForm('ruleForm')">登录</el-button>
+                       @click="login">登录</el-button>
           </el-form-item>
         </el-form>
         <div class="other-enter">
@@ -120,9 +120,9 @@ export default {
           this.GLOBAL.token = 'T'; // * 登录成功，标记
           sessionStorage['token'] = 'T'; // * 登录成功，保存token到session
           this.GLOBAL.id = res.data.id;
-          this.$router.push('/'); // * 登录成功后回到首页
+          await this.$router.push('/'); // * 登录成功后回到首页
         } else {
-          this.GLOBAL.token = 'F'; // * 登录失败，切换标记  
+          this.GLOBAL.token = 'F'; // * 登录失败，切换标记
           sessionStorage['token'] = 'F'
           this.$message.error(res.msg);
         }

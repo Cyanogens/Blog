@@ -62,7 +62,7 @@
         </el-form-item>
         <el-form-item class="btn">
           <el-button type="primary"
-                     @click="register;submitForm('ruleForm')">注册</el-button>
+                     @click="register">注册</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -79,7 +79,7 @@ export default {
         callback(new Error('请输入密码'));
       } else {
         if (this.ruleForm.checkPass !== '') {
-          this.$refs.ruleForm.validateField('pass');
+          this.$refs.ruleForm.validateField('checkPass');
         }
         callback();
       }
@@ -98,6 +98,7 @@ export default {
         return callback(new Error('请输入用户名'));
         // 根据后端返回结果显示是显示“请输入用户名还是，用户名重复”
       } else {
+        this.check();
         callback();
       }
     };
@@ -164,18 +165,17 @@ export default {
       });
     },
     register () {
-      this.checkName();
-      if (this.status == 1) {
-        this.register_push();
-      }
+      // if (this.status === 1) {
+      this.register_push();
+      // }
     },
 
-    async checkName () {
+    async check () {
       try {
-        const { data: res } = await axios.get('http://localhost:8080/checkAccount' + this.ruleForm.name)
+        const { data: res } = await axios.get('http://localhost:8080/checkAccount?username=' + this.ruleForm.name)
         if (res.code === 2008) {
           this.status = 0
-          this.$$message.error('改用户名已存在')
+          this.$message.error('该用户名已存在')
         } else {
           this.status = 1
         }
@@ -190,7 +190,8 @@ export default {
           username: this.ruleForm.name,
           password: this.ruleForm.pass,
           problem: this.ruleForm.question,
-          ans: this.ruleForm.answer
+          ans: this.ruleForm.answer,
+          nickName:this.ruleForm.nickName
         })
         if (res.code === 200) {
           this.$message.success('注册成功')
