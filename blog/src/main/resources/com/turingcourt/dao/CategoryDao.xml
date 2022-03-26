@@ -10,12 +10,12 @@
 
     <!--添加标签内容-->
     <insert id="insertCategory" keyProperty="id" useGeneratedKeys="true">
-        insert into turingblog.category(categoryName) values (#{categoryName});
+        insert into category(categoryName) values (#{categoryName});
     </insert>
 
     <!--修改标签内容-->
     <update id="updateCategory">
-        update turingblog.category
+        update category
         <set>
             <if test="categoryname != null and categoryname != ''">
                 categoryname = #{categoryName},
@@ -27,9 +27,9 @@
     <select id="queryByBlogId" resultType="category">
         select
             cate.id, cate.categoryname
-        from turingblog.blog a
-        inner join turingblog.category cate
-        inner join turingblog.blog_category bc
+        from blog a
+        inner join category cate
+        inner join blog_category bc
         on a.id = bc.bid and bc.cid = cate.id
         WHERE a.id LIKE #{blogId}
         order by rand()

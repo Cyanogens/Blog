@@ -20,7 +20,7 @@
     <select id="getBlog" resultType="blog">
         select
             id, title, mdcontent, htmlcontent, summary, uid, publishdata, state, pageview, likecount
-        from turingblog.blog
+        from blog
         where id = #{id}
     </select>
 
@@ -28,7 +28,7 @@
     <select id="queryByUserId" resultType="Blog">
         select
             id, title, mdcontent, htmlcontent, summary, uid, publishdata, state, pageview, likecount
-        from turingblog.blog
+        from blog
         where uid = #{userId}
         order by rand()
     </select>
@@ -37,7 +37,7 @@
     <select id="queryRandomBlog" resultType="blog">
         select
             id, title, mdcontent, htmlcontent, summary, uid, publishdata, state, pageview, likecount
-        from turingblog.blog
+        from blog
         order by rand()
     </select>
 
@@ -45,9 +45,9 @@
     <select id="queryByCategory" resultType="blog">
         select distinct
             a.id, a.title, a.mdcontent, a.htmlcontent, a.summary, a.uid, a.publishdata, a.state,a.pageview, a.likecount
-        from turingblog.blog a
-                 inner join turingblog.category cate
-                 inner join turingblog.blog_category bc
+        from blog a
+                 inner join category cate
+                 inner join blog_category bc
                             on a.id = bc.bid and bc.cid = cate.id
         where cate.categoryname like #{key}
            or a.title like #{key}
@@ -56,13 +56,13 @@
 
     <!--发布博客-->
     <insert id="insertBlog" useGeneratedKeys="true" keyProperty="id"  keyColumn="id" >
-        insert into turingblog.blog(title, mdcontent, htmlcontent, summary, uid, publishdata, state, pageview, likecount)
+        insert into blog(title, mdcontent, htmlcontent, summary, uid, publishdata, state, pageview, likecount)
         values (#{title}, #{mdContent}, #{htmlContent}, #{summary}, #{uid}, #{publishData}, #{state}, #{pageView}, #{likeCount})
     </insert>
 
     <!--更改用户发布的博客-->
     <update id="updateBlog">
-        update turingblog.blog
+        update blog
         <set>
 
             <if test="title != null and title != ''">
@@ -97,14 +97,14 @@
     </update>
     <!--更改博客浏览量-->
     <update id="changeView">
-        update turingblog.blog
+        update blog
         set pageview = pageview + 1
         where id = #{blogId}
     </update>
 
     <!--删除博客-->
     <delete id="deleteBlog">
-        delete from turingblog.blog where id = #{id}
+        delete from blog where id = #{id}
     </delete>
 
 </mapper>

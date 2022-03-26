@@ -34,19 +34,19 @@
     <select id="verifyAnswer" resultMap="BaseResultMap">
         select
             nickname, username, sex
-        from turingblog.user
+        from user
         where username = #{username} and ans = #{ans}
     </select>
 
     <!-- 用户注册-->
     <insert id="register" parameterType="User">
-        insert into turingblog.user (nickname, username, password, isenable,sex, problem, ans)
+        insert into user (nickname, username, password, isenable,sex, problem, ans)
         values (#{nickName},#{username},#{password},#{isEnable},#{sex},#{problem},#{ans})
     </insert>
 
     <!--更改用户信息-->
     <update id="update" parameterType="User">
-        update turingblog.user
+        update user
         <set>
             <if test="nickName != null and nickName != ''">
                 nickname = #{nickName},

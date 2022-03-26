@@ -17,7 +17,7 @@
     <select id="getComment" resultMap="BaseResultMap">
         select
           id, pid, bid, uid, content, createdate, likecount, treepath
-        from turingblog.comment
+        from comment
         where id = #{commentId}
     </select>
 
@@ -25,29 +25,29 @@
     <select id="queryComment" resultMap="BaseResultMap">
         select
             id, pid, bid, uid, content, createdate, likecount, treepath
-        from turingblog.comment
+        from comment
         where bid = #{blogId}
     </select>
 
     <!--发布评论/回复-->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
-        insert into turingblog.comment(pid, bid, uid, content, createdate, likecount, treepath)
+        insert into comment(pid, bid, uid, content, createdate, likecount, treepath)
         values (#{pid}, #{bid}, #{uid}, #{content}, #{createDate}, #{likeCount}, #{treePath})
     </insert>
 
     <!--删除评论-->
     <delete id="deleteComment">
-        delete from turingblog.comment where id = #{commentId}
+        delete from comment where id = #{commentId}
     </delete>
 
     <!--根据博客id删除评论-->
     <delete id="deleteCommentByBid">
-        delete from turingblog.comment where id = #{bid}
+        delete from comment where id = #{bid}
     </delete>
 
     <!--删除评论的子评论-->
     <delete id="deleteChildComment">
-        delete from turingblog.comment where treepath like #{tree};
+        delete from comment where treepath like #{tree};
     </delete>
 
 </mapper>
