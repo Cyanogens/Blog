@@ -50,7 +50,7 @@
                  inner join turingblog.blog_category bc
                             on a.id = bc.bid and bc.cid = cate.id
         where cate.categoryname like #{key}
-           or title like #{key}
+           or a.title like #{key}
         order by rand()
     </select>
 
