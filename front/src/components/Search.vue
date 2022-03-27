@@ -93,6 +93,7 @@ export default {
         console.log(error);
       }
     },
+    // ? 进入博客详情页，向博客详情页传值
     enterDetails (e) {
       //   console.log(e.currentTarget.id);
       const id = e.currentTarget.id;

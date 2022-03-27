@@ -11,6 +11,9 @@ import Head from '@/components/Head.vue'
 export default {
   components: {
     Head
+  },
+  created() {
+      localStorage['token'] = 'F'
   }
 }
 </script>

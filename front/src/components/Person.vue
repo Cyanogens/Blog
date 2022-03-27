@@ -129,20 +129,20 @@ export default {
       // 所有标签
       tag_list: [],
       // 博客总数目
-      total: 0,
+      total: localStorage.getItem('total'),
       // 当前页
       pageNo: 1,
       // 每页展示的数目
       pageSize: 4,
       color: ['', 'success', 'warning', 'danger'],
-      list: [],
-      id: sessionStorage.getItem('id'), // * 用户id
+      list: localStorage.getItem('list'),
+      id: localStorage.getItem('id'), // * 用户id
       password: 1,
       edit: true,
-      sex: sessionStorage.getItem('sex'), // * 性别
+      sex: localStorage.getItem('sex'), // * 性别
       ruleForm: {
-        userName: sessionStorage.getItem('username'),
-        phone: '',
+        userName: localStorage.getItem('username'),
+        pass: '',
       },
       rules: {
         userName: [
@@ -169,8 +169,8 @@ export default {
           });
           return;
         }
-        const { data: res } = await axois.post('http://localhost:8080/user/change', {
-          id: this.GLOBAL.id,
+        const { data: res } = await axios.post('http://localhost:8080/user/change', {
+          id: localStorage['userId'],
         })
         if (res.code === 200) {
           // * 请求成功，即更改信息成功
@@ -187,21 +187,21 @@ export default {
     // ? 获取用户信息
     async getInfo () {
       try {
-        const { data: res } = await axios.get('http://localhost:8080/user/' + this.GLOBAL.id)
-        if (res.code === 200) {
-          this.GLOBAL.id = res.data.id;
-          this.ruleForm.userName = res.data.username;
-          this.sex = res.data.sex;
-          sessionStorage.setItem('id', this.GLOBAL.id)
-          sessionStorage.setItem('username', this.ruleForm.userName)
-          sessionStorage.setItem('sex', this.sex)
-
-        } else {
-          if (res.code === 2001) {
-            this.$message.error('请先登录');
-            this.$router.push('/login')
+        // if (localStorage['token'] == 'F') {
+        //   this.$message.error('请先登录');
+        //   this.$router.push('/login')
+        // } else {
+          const { data: res } = await axios.get('http://localhost:8080/user/' + localStorage['userId'])
+          if (res.code === 200) {
+            localStorage['userId'] = res.data.id;
+            this.ruleForm.userName = res.data.username;
+            this.sex = res.data.sex;
+            this.password = res.data.password;
+            localStorage.setItem('sex', this.sex)
+            localStorage.setItem('password', this.password)
           }
-        }
+        // }
+
       } catch (error) {
         console.log(error);
       }
@@ -217,7 +217,7 @@ export default {
     // ? 获取用户发布的所有博客列表
     async getBlogList () {
       try {
-        const { data: res } = await axios.get('http://localhost:8080/user/userBlogs/' + this.GLOBAL.id + '', {
+        const { data: res } = await axios.get('http://localhost:8080/user/userBlogs/' + localStorage['userId'], {
           params: {
             pageNo: this.pageNo,
             pageSize: this.pageSize
@@ -227,8 +227,10 @@ export default {
         //   console.log('11');
         if (res.code === 200) { // ! 返回成功
           this.list = res.data.list;
-          this.total = res.data.total,
-              console.log(this.list);
+          this.total = res.data.total;
+          //   localStorage.setItem('list', this.list);
+          //   localStorage.setItem('total', this.total);
+          //   console.log(this.list);
         }
       } catch (error) {
         console.log(error);
@@ -343,8 +345,8 @@ export default {
         margin-left: 20px;
         margin-top: 10px;
         font-family: -apple-system, "Helvetica Neue", Helvetica, Arial,
-        "PingFang SC", "Hiragino Sans GB", "WenQuanYi Micro Hei",
-        "Microsoft Yahei", sans-serif;
+          "PingFang SC", "Hiragino Sans GB", "WenQuanYi Micro Hei",
+          "Microsoft Yahei", sans-serif;
       }
       // 内容
       .blog-article {

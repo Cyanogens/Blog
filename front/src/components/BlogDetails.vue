@@ -57,101 +57,6 @@
       </v-md-preview>
 
     </div>
-
-    <!-- 评论区 -->
-    <!-- <div class="comment">
-      <div v-clickoutside="hideReplyBtn"
-           @click="inputFocus"
-           class="my-reply">
-        <el-avatar class="header-img"
-                   :size="40"
-                   :src="myHeader"></el-avatar>
-        <div class="reply-info">
-          <div tabindex="0"
-               contenteditable="true"
-               id="replyInput"
-               spellcheck="false"
-               placeholder="输入评论..."
-               class="reply-input"
-               @focus="showReplyBtn"
-               @input="onDivInput($event)">
-          </div>
-        </div>
-        <div class="reply-btn-box"
-             v-show="btnShow">
-          <el-button class="reply-btn"
-                     size="medium"
-                     @click="sendComment"
-                     type="primary">发表评论</el-button>
-        </div>
-      </div>
-      <div v-for="(item,i) in comments"
-           :key="i"
-           class="author-title reply-father">
-        <el-avatar class="header-img"
-                   :size="40"
-                   :src="item.headImg"></el-avatar>
-        <div class="author-info">
-          <span class="author-name">{{item.name}}</span>
-          <span class="author-time">{{item.time}}</span>
-        </div>
-        <div class="icon-btn">
-          <span @click="showReplyInput(i,item.name,item.id)"><i class="iconfont el-icon-s-comment"></i>{{item.commentNum}}</span>
-          <i class="iconfont el-icon-caret-top"></i>{{item.like}}
-        </div>
-        <div class="talk-box">
-          <p>
-            <span class="reply">{{item.comment}}</span>
-          </p>
-        </div>
-        <div class="reply-box">
-          <div v-for="(reply,j) in item.reply"
-               :key="j"
-               class="author-title">
-            <el-avatar class="header-img"
-                       :size="40"
-                       :src="reply.fromHeadImg"></el-avatar>
-            <div class="author-info">
-              <span class="author-name">{{reply.from}}</span>
-              <span class="author-time">{{reply.time}}</span>
-            </div>
-            <div class="icon-btn">
-              <span @click="showReplyInput(i,reply.from,reply.id)"><i class="iconfont el-icon-s-comment"></i>{{reply.commentNum}}</span>
-              <i class="iconfont el-icon-caret-top"></i>{{reply.like}}
-            </div>
-            <div class="talk-box">
-              <p>
-                <span>回复 {{reply.to}}:</span>
-                <span class="reply">{{reply.comment}}</span>
-              </p>
-            </div>
-            <div class="reply-box">
-
-            </div>
-          </div>
-        </div>
-        <div v-show="_inputShow(i)"
-             class="my-reply my-comment-reply">
-          <el-avatar class="header-img"
-                     :size="40"
-                     :src="myHeader"></el-avatar>
-          <div class="reply-info">
-            <div tabindex="0"
-                 contenteditable="true"
-                 spellcheck="false"
-                 placeholder="输入评论..."
-                 @input="onDivInput($event)"
-                 class="reply-input reply-comment-input"></div>
-          </div>
-          <div class=" reply-btn-box">
-            <el-button class="reply-btn"
-                       size="medium"
-                       @click="sendCommentReply(i,j)"
-                       type="primary">回复评论</el-button>
-          </div>
-        </div>
-      </div>
-    </div> -->
   </div>
 </template>
 
@@ -178,35 +83,6 @@ VMdPreview.use(githubTheme, {
 Vue.use(VMdPreview);
 
 
-
-
-const clickoutside = {
-  // 初始化指令
-  bind (el, binding, vnode) {
-    function documentHandler (e) {
-      // 这里判断点击的元素是否是本身，是本身，则返回
-      if (el.contains(e.target)) {
-        return false;
-      }
-      // 判断指令中是否绑定了函数
-      if (binding.expression) {
-        // 如果绑定了函数 则调用那个函数，此处binding.value就是handleClose方法
-        binding.value(e);
-      }
-    }
-    // 给当前元素绑定个私有变量，方便在unbind中可以解除事件监听
-    el.vueClickOutside = documentHandler;
-    document.addEventListener('click', documentHandler);
-  },
-  update () { },
-  unbind (el, binding) {
-    // 解除事件监听
-    document.removeEventListener('click', el.vueClickOutside);
-    delete el.vueClickOutside;
-  },
-};
-
-
 export default {
   name: 'BlogDetails',
   components: {
@@ -224,75 +100,43 @@ export default {
       markdown: '',
       blog: {}, // * 博客对象
       starName: '#icon-star', // * 星星图标
-
-      btnShow: false,
-      index: '0',
-      replyComment: '',
-      myName: 'Lana Del Rey',
-      myHeader: 'https://ae01.alicdn.com/kf/Hd60a3f7c06fd47ae85624badd32ce54dv.jpg',
-      myId: 19870621,
-      to: '',
-      toId: -1,
-      comments: [
-        {
-          name: 'Lana Del Rey',
-          id: 19870621,
-          headImg: 'https://ae01.alicdn.com/kf/Hd60a3f7c06fd47ae85624badd32ce54dv.jpg',
-          comment: '我发布一张新专辑Norman Fucking Rockwell,大家快来听啊',
-          time: '2019年9月16日 18:43',
-          commentNum: 2,
-          like: 15,
-          inputShow: false,
-          reply: [
-            {
-              from: 'Taylor Swift',
-              fromId: 19891221,
-              fromHeadImg: 'https://ae01.alicdn.com/kf/H94c78935ffa64e7e977544d19ecebf06L.jpg',
-              to: 'Lana Del Rey',
-              toId: 19870621,
-              comment: '我很喜欢你的新专辑！！',
-              time: '2019年9月16日 18:43',
-              commentNum: 1,
-              like: 15,
-              inputShow: false
-            },
-            {
-              from: 'Ariana Grande',
-              fromId: 1123,
-              fromHeadImg: 'https://ae01.alicdn.com/kf/Hf6c0b4a7428b4edf866a9fbab75568e6U.jpg',
-              to: 'Lana Del Rey',
-              toId: 19870621,
-              comment: '别忘记宣传我们的合作单曲啊',
-              time: '2019年9月16日 18:43',
-              commentNum: 0,
-              like: 5,
-              inputShow: false
-
-            }
-          ]
-        },
-      ]
     }
   },
 
-
-  directives: { clickoutside },
   created () {
+    bus.$off('getBlogId');
     bus.$on('getBlogId', id => {
       this.id = id;
-      //   console.log(id);
-      this.viewAdd(); // * 浏览量增加
-      this.getBlog(); // * 获取博客内容
-    })
-    window.onbeforeunload = function () {
-      console.log(22);
+      //   this.pageView = val.count;
+      localStorage['blogId'] = id;
+      localStorage['flag'] = 'F';
+      //   console.log('拿到id了');
+      //   console.log(val.count);
+    });
+    // ? 刷新页面重新获取数据
+    window.onload = e => {
+      this.id = localStorage['blogId'];
     }
+  },
+  watch: {
+    id: function () {
+      console.log('id变化了');
+      this.getBlog();
+      if (localStorage['flag'] === 'F') { // * flag 表示访问量只加载(调用接口）一次
+        this.viewAdd();
+        localStorage['flag'] = 'T';
+      }
+    }
+  },
+  destroyed () {
+    localStorage['flag'] = 'F'
   },
 
   methods: {
     async getBlog () {
       try {
-        const { data: res } = await axios.get('http://localhost:8080/blog/' + this.id + '')
+        let num = localStorage['blogId'];
+        const { data: res } = await axios.get('http://localhost:8080/blog/' + num)
         if (res.code === 200) {
           this.markdown = res.data.mdContent;
           this.blog = res.data;
@@ -312,7 +156,9 @@ export default {
     // ? 浏览量增加
     async viewAdd () {
       try {
-        const { data: res } = axios.post('http://localhost:8080/blog/changeView?blogId=' +　this.id)
+        let num = localStorage['blogId'];
+        console.log('浏览量增加');
+        const { data: res } = await axios.post('http://localhost:8080/blog/changeView?blogId=' + num);
         if (res.code === 200) {
           this.pageView = res.data;
         }
@@ -397,6 +243,10 @@ export default {
       }
       .watch {
         width: 110px;
+        display: flex;
+        flex-wrap: nowrap;
+        justify-content: center;
+        align-items: center;
       }
     }
     .icon-star {
@@ -411,7 +261,7 @@ export default {
       height: 25px;
       line-height: 25px;
       padding: 0 5px;
-      margin-right: 28px;
+    //   margin-right: 28px;
     }
   }
 }
@@ -433,10 +283,17 @@ export default {
 }
 
 .blog-view >>> .el-badge__content--primary {
-  top: 13px;
-  right: 25px;
+  /* top: 13px; */
+  /* right: 25px; */
   background-color: #e5e7e9;
   color: #2a2935;
+}
+
+.blog-view >>> .el-badge__content.is-fixed {
+    transform: none;
+    position: inherit;
+    right: 0;
+    top: 0;
 }
 </style>
 

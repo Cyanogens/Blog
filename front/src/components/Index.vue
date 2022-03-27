@@ -90,7 +90,8 @@ export default {
       // 每页展示的数目
       pageSize: 5,
       color: ['', 'success', 'warning', 'danger'],
-      list: []
+      list: [],
+      pageView: 0
     }
   },
   methods: {
@@ -121,7 +122,7 @@ export default {
         if (res.code === 200) { // ! 返回成功
           this.list = res.data.list;
           this.total = res.data.total;
-          console.log(this.list);
+        //   console.log(this.list);
         }
       } catch (error) {
         console.log(error);
@@ -136,7 +137,7 @@ export default {
         if (res.code === 200) { // ! 返回成功
           this.tag_list = res.data;
           this.tag_list = this.unique(this.tag_list);
-          console.log(this.tag_list);
+        //   console.log(this.tag_list);
         }
       } catch (error) {
         console.log(error);
@@ -260,7 +261,7 @@ export default {
 .tagAll-list {
   position: fixed;
   right: 235px;
-  top: 180px;
+  top: 80px;
   width: 280px;
   //   padding: 10px 0 20px 0;
   background-color: #fff;

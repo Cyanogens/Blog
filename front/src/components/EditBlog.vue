@@ -166,11 +166,10 @@ export default {
       let MarkdownIt = require('markdown-it'), md = new MarkdownIt();
       let result = md.render(this.text);
       this.blog.htmlContent = result;
-
-      this.blog.userName = 'vivi';
+      this.blog.userName = localStorage['username'];
       this.blog.title = this.title;
       this.pushBlog();
-      //   console.log(this.blog);
+        console.log(this.blog);
     },
 
     async pushBlog () {
@@ -194,7 +193,7 @@ export default {
           if (res.code === 200) {
             bus.$emit('getBlogId', res.data); // * 发送博客id
             // ! 跳转路由
-            await this.$router.push('/blog')
+            this.$router.push('/blog')
           } else {
             if (res.code === 2001) {
               this.$message.error('请先完成登录才能发布博客哦~')
@@ -261,7 +260,7 @@ export default {
   // * 博客编辑部分
   .edit {
     position: relative;
-    margin-top: 120px;
+    margin-top: 140px;
     padding: 0 175px;
     z-index: 9;
     .commit {
@@ -287,7 +286,7 @@ export default {
   // * 标签部分
   .tags {
     position: absolute;
-    top: 70px;
+    top: 90px;
     left: 550px;
     padding: 0 5px;
   }
@@ -311,7 +310,7 @@ export default {
   // * 标题部分
   .title {
     position: absolute;
-    top: 60px;
+    top: 80px;
     left: 165px;
     height: 50px;
     line-height: 50px;
