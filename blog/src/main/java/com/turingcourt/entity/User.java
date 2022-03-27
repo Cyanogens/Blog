@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.util.Collection;
 
@@ -29,10 +30,12 @@ public class User implements Serializable, UserDetails {
     /**
      * 用户名
      */
+    @NotBlank(message = "用户名不应为空")
     private String username;
     /**
      * 密码
      */
+    @NotBlank(message = "密码不应为空")
     private String password;
     /**
      * 用户是否可用
@@ -46,11 +49,13 @@ public class User implements Serializable, UserDetails {
     /**
      * 密保问题
      */
+    @NotBlank(message = "密保问题不应为空")
     private String problem;
 
     /**
      * 密保答案
      */
+    @NotBlank(message = "密保答案不应为空")
     private String ans;
 
     @Override

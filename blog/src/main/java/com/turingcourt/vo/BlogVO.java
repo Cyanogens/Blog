@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import java.util.Date;
 import java.util.List;
 
@@ -21,34 +23,47 @@ public class BlogVO {
      * 博客id
      */
     private Long id;
+
     /**
      * 标题
      */
+    @NotBlank(message = "标题不为空")
     private String title;
+
     /**
      * md格式的内容
      */
+    @NotBlank(message = "")
     private String mdContent;
+
     /**
      * html格式的内容
      */
+    @NotBlank(message = "")
     private String htmlContent;
+
     /**
      * 内容
      */
     private String summary;
+
     /**
      * 标签名集合
      */
+    @NotEmpty(message = "")
     private List<String> categoryNames;
+
     /**
      * 用户名
      */
+    @NotBlank(message = "")
     private String userName;
+
     /**
      * 发布时间
      */
     private Date publishData;
+
     /**
      * 点赞数
      */

@@ -21,4 +21,10 @@ public class ResultTool {
     public static JsonResult fail(ResultCode resultEnum) {
         return new JsonResult(false, resultEnum);
     }
+
+    public static JsonResult fail(ResultCode resultEnum, String msg) {
+        JsonResult jsonResult = new JsonResult(false, resultEnum);
+        jsonResult.setMsg(msg);
+        return jsonResult;
+    }
 }

@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotBlank;
 import java.util.Date;
 
 /**
@@ -20,14 +21,19 @@ public class CommentVO {
      * 评论id
      */
     private Long id;
+
     /**
      * 用户名
      */
+    @NotBlank(message = "")
     private String username;
+
     /**
      * 评论内容
      */
+    @NotBlank(message = "")
     private String content;
+
     /**
      * 发布时间
      */

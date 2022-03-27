@@ -8,12 +8,18 @@ import com.turingcourt.service.UserLoginService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.FileCopyUtils;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.constraints.NotBlank;
 import java.io.File;
 import java.io.IOException;
+import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -22,7 +28,7 @@ import java.util.UUID;
  * @author Cyanogen
  * @since 2022-03-07 19:30:52
  */
-@CrossOrigin
+@Validated
 @RestController
 @ApiOperation("通用操作")
 public class IndexController {
@@ -38,10 +44,16 @@ public class IndexController {
      */
     @PostMapping("/register")
     @ApiOperation("用户注册")
-    public JsonResult register(@RequestBody User user) {
-        System.out.println("user = " + user);
-        Boolean registered = userLoginService.register(user);
-        return registered ? ResultTool.success() : ResultTool.fail();
+    public JsonResult register(@Validated @RequestBody User user) {
+        try {
+            Boolean registered = userLoginService.register(user);
+            if (registered) {
+                return ResultTool.success();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ResultTool.fail(ResultCode.COMMON_FAIL, "注册失败");
     }
 
     /**
@@ -52,7 +64,7 @@ public class IndexController {
      */
     @GetMapping("/checkAccount")
     @ApiOperation("账号校验")
-    public JsonResult checkAccount(String username) {
+    public JsonResult checkAccount(@NotBlank(message = "用户名不应为空") String username) {
         Boolean isExist = userLoginService.checkAccount(username);
         if (isExist) {
             return ResultTool.fail(ResultCode.USER_ACCOUNT_ALREADY_EXIST);
@@ -87,7 +99,7 @@ public class IndexController {
                 .append(req.getServerPort())
                 .append(req.getContextPath())
                 .append(filePath);
-        String imgName = UUID.randomUUID() + "_" + image.getOriginalFilename().replaceAll(" ", "");
+        String imgName = UUID.randomUUID() + "_" + Objects.requireNonNull(image.getOriginalFilename()).replaceAll(" ", "");
 
         try {
             //文件复制
@@ -110,9 +122,17 @@ public class IndexController {
      */
     @GetMapping("/verifyAnswer")
     @ApiOperation("验证密保答案")
-    public JsonResult verifyAnswer(String username, String answer) {
-        Boolean verify = userLoginService.verifyAnswer(username, answer);
-        return verify ? ResultTool.success() : ResultTool.fail();
+    public JsonResult verifyAnswer(@NotBlank(message = "用户名不应为空") String username,
+                                   @NotBlank(message = "密保答案不应为空") String answer) {
+        try {
+            Boolean verify = userLoginService.verifyAnswer(username, answer);
+            if (verify) {
+                return ResultTool.success();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ResultTool.fail(ResultCode.COMMON_FAIL, "验证失败");
     }
 
     /**
@@ -124,9 +144,17 @@ public class IndexController {
      */
     @PostMapping("/changePassword")
     @ApiOperation("更改密码")
-    public JsonResult changePassword(String username, String password) {
-        Boolean change = userLoginService.changePassword(username, password);
-        return change ? ResultTool.success() : ResultTool.fail();
+    public JsonResult changePassword(@NotBlank(message = "用户名不应为空") String username,
+                                     @NotBlank(message = "新密码不应为空") String password) {
+        try {
+            Boolean change = userLoginService.changePassword(username, password);
+            if (change) {
+                return ResultTool.success();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ResultTool.fail(ResultCode.COMMON_FAIL, "更改失败");
     }
 
 }

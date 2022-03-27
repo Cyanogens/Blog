@@ -7,9 +7,10 @@ import com.turingcourt.service.CommentService;
 import com.turingcourt.vo.CommentVO;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import static com.turingcourt.config.json.ResultCode.COMMON_FAIL;
+import javax.validation.constraints.NotNull;
 
 /**
  * Comment控制层
@@ -17,7 +18,7 @@ import static com.turingcourt.config.json.ResultCode.COMMON_FAIL;
  * @author Cyanogen
  * @since 2022-03-07 19:30:53
  */
-@CrossOrigin
+@Validated
 @RestController
 @ApiOperation("评论操作")
 @RequestMapping("/comment")
@@ -35,14 +36,18 @@ public class CommentController {
      */
     @GetMapping("/get/{blogId}")
     @ApiOperation("查询某博客的所有评论")
-    public JsonResult getAllComment(@PathVariable Long blogId, @RequestParam(value = "pageNo", defaultValue = "1") int pageNo, @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
-        PageInfo<CommentVO> allComment = commentService.getAllComment(blogId, pageNo, pageSize);
-        if (allComment != null) {
-            return ResultTool.success(allComment);
-        } else {
-            return ResultTool.fail();
+    public JsonResult getAllComment(@NotNull(message = "博客id不应为空") @PathVariable Long blogId,
+                                    @RequestParam(value = "pageNo", defaultValue = "1") int pageNo,
+                                    @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
+        try {
+            PageInfo<CommentVO> allComment = commentService.getAllComment(blogId, pageNo, pageSize);
+            if (allComment != null) {
+                return ResultTool.success(allComment);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-
+        return ResultTool.fail();
     }
 
     /**
@@ -55,10 +60,17 @@ public class CommentController {
      */
     @PostMapping("/insert")
     @ApiOperation("发布评论")
-    public JsonResult insertComment(@RequestBody CommentVO commentVO, Long blogId) {
-        Boolean insert = commentService.insertComment(commentVO, blogId);
-
-        return insert ? ResultTool.success() : ResultTool.fail();
+    public JsonResult insertComment(@Validated @RequestBody CommentVO commentVO,
+                                    @NotNull(message = "博客id不应为空") Long blogId) {
+        try {
+            Boolean insert = commentService.insertComment(commentVO, blogId);
+            if (insert) {
+                return ResultTool.success();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ResultTool.fail();
     }
 
     /**
@@ -70,10 +82,17 @@ public class CommentController {
      */
     @PostMapping("/reply")
     @ApiOperation("回复评论")
-    public JsonResult replyComment(@RequestBody CommentVO commentVO, Long pid) {
-        Boolean insert = commentService.replyComment(commentVO, pid);
-
-        return insert ? ResultTool.success() : ResultTool.fail();
+    public JsonResult replyComment(@Validated @RequestBody CommentVO commentVO,
+                                   @NotNull(message = "博客id不应为空") Long pid) {
+        try {
+            Boolean insert = commentService.replyComment(commentVO, pid);
+            if (insert) {
+                return ResultTool.success();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ResultTool.fail();
     }
 
     /**
