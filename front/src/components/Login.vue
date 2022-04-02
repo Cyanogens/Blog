@@ -118,12 +118,12 @@ export default {
 
         if (res.code === 200) {
         //   this.GLOBAL.token = 'T'; // * 登录成功，标记
-          localStorage['token'] = 'T'; // * 登录成功，保存token到session
-          localStorage['userName'] = this.ruleForm.name; // * 保存用户名到本地
-          localStorage['userId'] = res.data.id;
+          sessionStorage['token'] = 'T'; // * 登录成功，保存token到session
+          sessionStorage['userName'] = this.ruleForm.name; // * 保存用户名到本地
+          sessionStorage['userId'] = res.data.id;
           this.$router.push('/'); // * 登录成功后回到首页
         } else {
-          localStorage['token'] = 'F'; // * 登录失败，切换标记
+          sessionStorage['token'] = 'F'; // * 登录失败，切换标记
           this.$message.error(res.msg);
         }
       } catch (error) {

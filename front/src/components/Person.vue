@@ -125,23 +125,23 @@ export default {
     };
     return {
       // 用户登录标志
-      token: localStorage['token'],
+      token: sessionStorage['token'],
       // 所有标签
       tag_list: [],
       // 博客总数目
-      total: localStorage.getItem('total'),
+      total: sessionStorage.getItem('total'),
       // 当前页
       pageNo: 1,
       // 每页展示的数目
       pageSize: 4,
       color: ['', 'success', 'warning', 'danger'],
-      list: localStorage.getItem('list'),
-      id: localStorage.getItem('id'), // * 用户id
+      list: sessionStorage.getItem('list'),
+      id: sessionStorage.getItem('id'), // * 用户id
       password: 1,
       edit: true,
-      sex: localStorage.getItem('sex'), // * 性别
+      sex: sessionStorage.getItem('sex'), // * 性别
       ruleForm: {
-        userName: localStorage.getItem('username'),
+        userName: sessionStorage.getItem('username'),
         pass: '',
       },
       rules: {
@@ -170,7 +170,7 @@ export default {
           return;
         }
         const { data: res } = await axios.post('http://localhost:8080/user/change', {
-          id: localStorage['userId'],
+          id: sessionStorage['userId'],
         })
         if (res.code === 200) {
           // * 请求成功，即更改信息成功
@@ -191,14 +191,14 @@ export default {
         //   this.$message.error('请先登录');
         //   this.$router.push('/login')
         // } else {
-          const { data: res } = await axios.get('http://localhost:8080/user/' + localStorage['userId'])
+          const { data: res } = await axios.get('http://localhost:8080/user/' + sessionStorage['userId'])
           if (res.code === 200) {
-            localStorage['userId'] = res.data.id;
+            sessionStorage['userId'] = res.data.id;
             this.ruleForm.userName = res.data.username;
             this.sex = res.data.sex;
             this.password = res.data.password;
-            localStorage.setItem('sex', this.sex)
-            localStorage.setItem('password', this.password)
+            sessionStorage.setItem('sex', this.sex)
+            sessionStorage.setItem('password', this.password)
           }
         // }
 
@@ -217,7 +217,7 @@ export default {
     // ? 获取用户发布的所有博客列表
     async getBlogList () {
       try {
-        const { data: res } = await axios.get('http://localhost:8080/user/userBlogs/' + localStorage['userId'], {
+        const { data: res } = await axios.get('http://localhost:8080/user/userBlogs/' + sessionStorage['userId'], {
           params: {
             pageNo: this.pageNo,
             pageSize: this.pageSize

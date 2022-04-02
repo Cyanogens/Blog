@@ -174,7 +174,7 @@ export default {
       let MarkdownIt = require('markdown-it'), md = new MarkdownIt();
       let result = md.render(this.text);
       this.blog.htmlContent = result;
-      this.blog.userName = localStorage['username'];
+      this.blog.userName = sessionStorage['username'];
       this.blog.title = this.title;
       this.pushBlog();
         console.log(this.blog);

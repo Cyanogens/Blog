@@ -108,34 +108,34 @@ export default {
     bus.$on('getBlogId', id => {
       this.id = id;
       //   this.pageView = val.count;
-      localStorage['blogId'] = id;
-      localStorage['flag'] = 'F';
+      sessionStorage['blogId'] = id;
+      sessionStorage['flag'] = 'F';
       //   console.log('拿到id了');
       //   console.log(val.count);
     });
     // ? 刷新页面重新获取数据
     window.onload = e => {
-      this.id = localStorage['blogId'];
+      this.id = sessionStorage['blogId'];
     }
   },
   watch: {
     id: function () {
       console.log('id变化了');
       this.getBlog();
-      if (localStorage['flag'] === 'F') { // * flag 表示访问量只加载(调用接口）一次
+      if (sessionStorage['flag'] === 'F') { // * flag 表示访问量只加载(调用接口）一次
         this.viewAdd();
-        localStorage['flag'] = 'T';
+        sessionStorage['flag'] = 'T';
       }
     }
   },
   destroyed () {
-    localStorage['flag'] = 'F'
+    sessionStorage['flag'] = 'F'
   },
 
   methods: {
     async getBlog () {
       try {
-        let num = localStorage['blogId'];
+        let num = sessionStorage['blogId'];
         const { data: res } = await axios.get('http://localhost:8080/blog/' + num)
         if (res.code === 200) {
           this.markdown = res.data.mdContent;
@@ -156,7 +156,7 @@ export default {
     // ? 浏览量增加
     async viewAdd () {
       try {
-        let num = localStorage['blogId'];
+        let num = sessionStorage['blogId'];
         console.log('浏览量增加');
         const { data: res } = await axios.post('http://localhost:8080/blog/changeView?blogId=' + num);
         if (res.code === 200) {

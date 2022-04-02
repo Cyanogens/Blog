@@ -115,11 +115,11 @@ export default {
       bus.$emit('getSearchTxt', this.input);
     },
     toLogin () {
-      if (localStorage['token'] === 'T') { // * 当前状态为已登录，点击退出
+      if (sessionStorage['token'] === 'T') { // * 当前状态为已登录，点击退出
         this.logout();
-        localStorage['token'] = 'F'; // * 退出，清空本地存储的信息
-        localStorage['blogId'] = 0; // * 默认为0（无此数据）
-        localStorage['userName'] = ''; // * 清空用户名
+        sessionStorage['token'] = 'F'; // * 退出，清空本地存储的信息
+        sessionStorage['blogId'] = 0; // * 默认为0（无此数据）
+        sessionStorage['userName'] = ''; // * 清空用户名
       } else {
         // * 当前状态为未登录，点击跳转到登录界面
         this.path = '/login'
@@ -141,7 +141,7 @@ export default {
   watch: { // * 监听路由的变化，只要有变化，就实时调整登录/退出的切换
     $route: {
       handler () {
-        if (localStorage['token'] === 'T') {
+        if (sessionStorage['token'] === 'T') {
           this.txt = '退出'
         } else {
           this.txt = '登录'
@@ -150,7 +150,7 @@ export default {
     }
   },
   mounted () {
-    if (localStorage['token'] === 'T') {
+    if (sessionStorage['token'] === 'T') {
       this.txt = '退出'
     } else {
       this.txt = '登录'
