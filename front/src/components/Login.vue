@@ -117,7 +117,7 @@ export default {
         })
 
         if (res.code === 200) {
-          this.GLOBAL.token = 'T'; // * 登录成功，标记
+        //   this.GLOBAL.token = 'T'; // * 登录成功，标记
           localStorage['token'] = 'T'; // * 登录成功，保存token到session
           localStorage['userName'] = this.ruleForm.name; // * 保存用户名到本地
           localStorage['userId'] = res.data.id;

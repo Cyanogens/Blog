@@ -12,8 +12,10 @@ export default {
   components: {
     Head
   },
-  created() {
+  created () {
+    if (localStorage['token'] !== 'T') {
       localStorage['token'] = 'F'
+    }
   }
 }
 </script>

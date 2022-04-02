@@ -137,6 +137,14 @@ export default {
       },
     };
   },
+  mounted() {
+    //   window.onbeforeunload = () =>{
+    //       sessionStorage['blog-title'] = this.blog.title;
+    //       sessionStorage['blog-categoryNames'] = this.blog.categoryNames;
+    //       sessionStorage['blog-mdContent'] = this.blog.mdContent;
+    //       return null
+    //   }
+  },
   methods: {
     handleClose (tag) {
       this.dynamicTags.splice(this.dynamicTags.indexOf(tag), 1);
@@ -246,7 +254,7 @@ export default {
     },
     handleDownload (file) {
       console.log(file);
-    }
+    },
   }
 };
 </script>

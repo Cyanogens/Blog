@@ -303,7 +303,7 @@ export default {
   height: 60px;
 }
 
-.menu ul li:hover {
+.menu ul li:not(1):hover {
   background-color: #cccccc;
 }
 

@@ -118,6 +118,7 @@ router.beforeEach((to, from, next) => {
       // this.$message.error('请先登录')
       next('/login')
     }
+    next()
   } else {
     // * 已登录，放行
     next()

@@ -125,7 +125,7 @@ export default {
     };
     return {
       // 用户登录标志
-      token: this.GLOBAL.token,
+      token: localStorage['token'],
       // 所有标签
       tag_list: [],
       // 博客总数目
