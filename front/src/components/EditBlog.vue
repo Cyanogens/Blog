@@ -129,21 +129,13 @@ export default {
         mdContent: '', // * 博客内容--Markdown格式
         htmlContent: '', // * 博客内容--HTML格式
         categoryNames: [], // * 标签数组
-        userName: '', // * 用户名--未完成登录等功能，默认值
+        userName: sessionStorage['userName'], // * 用户名--未完成登录等功能，默认值
         // publishData: '', // * 发布日期
         title: '', // * 博客标题
         summary: '',
 
       },
     };
-  },
-  mounted() {
-    //   window.onbeforeunload = () =>{
-    //       sessionStorage['blog-title'] = this.blog.title;
-    //       sessionStorage['blog-categoryNames'] = this.blog.categoryNames;
-    //       sessionStorage['blog-mdContent'] = this.blog.mdContent;
-    //       return null
-    //   }
   },
   methods: {
     handleClose (tag) {
@@ -174,10 +166,10 @@ export default {
       let MarkdownIt = require('markdown-it'), md = new MarkdownIt();
       let result = md.render(this.text);
       this.blog.htmlContent = result;
-      this.blog.userName = sessionStorage['username'];
+      this.blog.userName = sessionStorage['userName'];
       this.blog.title = this.title;
       this.pushBlog();
-        console.log(this.blog);
+        // console.log(this.blog);
     },
 
     async pushBlog () {
@@ -191,16 +183,19 @@ export default {
         }
         else {
           const { data: res } = await axios.post('http://localhost:8080/blog/insertBlog', {
-            userName: this.blog.userName,
-            categoryNames: this.blog.categoryNames,
-            mdContent: this.text,
             title: this.blog.title,
-            htmlContent: this.blog.htmlContent
+            mdContent: this.blog.mdContent,
+            htmlContent: this.blog.htmlContent,
+            categoryNames: this.blog.categoryNames,
+            userName: this.blog.userName,
           })
-          // console.log(this.blog);
+        //   console.log(this.blog);
+        //   console.log(this.blog.userName);
           if (res.code === 200) {
-            bus.$emit('getBlogId', res.data); // * 发送博客id
+            // bus.$emit('getBlogId', res.data);
+            sessionStorage['blogId'] = res.data // * 发送博客id
             // ! 跳转路由
+            // console.log('新博客编号',res.data);
             this.$router.push('/blog')
           } else {
             if (res.code === 2001) {

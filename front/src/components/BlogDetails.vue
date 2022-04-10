@@ -102,21 +102,27 @@ export default {
       starName: '#icon-star', // * 星星图标
     }
   },
-
   created () {
+    console.log('created');
+    sessionStorage['flag'] = 'F';
     bus.$off('getBlogId');
-    bus.$on('getBlogId', id => {
-      this.id = id;
-      //   this.pageView = val.count;
+    bus.$on('getBlogId', (id) => {
       sessionStorage['blogId'] = id;
-      sessionStorage['flag'] = 'F';
-      //   console.log('拿到id了');
-      //   console.log(val.count);
-    });
+      console.log('触发了自定义事件', id);
+    })
+  },
+  beforeMount () {
+    console.log('beforeMount');
+    this.id = sessionStorage['blogId'];
+    console.log('接受的博客编号', this.id);
+    // console.log('接受的博客编号', this.id);
+  },
+  beforeDestroy () {
     // ? 刷新页面重新获取数据
     window.onload = e => {
       this.id = sessionStorage['blogId'];
-    }
+      sessionStorage['flag'] = 'T'
+    };
   },
   watch: {
     id: function () {
@@ -124,12 +130,13 @@ export default {
       this.getBlog();
       if (sessionStorage['flag'] === 'F') { // * flag 表示访问量只加载(调用接口）一次
         this.viewAdd();
+        // console.log('浏览量增加');
         sessionStorage['flag'] = 'T';
       }
     }
   },
   destroyed () {
-    sessionStorage['flag'] = 'F'
+    // sessionStorage['flag'] = 'F'
   },
 
   methods: {
@@ -140,7 +147,7 @@ export default {
         if (res.code === 200) {
           this.markdown = res.data.mdContent;
           this.blog = res.data;
-          this.id = res.data.id;
+          //   this.id = res.data.id;
           this.title = res.data.title;
           this.author = res.data.userName;
           this.date = res.data.publishData;
@@ -157,10 +164,10 @@ export default {
     async viewAdd () {
       try {
         let num = sessionStorage['blogId'];
-        console.log('浏览量增加');
         const { data: res } = await axios.post('http://localhost:8080/blog/changeView?blogId=' + num);
         if (res.code === 200) {
           this.pageView = res.data;
+        console.log('浏览量增加');
         }
       } catch (error) {
         console.log(error);
@@ -240,6 +247,10 @@ export default {
       }
       .star {
         width: 90px;
+        display: flex;
+        flex-wrap: nowrap;
+        justify-content: center;
+        align-items: center;
       }
       .watch {
         width: 110px;
@@ -261,7 +272,7 @@ export default {
       height: 25px;
       line-height: 25px;
       padding: 0 5px;
-    //   margin-right: 28px;
+      //   margin-right: 28px;
     }
   }
 }
@@ -290,10 +301,14 @@ export default {
 }
 
 .blog-view >>> .el-badge__content.is-fixed {
-    transform: none;
-    position: inherit;
-    right: 0;
-    top: 0;
+  transform: none;
+  position: inherit;
+  right: 0;
+  top: -1px;
+}
+
+.blog-view >>> .el-badge__content {
+  border: none;
 }
 </style>
 
